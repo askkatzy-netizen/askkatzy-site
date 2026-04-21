@@ -234,10 +234,17 @@ function RedPopupModal({ open, onClose }) {
 
     const updateCornerClosePosition = () => {
       const rect = cardEl.getBoundingClientRect()
-      const radius = RED_POPUP_CORNER_CLOSE_IDLE_SIZE / 2
-      const top = rect.top - RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD - radius
-      const left = rect.right - RED_POPUP_CORNER_CLOSE_INSET - radius
-      setCornerClosePosition({ top, left })
+      const mobileSheet = window.matchMedia('(max-width: 700px)').matches
+      if (mobileSheet) {
+        const radius = RED_POPUP_CORNER_CLOSE_IDLE_SIZE / 2
+        setCornerClosePosition({
+          top: rect.top - RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD - radius,
+          left: rect.right - RED_POPUP_CORNER_CLOSE_INSET - radius,
+        })
+      } else {
+        /* Desktop / tablet: anchor at card top-right (matches pre–iOS-fix behavior). */
+        setCornerClosePosition({ top: rect.top, left: rect.right })
+      }
     }
 
     const frameId = window.requestAnimationFrame(() => {
