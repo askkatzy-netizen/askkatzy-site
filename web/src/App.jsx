@@ -157,7 +157,9 @@ function RedStatsRow() {
               className="pointer-events-none absolute left-0 top-1/2 h-[calc(100%-8px)] -translate-y-1/2 border-l border-black/15"
             />
           )}
-          <p className="font-roboto-slab text-[32px] leading-[1.4] font-semibold">{stat.value}</p>
+          <p className="font-roboto-slab text-[32px] leading-[1.4] font-semibold">
+            {stat.value}
+          </p>
           <p className="text-[12px] leading-[1.4]">{stat.label}</p>
         </div>
       ))}
@@ -171,6 +173,10 @@ function RedPopupModal({ open, onClose }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
   const [entered, setEntered] = useState(false)
   const [mounted, setMounted] = useState(open)
+  const overlayRef = useRef(null)
+  const cardRef = useRef(null)
+  const [cornerClosePosition, setCornerClosePosition] = useState({ top: 0, left: 0 })
+  const [cornerCloseReady, setCornerCloseReady] = useState(false)
 
   useLayoutEffect(() => {
     /* DOM overlay enter/exit: reset `entered` before paint (reopen animation + closing transition). */
@@ -178,6 +184,7 @@ function RedPopupModal({ open, onClose }) {
     if (open) {
       setMounted(true)
       setEntered(false)
+      setCornerCloseReady(false)
     } else if (mounted) {
       setEntered(false)
     }
@@ -216,6 +223,31 @@ function RedPopupModal({ open, onClose }) {
     }
   }, [mounted, onClose])
 
+  useEffect(() => {
+    if (!mounted || !open || !entered) return undefined
+
+    const updateCornerClosePosition = () => {
+      if (!cardRef.current) return
+      const rect = cardRef.current.getBoundingClientRect()
+      setCornerClosePosition({ top: rect.top, left: rect.right })
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(updateCornerClosePosition)
+    })
+    const settleTimer = window.setTimeout(() => {
+      updateCornerClosePosition()
+      setCornerCloseReady(true)
+    }, RED_POPUP_TRANSITION_MS)
+    window.addEventListener('resize', updateCornerClosePosition)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.clearTimeout(settleTimer)
+      window.removeEventListener('resize', updateCornerClosePosition)
+    }
+  }, [mounted, open, entered])
+
   if (!mounted) return null
 
   const handleHeadMouseMove = (event) => {
@@ -235,7 +267,8 @@ function RedPopupModal({ open, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[120] overflow-y-auto px-[56px] py-4 max-[700px]:px-4"
+      ref={overlayRef}
+      className="red-popup__overlay fixed inset-0 z-[120] overflow-y-auto px-[56px] py-4 max-[700px]:px-4"
       onClick={onClose}
       role="presentation"
     >
@@ -253,7 +286,7 @@ function RedPopupModal({ open, onClose }) {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none relative z-10 mx-auto flex min-h-full w-full max-w-[1200px] flex-col items-center justify-start pt-14 pb-14"
+        className="red-popup__dialog pointer-events-none relative z-10 mx-auto flex min-h-full w-full max-w-[1200px] flex-col items-center justify-start pt-14 pb-14"
         role="dialog"
         aria-modal="true"
         aria-label="About RED"
@@ -268,9 +301,10 @@ function RedPopupModal({ open, onClose }) {
         >
         {open && (
           <>
-          <div className="red-popup__card w-full overflow-hidden rounded-[40px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
+          <div className="relative w-full">
+          <div ref={cardRef} className="red-popup__card relative w-full overflow-hidden rounded-[40px] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
           <div
-            className="relative grid grid-cols-1 gap-[40px] overflow-hidden p-10 min-[893px]:grid-cols-2"
+            className="red-popup__card-content relative grid grid-cols-1 gap-[40px] overflow-hidden p-10 min-[893px]:grid-cols-2 max-[480px]:p-6"
             onMouseMove={handleHeadMouseMove}
             onMouseLeave={handleHeadMouseLeave}
           >
@@ -278,7 +312,7 @@ function RedPopupModal({ open, onClose }) {
               <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">RED</p>
               <RedStatsRow />
               <div
-                className="red-popup__shape-layer pointer-events-none absolute -left-[314px] top-[501px] hidden h-[674px] w-[680px] items-center justify-center transition-transform duration-150 ease-out min-[893px]:flex"
+                className="red-popup__shape-layer pointer-events-none absolute -left-[314px] top-[501px] flex h-[674px] w-[680px] items-center justify-center transition-transform duration-150 ease-out max-[892px]:hidden"
                 style={{ transform: `translate3d(${shapeOffset.x}px, ${shapeOffset.y}px, 0)` }}
                 aria-hidden="true"
               >
@@ -287,7 +321,7 @@ function RedPopupModal({ open, onClose }) {
                     src={wowShapeSvg}
                     alt=""
                     aria-hidden="true"
-                    className="h-[401px] w-[556px] opacity-95"
+                    className="h-[401px] w-[556px] opacity-95 max-[892px]:h-[220px] max-[892px]:w-[300px]"
                   />
                 </div>
               </div>
@@ -368,17 +402,31 @@ function RedPopupModal({ open, onClose }) {
               </div>
             </div>
           </div>
+          <div
+            className="pointer-events-none absolute -right-[54px] -bottom-[56px] z-[2] flex h-[220px] w-[292px] items-end justify-end max-[700px]:hidden min-[893px]:hidden"
+            aria-hidden="true"
+          >
+            <img src={wowShapeSvg} alt="" className="red-popup__wow-mobile h-[200px] w-[272px] opacity-95" />
+          </div>
+          </div>
           </div>
 
-          <button type="button" onClick={onClose} className="red-popup__close">
-            <span aria-hidden="true" className="red-popup__close-icon">
-              ✕
-            </span>
-            <span>Close</span>
-          </button>
           </>
         )}
         </div>
+        {open && (
+          <button
+            type="button"
+            onClick={onClose}
+            className={`red-popup__corner-close pointer-events-auto ${
+              entered && cornerCloseReady ? 'red-popup__corner-close--entered' : ''
+            }`}
+            style={{ top: `${cornerClosePosition.top}px`, left: `${cornerClosePosition.left}px` }}
+            aria-label="Close"
+          >
+            <span aria-hidden="true" className="red-popup__corner-close-icon">✕</span>
+          </button>
+        )}
       </div>
     </div>
   )

@@ -923,6 +923,106 @@ body {
 }
 
 /* RED modal */
+.red-popup__corner-close {
+  position: fixed;
+  z-index: 130;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid rgb(0 0 0 / 90%);
+  border-radius: 999px;
+  background: #ffffff;
+  color: rgb(0 0 0 / 90%);
+  cursor: pointer;
+  transform: translate(-50%, calc(-50% + 72px));
+  opacity: 0;
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 300ms ease-out,
+    width 100ms ease-out,
+    height 100ms ease-out,
+    border-color 100ms ease-out,
+    box-shadow 100ms ease-out;
+}
+
+.red-popup__corner-close--entered {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.red-popup__corner-close:hover,
+.red-popup__corner-close:focus-visible {
+  width: 64px;
+  height: 64px;
+  border-color: #2b00ff;
+  box-shadow: 0 0 0 4px rgb(43 0 255 / 20%);
+}
+
+.red-popup__corner-close-icon {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.red-popup__wow-mobile {
+  display: block;
+  /* Trim the SVG fringe so no white edge is visible. */
+  clip-path: inset(2px);
+}
+
+@media (max-width: 700px) {
+  .red-popup__overlay {
+    overflow: hidden;
+  }
+
+  .red-popup__dialog {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .red-popup__enter {
+    gap: 0;
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    width: auto;
+    transform: none !important;
+  }
+
+  .red-popup__card {
+    position: relative;
+    z-index: 125;
+    width: 100%;
+    height: 90dvh;
+    max-height: 90dvh;
+    background: #ffffff !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .red-popup__card-content {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 40px !important;
+  }
+
+  .red-popup__corner-close {
+    top: 40px !important;
+    left: calc(100vw - 40px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .red-popup__enter {
+    left: 0;
+    right: 0;
+  }
+}
+
 .red-popup__close {
   display: inline-flex;
   align-items: center;
