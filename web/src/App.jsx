@@ -96,10 +96,10 @@ const headerCtas = [
 ]
 
 const redStats = [
-  { value: '16', label: 'Years' },
-  { value: '15', label: 'Team members' },
-  { value: '500+', label: 'Projects delivered' },
-  { value: 'Millions', label: 'Impacted users' },
+  { value: '3', label: 'partners' },
+  { value: '15', label: 'team members' },
+  { value: '500+', label: 'projects delivered' },
+  { value: 'Millions', label: 'impacted users' },
 ]
 
 function RedStatsRow() {
