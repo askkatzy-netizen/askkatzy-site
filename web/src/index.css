@@ -1117,25 +1117,27 @@ body {
   color: #ffffff;
 }
 
-.beyond-tooltip-anchor:hover,
-.beyond-tooltip-anchor:focus-visible {
-  z-index: 80;
-  color: #ffffff;
-}
-
 .beyond-tooltip-anchor[data-open='true']::before {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.beyond-tooltip-anchor:hover::before,
-.beyond-tooltip-anchor:focus-visible::before {
   opacity: 1;
   transform: scale(1);
 }
 
 .beyond-tooltip-anchor[data-open='true'] .beyond-tooltip-bubble {
   transform: translateX(calc(-50% + var(--tooltip-shift-x, 0px))) translateY(0);
+}
+
+@media (hover: hover) {
+  .beyond-tooltip-anchor:hover,
+  .beyond-tooltip-anchor:focus-visible {
+    z-index: 80;
+    color: #ffffff;
+  }
+
+  .beyond-tooltip-anchor:hover::before,
+  .beyond-tooltip-anchor:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--stream {
