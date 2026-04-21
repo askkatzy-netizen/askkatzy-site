@@ -1011,7 +1011,7 @@ body {
   }
 
   .red-popup__corner-close {
-    top: 40px !important;
+    top: calc(10dvh - 36px) !important;
     left: calc(100vw - 40px) !important;
   }
 }
