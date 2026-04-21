@@ -1455,7 +1455,7 @@ body {
   }
 }
 
-@media (hover: none) {
+@media (hover: none), (pointer: coarse), (max-width: 968px) {
   .case-thumb,
   .case-thumb__surface,
   .case-thumb__tag,
