@@ -403,12 +403,13 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
     const bubbleRect = bubbleRef.current.getBoundingClientRect()
     const anchorRect = anchorRef.current.getBoundingClientRect()
     const viewportPadding = 8
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth
     const spaceAbove = anchorRect.top - viewportPadding
     const nextPlacement = spaceAbove < bubbleRect.height + 24 ? 'bottom' : 'top'
 
     const rawLeft = anchorRect.left + anchorRect.width / 2 - bubbleRect.width / 2
     const minLeft = viewportPadding
-    const maxLeft = window.innerWidth - viewportPadding - bubbleRect.width
+    const maxLeft = Math.max(minLeft, viewportWidth - viewportPadding - bubbleRect.width)
     const clampedLeft = Math.min(Math.max(rawLeft, minLeft), maxLeft)
     const nextShiftX = clampedLeft - rawLeft
 
@@ -512,6 +513,7 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
             src={imageSrc}
             alt=""
             className="beyond-tooltip-image"
+            onLoad={() => requestAnimationFrame(updatePosition)}
             style={
               imageMaxWidth
                 ? { maxWidth: `min(${imageMaxWidth}px, calc(100vw - 24px))` }
