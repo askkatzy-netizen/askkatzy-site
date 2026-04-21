@@ -1009,11 +1009,6 @@ body {
     -webkit-overflow-scrolling: touch;
     padding-bottom: 40px !important;
   }
-
-  .red-popup__corner-close {
-    top: calc(10dvh - 36px) !important;
-    left: calc(100vw - 40px) !important;
-  }
 }
 
 @media (max-width: 480px) {

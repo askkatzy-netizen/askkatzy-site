@@ -168,6 +168,9 @@ function RedStatsRow() {
 }
 
 const RED_POPUP_TRANSITION_MS = 240
+const RED_POPUP_CORNER_CLOSE_IDLE_SIZE = 48
+const RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD = 12
+const RED_POPUP_CORNER_CLOSE_INSET = 12
 
 function RedPopupModal({ open, onClose }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
@@ -226,10 +229,15 @@ function RedPopupModal({ open, onClose }) {
   useEffect(() => {
     if (!mounted || !open || !entered) return undefined
 
+    const cardEl = cardRef.current
+    if (!cardEl) return undefined
+
     const updateCornerClosePosition = () => {
-      if (!cardRef.current) return
-      const rect = cardRef.current.getBoundingClientRect()
-      setCornerClosePosition({ top: rect.top, left: rect.right })
+      const rect = cardEl.getBoundingClientRect()
+      const radius = RED_POPUP_CORNER_CLOSE_IDLE_SIZE / 2
+      const top = rect.top - RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD - radius
+      const left = rect.right - RED_POPUP_CORNER_CLOSE_INSET - radius
+      setCornerClosePosition({ top, left })
     }
 
     const frameId = window.requestAnimationFrame(() => {
@@ -240,11 +248,24 @@ function RedPopupModal({ open, onClose }) {
       setCornerCloseReady(true)
     }, RED_POPUP_TRANSITION_MS)
     window.addEventListener('resize', updateCornerClosePosition)
+    const overlayElement = overlayRef.current
+    overlayElement?.addEventListener('scroll', updateCornerClosePosition, { passive: true })
+    const visualViewport = window.visualViewport
+    visualViewport?.addEventListener('resize', updateCornerClosePosition)
+    visualViewport?.addEventListener('scroll', updateCornerClosePosition)
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => updateCornerClosePosition()) : null
+    resizeObserver?.observe(cardEl)
 
     return () => {
       window.cancelAnimationFrame(frameId)
       window.clearTimeout(settleTimer)
       window.removeEventListener('resize', updateCornerClosePosition)
+      overlayElement?.removeEventListener('scroll', updateCornerClosePosition)
+      visualViewport?.removeEventListener('resize', updateCornerClosePosition)
+      visualViewport?.removeEventListener('scroll', updateCornerClosePosition)
+      resizeObserver?.unobserve(cardEl)
+      resizeObserver?.disconnect()
     }
   }, [mounted, open, entered])
 
