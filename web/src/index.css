@@ -220,10 +220,11 @@ body {
 }
 
 .case-thumb__surface {
-  position: relative;
+  position: absolute;
+  inset: 5px;
   display: flex;
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
   align-items: center;
   justify-content: center;
   overflow: hidden;
