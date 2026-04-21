@@ -72,7 +72,6 @@ const projectCards = [
 
 const beyondLines = [
   'I have an identical twin brother.',
-  'Happily married and a proud dad to two amazing, curly-haired daughters.',
 ]
 
 const GMAIL_COMPOSE_URL =
@@ -931,6 +930,10 @@ function App() {
             {beyondLines.map((line) => (
               <p key={line}>{line}</p>
             ))}
+            <p>
+              <TooltipWord label="Happily married">Happily married</TooltipWord>{' '}
+              and a proud dad to two amazing, curly-haired daughters.
+            </p>
             <p>
               <TooltipWord imageSrc={tooltipNela}>Nela</TooltipWord>{' '}
               is a great addition to any
