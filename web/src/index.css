@@ -402,27 +402,14 @@ body {
   object-fit: cover;
   object-position: center;
   pointer-events: none;
-}
-
-.case-thumb__graptap-illustration {
-  position: absolute;
-  bottom: 0;
-  right: -61px;
-  top: auto;
-  left: auto;
-  z-index: 1;
-  width: auto;
-  height: auto;
-  max-width: min(260px, 72%);
-  max-height: min(420px, 118%);
-  object-fit: contain;
-  object-position: bottom right;
-  pointer-events: none;
+  transform: scale(1);
+  transform-origin: center center;
+  transition: transform 160ms ease-out;
 }
 
 .case-thumb__graptap-mark {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   flex: 1 1 auto;
   align-self: stretch;
   min-height: 0;
@@ -524,14 +511,11 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--graptap .case-thumb__graptap-pattern-bg {
   z-index: 1;
-}
-
-:is(.group:hover, .case-study-item--active) .case-thumb--graptap .case-thumb__graptap-illustration {
-  z-index: 2;
+  transform: scale(1.3);
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--graptap .case-thumb__graptap-mark {
-  z-index: 3;
+  z-index: 2;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--graptap .case-thumb__tag {
@@ -1455,44 +1439,45 @@ body {
   }
 }
 
-@media (hover: none), (pointer: coarse), (max-width: 968px) {
-  .case-thumb,
-  .case-thumb__surface,
-  .case-thumb__tag,
-  .case-thumb__logo,
-  .case-thumb__logo--spons-idle,
-  .case-thumb__spons-hover,
-  .case-thumb__logo--spons-hover-logo,
-  .case-thumb__squarefish,
-  .case-thumb__graptap-deco,
-  .case-thumb__graptap-ring,
-  .case-thumb__graptap-ring-svg,
-  .case-thumb__graptap-ring-path,
-  .case-thumb__graptap-glyph-idle,
-  .case-thumb__graptap-glyph-hover,
-  .case-thumb__boss-cog,
-  .case-thumb__boss-cog-img,
-  .case-thumb__boss-ring,
-  .case-thumb__boss-ring-svg,
-  .case-thumb__boss-ring-path,
-  .case-thumb__boss-sparkle,
-  .case-thumb__boss-sparkle-path,
-  .case-thumb__campaign-brief-vector,
-  .case-thumb__campaign-brief-ring,
-  .case-thumb__campaign-brief-ring-svg,
-  .case-thumb__campaign-brief-ring-path,
-  .case-thumb__campaign-brief-icon,
-  .case-thumb__design-sprints-stack,
-  .case-thumb__design-sprints-circles,
-  .case-thumb__design-sprints .sprint-fill-r1,
-  .case-thumb__design-sprints .sprint-fill-r2,
-  .case-thumb__design-sprints .sprint-fill-r3,
-  .case-thumb__design-sprints .sprint-fill-r4,
-  .case-thumb__design-sprints .sprint-fill-k-main,
-  .case-thumb__design-sprints .sprint-fill-accent-soft,
-  .case-thumb__design-sprints .sprint-fill-outline,
-  .case-thumb__design-sprints .sprint-fill-accent,
-  .case-thumb__design-sprints .sprint-fill-detail {
+@media (hover: none) {
+  .case-study-item .case-thumb,
+  .case-study-item .case-thumb__surface,
+  .case-study-item .case-thumb__tag,
+  .case-study-item .case-thumb__logo,
+  .case-study-item .case-thumb__logo--spons-idle,
+  .case-study-item .case-thumb__spons-hover,
+  .case-study-item .case-thumb__logo--spons-hover-logo,
+  .case-study-item .case-thumb__squarefish,
+  .case-study-item .case-thumb__graptap-deco,
+  .case-study-item .case-thumb__graptap-pattern-bg,
+  .case-study-item .case-thumb__graptap-ring,
+  .case-study-item .case-thumb__graptap-ring-svg,
+  .case-study-item .case-thumb__graptap-ring-path,
+  .case-study-item .case-thumb__graptap-glyph-idle,
+  .case-study-item .case-thumb__graptap-glyph-hover,
+  .case-study-item .case-thumb__boss-cog,
+  .case-study-item .case-thumb__boss-cog-img,
+  .case-study-item .case-thumb__boss-ring,
+  .case-study-item .case-thumb__boss-ring-svg,
+  .case-study-item .case-thumb__boss-ring-path,
+  .case-study-item .case-thumb__boss-sparkle,
+  .case-study-item .case-thumb__boss-sparkle-path,
+  .case-study-item .case-thumb__campaign-brief-vector,
+  .case-study-item .case-thumb__campaign-brief-ring,
+  .case-study-item .case-thumb__campaign-brief-ring-svg,
+  .case-study-item .case-thumb__campaign-brief-ring-path,
+  .case-study-item .case-thumb__campaign-brief-icon,
+  .case-study-item .case-thumb__design-sprints-stack,
+  .case-study-item .case-thumb__design-sprints-circles,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-r1,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-r2,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-r3,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-r4,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-k-main,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-accent-soft,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-outline,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-accent,
+  .case-study-item .case-thumb__design-sprints .sprint-fill-detail {
     transition-duration: 300ms !important;
   }
 }

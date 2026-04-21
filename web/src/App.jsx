@@ -14,6 +14,7 @@ import tooltipAskkatzy from './assets/type_Askkatzy.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
 import tooltipPacman from './assets/type_pac-man.png'
 import tooltipNela from './assets/type_Nela.png'
+import tooltipHappilyMarried from './assets/happily-married.png'
 import linkedInIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
@@ -383,7 +384,7 @@ function RedPopupModal({ open, onClose }) {
   )
 }
 
-function TooltipWord({ children, imageSrc, label }) {
+function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
   const tooltipId = useId()
   const anchorRef = useRef(null)
   const bubbleRef = useRef(null)
@@ -507,7 +508,16 @@ function TooltipWord({ children, imageSrc, label }) {
         {label ? (
           <span className="beyond-tooltip-label">{label}</span>
         ) : (
-          <img src={imageSrc} alt="" className="beyond-tooltip-image" />
+          <img
+            src={imageSrc}
+            alt=""
+            className="beyond-tooltip-image"
+            style={
+              imageMaxWidth
+                ? { maxWidth: `min(${imageMaxWidth}px, calc(100vw - 24px))` }
+                : undefined
+            }
+          />
         )}
       </span>
     </span>
@@ -706,11 +716,6 @@ function App() {
             <>
               <div className="case-thumb__graptap-deco" aria-hidden="true">
                 <img src={graptapBg} alt="" className="case-thumb__graptap-pattern-bg" />
-                <img
-                  src="/graptap-hover-illustration.png"
-                  alt=""
-                  className="case-thumb__graptap-illustration"
-                />
               </div>
               <div className="case-thumb__graptap-mark">
                 <div className="case-thumb__graptap-ring">
@@ -931,7 +936,9 @@ function App() {
               <p key={line}>{line}</p>
             ))}
             <p>
-              <TooltipWord label="Happily married">Happily married</TooltipWord>{' '}
+              <TooltipWord imageSrc={tooltipHappilyMarried} imageMaxWidth={360}>
+                Happily married
+              </TooltipWord>{' '}
               and a proud dad to two amazing, curly-haired daughters.
             </p>
             <p>
