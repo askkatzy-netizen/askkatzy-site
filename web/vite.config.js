@@ -3,12 +3,13 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react(), tailwindcss()],
+  base: mode === 'production' ? '/askkatzy-site/' : '/',
   server: {
     port: 5191,
   },
   preview: {
     port: 5191,
   },
-})
+}))
