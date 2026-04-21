@@ -1455,6 +1455,48 @@ body {
   }
 }
 
+@media (hover: none) {
+  .case-thumb,
+  .case-thumb__surface,
+  .case-thumb__tag,
+  .case-thumb__logo,
+  .case-thumb__logo--spons-idle,
+  .case-thumb__spons-hover,
+  .case-thumb__logo--spons-hover-logo,
+  .case-thumb__squarefish,
+  .case-thumb__graptap-deco,
+  .case-thumb__graptap-ring,
+  .case-thumb__graptap-ring-svg,
+  .case-thumb__graptap-ring-path,
+  .case-thumb__graptap-glyph-idle,
+  .case-thumb__graptap-glyph-hover,
+  .case-thumb__boss-cog,
+  .case-thumb__boss-cog-img,
+  .case-thumb__boss-ring,
+  .case-thumb__boss-ring-svg,
+  .case-thumb__boss-ring-path,
+  .case-thumb__boss-sparkle,
+  .case-thumb__boss-sparkle-path,
+  .case-thumb__campaign-brief-vector,
+  .case-thumb__campaign-brief-ring,
+  .case-thumb__campaign-brief-ring-svg,
+  .case-thumb__campaign-brief-ring-path,
+  .case-thumb__campaign-brief-icon,
+  .case-thumb__design-sprints-stack,
+  .case-thumb__design-sprints-circles,
+  .case-thumb__design-sprints .sprint-fill-r1,
+  .case-thumb__design-sprints .sprint-fill-r2,
+  .case-thumb__design-sprints .sprint-fill-r3,
+  .case-thumb__design-sprints .sprint-fill-r4,
+  .case-thumb__design-sprints .sprint-fill-k-main,
+  .case-thumb__design-sprints .sprint-fill-accent-soft,
+  .case-thumb__design-sprints .sprint-fill-outline,
+  .case-thumb__design-sprints .sprint-fill-accent,
+  .case-thumb__design-sprints .sprint-fill-detail {
+    transition-duration: 300ms !important;
+  }
+}
+
 @media (max-width: 700px) {
   .header-cta-hide-under-700 {
     display: none;

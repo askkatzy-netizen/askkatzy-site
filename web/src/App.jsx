@@ -446,7 +446,8 @@ function TooltipWord({ children, imageSrc, label }) {
           window.dispatchEvent(
             new CustomEvent('beyond-tooltip-open', { detail: { id: tooltipId } }),
           )
-          requestAnimationFrame(updatePosition)
+          // Wait for mobile-open styles to render before measuring/clamping.
+          requestAnimationFrame(() => requestAnimationFrame(updatePosition))
         } else {
           setShiftX(0)
           setPlacement('top')
@@ -461,12 +462,22 @@ function TooltipWord({ children, imageSrc, label }) {
     if (!isOpen || canHover()) return undefined
 
     const closeOnDocumentClick = () => resetTooltip()
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') resetTooltip()
+    }
+    const updateOnViewportChange = () => requestAnimationFrame(updatePosition)
 
     document.addEventListener('click', closeOnDocumentClick)
+    document.addEventListener('keydown', closeOnEscape)
+    window.addEventListener('resize', updateOnViewportChange)
+    window.addEventListener('scroll', updateOnViewportChange, { passive: true })
     return () => {
       document.removeEventListener('click', closeOnDocumentClick)
+      document.removeEventListener('keydown', closeOnEscape)
+      window.removeEventListener('resize', updateOnViewportChange)
+      window.removeEventListener('scroll', updateOnViewportChange)
     }
-  }, [canHover, isOpen, resetTooltip])
+  }, [canHover, isOpen, resetTooltip, updatePosition])
 
   useEffect(() => {
     const closeIfAnotherTooltipOpened = (event) => {
