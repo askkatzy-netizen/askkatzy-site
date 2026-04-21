@@ -385,9 +385,11 @@ function RedPopupModal({ open, onClose }) {
 }
 
 function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
+  const TOOLTIP_OPEN_DELAY_MS = 240
   const tooltipId = useId()
   const anchorRef = useRef(null)
   const bubbleRef = useRef(null)
+  const openTimerRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
   const [shiftX, setShiftX] = useState(0)
   const [placement, setPlacement] = useState('top')
@@ -395,6 +397,11 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
   const canHover = useCallback(() => {
     if (typeof window === 'undefined') return true
     return window.matchMedia('(hover: hover)').matches
+  }, [])
+
+  const shouldUseTapToggle = useCallback(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(hover: none), (pointer: coarse)').matches
   }, [])
 
   const updatePosition = useCallback(() => {
@@ -418,19 +425,31 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
   }, [])
 
   const openTooltip = useCallback(() => {
-    if (!canHover()) return
-    setIsOpen(true)
-    requestAnimationFrame(updatePosition)
-  }, [canHover, updatePosition])
+    if (!canHover() || shouldUseTapToggle()) return
+    if (openTimerRef.current) window.clearTimeout(openTimerRef.current)
+    openTimerRef.current = window.setTimeout(() => {
+      setIsOpen(true)
+      requestAnimationFrame(updatePosition)
+      openTimerRef.current = null
+    }, TOOLTIP_OPEN_DELAY_MS)
+  }, [canHover, shouldUseTapToggle, updatePosition])
 
   const closeTooltip = useCallback(() => {
-    if (!canHover()) return
+    if (!canHover() || shouldUseTapToggle()) return
+    if (openTimerRef.current) {
+      window.clearTimeout(openTimerRef.current)
+      openTimerRef.current = null
+    }
     setIsOpen(false)
     setShiftX(0)
     setPlacement('top')
-  }, [canHover])
+  }, [canHover, shouldUseTapToggle])
 
   const resetTooltip = useCallback(() => {
+    if (openTimerRef.current) {
+      window.clearTimeout(openTimerRef.current)
+      openTimerRef.current = null
+    }
     setIsOpen(false)
     setShiftX(0)
     setPlacement('top')
@@ -438,7 +457,7 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
 
   const toggleTooltipOnMobile = useCallback(
     (event) => {
-      if (canHover()) return
+      if (!shouldUseTapToggle()) return
       event.preventDefault()
       event.stopPropagation()
       setIsOpen((prev) => {
@@ -449,34 +468,39 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
           )
           // Wait for mobile-open styles to render before measuring/clamping.
           requestAnimationFrame(() => requestAnimationFrame(updatePosition))
-        } else {
-          setShiftX(0)
-          setPlacement('top')
         }
         return next
       })
     },
-    [canHover, tooltipId, updatePosition],
+    [shouldUseTapToggle, tooltipId, updatePosition],
   )
 
   useEffect(() => {
     if (!isOpen || canHover()) return undefined
 
-    const closeOnDocumentClick = () => resetTooltip()
+    const closeOnPointerDown = (event) => {
+      if (anchorRef.current?.contains(event.target)) return
+      resetTooltip()
+    }
     const closeOnEscape = (event) => {
       if (event.key === 'Escape') resetTooltip()
     }
     const updateOnViewportChange = () => requestAnimationFrame(updatePosition)
+    const updateOnVisualViewportChange = () => requestAnimationFrame(updatePosition)
 
-    document.addEventListener('click', closeOnDocumentClick)
+    document.addEventListener('pointerdown', closeOnPointerDown, true)
     document.addEventListener('keydown', closeOnEscape)
     window.addEventListener('resize', updateOnViewportChange)
     window.addEventListener('scroll', updateOnViewportChange, { passive: true })
+    window.visualViewport?.addEventListener('resize', updateOnVisualViewportChange)
+    window.visualViewport?.addEventListener('scroll', updateOnVisualViewportChange)
     return () => {
-      document.removeEventListener('click', closeOnDocumentClick)
+      document.removeEventListener('pointerdown', closeOnPointerDown, true)
       document.removeEventListener('keydown', closeOnEscape)
       window.removeEventListener('resize', updateOnViewportChange)
       window.removeEventListener('scroll', updateOnViewportChange)
+      window.visualViewport?.removeEventListener('resize', updateOnVisualViewportChange)
+      window.visualViewport?.removeEventListener('scroll', updateOnVisualViewportChange)
     }
   }, [canHover, isOpen, resetTooltip, updatePosition])
 
@@ -491,6 +515,13 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
     }
   }, [resetTooltip, tooltipId])
 
+  useEffect(
+    () => () => {
+      if (openTimerRef.current) window.clearTimeout(openTimerRef.current)
+    },
+    [],
+  )
+
   return (
     <span
       ref={anchorRef}
@@ -502,7 +533,7 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
       onMouseLeave={closeTooltip}
       onFocus={openTooltip}
       onBlur={closeTooltip}
-      onClick={toggleTooltipOnMobile}
+      onPointerUp={toggleTooltipOnMobile}
     >
       {children}
       <span ref={bubbleRef} className="beyond-tooltip-bubble" aria-hidden="true">
@@ -531,7 +562,7 @@ function App() {
   const redCards = projectCards.filter((project) => project.section === 'red')
   const [isRedModalOpen, setIsRedModalOpen] = useState(false)
   const [supportsHover, setSupportsHover] = useState(true)
-  const [activeCaseIndex, setActiveCaseIndex] = useState(0)
+  const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const caseItemRefs = useRef([])
 
   useEffect(() => {
@@ -566,7 +597,27 @@ function App() {
         }
       })
 
-      if (closestIndex >= 0) setActiveCaseIndex(closestIndex)
+      if (closestIndex < 0) return
+
+      const closestElement = caseItemRefs.current[closestIndex]
+      if (!closestElement) return
+
+      const closestTop = closestElement.getBoundingClientRect().top
+      const sameRowIndexes = []
+
+      caseItemRefs.current.forEach((element, index) => {
+        if (!element) return
+        const rowDistance = Math.abs(element.getBoundingClientRect().top - closestTop)
+        if (rowDistance < 2) sameRowIndexes.push(index)
+      })
+
+      setActiveCaseIndexes((prev) => {
+        const sortedNext = [...sameRowIndexes].sort((a, b) => a - b)
+        const isSame =
+          prev.length === sortedNext.length &&
+          prev.every((value, idx) => value === sortedNext[idx])
+        return isSame ? prev : sortedNext
+      })
     }
 
     const queueUpdate = () => {
@@ -592,7 +643,7 @@ function App() {
         caseItemRefs.current[index] = el
       }}
       className={`case-study-item fade-up group ${
-        !supportsHover && activeCaseIndex === index ? 'case-study-item--active' : ''
+        !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
       }`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
     >
@@ -769,7 +820,7 @@ function App() {
       </div>
       <p
         className={`mt-2 ml-[40px] text-black/40 transition-colors duration-[160ms] ease-out group-hover:text-black/90 ${
-          !supportsHover && activeCaseIndex === index ? 'text-black/90' : ''
+          !supportsHover && activeCaseIndexes.includes(index) ? 'text-black/90' : ''
         }`}
       >
         <span className="font-roboto-slab text-[16px] font-semibold leading-none">{project.title}</span>
@@ -857,20 +908,20 @@ function App() {
               </button>
               {', combining pixel-perfect design with team leadership experience.'}
             </p>
-            <p className="mb-4 text-[14px] leading-[1.4] text-black/70">
+            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
               {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
             </p>
-            <p className="mb-4 text-[14px] leading-[1.4] text-black/70">
+            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
               {'I led design and operations at '}
               <strong className="font-semibold text-black/70">RED</strong>
               {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
               <strong className="font-semibold text-black/70">StreamElements</strong>
               {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
             </p>
-            <p className="mb-4 text-[14px] leading-[1.4] text-black/70">
+            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
               {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
             </p>
-            <p className="text-[14px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
+            <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
 
             <button className="header-cta--case-studies header-cta--ghost mt-8">
               <svg
@@ -927,7 +978,7 @@ function App() {
         <div className="separator-line" />
 
         <section
-          className="px-3 py-8 text-center fade-up"
+          className="beyond-pixels-section px-3 py-8 text-center fade-up"
           style={{ animationDelay: '420ms' }}
         >
           <h2 className="font-roboto-slab mb-7 text-[36px] font-semibold leading-[1.05] tracking-[-0.01em] text-black/90">
