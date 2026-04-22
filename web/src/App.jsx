@@ -25,6 +25,8 @@ import rocketSvg from './assets/rocket.svg'
 import wowShapeSvg from './assets/wow-shape.svg'
 import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
+import chevronDownIcon from './assets/chevron-down.svg'
+import chevronUpIcon from './assets/chevron-up.svg'
 
 const projectCards = [
   {
@@ -638,6 +640,10 @@ function App() {
   const redCards = projectCards.filter((project) => project.section === 'red')
   const [isRedModalOpen, setIsRedModalOpen] = useState(false)
   const [supportsHover, setSupportsHover] = useState(true)
+  const [isIntroExpanded, setIsIntroExpanded] = useState(false)
+  const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
+  const [isMobileLayout, setIsMobileLayout] = useState(false)
+  const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const caseItemRefs = useRef([])
 
@@ -650,6 +656,25 @@ function App() {
     updateSupportsHover()
     mediaQuery.addEventListener('change', updateSupportsHover)
     return () => mediaQuery.removeEventListener('change', updateSupportsHover)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+
+    const introTopQuery = window.matchMedia('(max-width: 968px)')
+    const mobileQuery = window.matchMedia('(max-width: 700px)')
+    const updateLayoutModes = () => {
+      setIsIntroTopLayout(introTopQuery.matches)
+      setIsMobileLayout(mobileQuery.matches)
+    }
+
+    updateLayoutModes()
+    introTopQuery.addEventListener('change', updateLayoutModes)
+    mobileQuery.addEventListener('change', updateLayoutModes)
+    return () => {
+      introTopQuery.removeEventListener('change', updateLayoutModes)
+      mobileQuery.removeEventListener('change', updateLayoutModes)
+    }
   }, [])
 
   useEffect(() => {
@@ -984,48 +1009,147 @@ function App() {
               </button>
               {', combining pixel-perfect design with team leadership experience.'}
             </p>
-            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-              {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
-            </p>
-            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-              {'I led design and operations at '}
-              <strong className="font-semibold text-black/70">RED</strong>
-              {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
-              <strong className="font-semibold text-black/70">StreamElements</strong>
-              {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
-            </p>
-            <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-              {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
-            </p>
-            <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
+            {!isIntroTopLayout ? (
+              <>
+                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                  {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
+                </p>
+                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                  {'I led design and operations at '}
+                  <strong className="font-semibold text-black/70">RED</strong>
+                  {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
+                  <strong className="font-semibold text-black/70">StreamElements</strong>
+                  {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
+                </p>
+                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                  {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
+                </p>
+                <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
 
-            <button className="header-cta--case-studies header-cta--ghost mt-8">
-              <svg
-                className="header-cta__icon"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <span>See full Bio</span>
-            </button>
+                <button className="header-cta--case-studies header-cta--ghost mt-8">
+                  <svg
+                    className="header-cta__icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>See full Bio</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <div
+                  className={`intro-more-panel ${isIntroExpanded ? 'intro-more-panel--open' : ''}`}
+                  style={{
+                    maxHeight: isIntroExpanded ? `${introMoreContentRef.current?.scrollHeight ?? 0}px` : '0px',
+                  }}
+                  aria-hidden={!isIntroExpanded}
+                >
+                  <div ref={introMoreContentRef} className="intro-more-panel__content">
+                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                      {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
+                    </p>
+                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                      {'I led design and operations at '}
+                      <strong className="font-semibold text-black/70">RED</strong>
+                      {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
+                      <strong className="font-semibold text-black/70">StreamElements</strong>
+                      {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
+                    </p>
+                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                      {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
+                    </p>
+                    <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
+                  </div>
+                </div>
+
+                {!isIntroExpanded && (
+                  <div>
+                    <button
+                      type="button"
+                      className="intro-see-more"
+                      onClick={() => setIsIntroExpanded((prev) => !prev)}
+                      aria-expanded={isIntroExpanded}
+                    >
+                      <span>See more</span>
+                      <img
+                        src={chevronDownIcon}
+                        alt=""
+                        aria-hidden="true"
+                        className="intro-see-more__chevron"
+                      />
+                    </button>
+                  </div>
+                )}
+
+                {isIntroExpanded && (
+                  <>
+                    <button className="header-cta--case-studies header-cta--ghost intro-full-bio-cta mt-4">
+                      <svg
+                        className="header-cta__icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <span>See full Bio</span>
+                    </button>
+
+                    <div className="mt-7">
+                      <button
+                        type="button"
+                        className="intro-see-more"
+                        onClick={() => setIsIntroExpanded((prev) => !prev)}
+                        aria-expanded={isIntroExpanded}
+                      >
+                        <span>Less</span>
+                        <img
+                          src={chevronUpIcon}
+                          alt=""
+                          aria-hidden="true"
+                          className="intro-see-more__chevron"
+                        />
+                      </button>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
           </div>
 
           <div className="case-studies-content">
