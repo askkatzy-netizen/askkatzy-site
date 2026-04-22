@@ -643,6 +643,7 @@ function App() {
   const [isIntroExpanded, setIsIntroExpanded] = useState(false)
   const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
   const [isMobileLayout, setIsMobileLayout] = useState(false)
+  const [introMoreContentHeight, setIntroMoreContentHeight] = useState(0)
   const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const caseItemRefs = useRef([])
@@ -736,6 +737,28 @@ function App() {
       if (frameId) window.cancelAnimationFrame(frameId)
     }
   }, [supportsHover])
+
+  useEffect(() => {
+    if (!isIntroTopLayout) return undefined
+
+    const updateIntroMoreHeight = () => {
+      if (!introMoreContentRef.current) return
+      setIntroMoreContentHeight(introMoreContentRef.current.scrollHeight)
+    }
+
+    updateIntroMoreHeight()
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => updateIntroMoreHeight())
+        : null
+    if (introMoreContentRef.current) resizeObserver?.observe(introMoreContentRef.current)
+    window.addEventListener('resize', updateIntroMoreHeight)
+
+    return () => {
+      window.removeEventListener('resize', updateIntroMoreHeight)
+      resizeObserver?.disconnect()
+    }
+  }, [isIntroTopLayout, isIntroExpanded])
 
   const renderCaseStudyCard = (project, index) => (
     <article
@@ -1059,7 +1082,7 @@ function App() {
                 <div
                   className={`intro-more-panel ${isIntroExpanded ? 'intro-more-panel--open' : ''}`}
                   style={{
-                    maxHeight: isIntroExpanded ? `${introMoreContentRef.current?.scrollHeight ?? 0}px` : '0px',
+                    maxHeight: isIntroExpanded ? `${introMoreContentHeight}px` : '0px',
                   }}
                   aria-hidden={!isIntroExpanded}
                 >
@@ -1102,7 +1125,11 @@ function App() {
 
                 {isIntroExpanded && (
                   <>
-                    <button className="header-cta--case-studies header-cta--ghost intro-full-bio-cta mt-4">
+                    <button
+                      className={`header-cta--case-studies header-cta--ghost intro-full-bio-cta ${
+                        isIntroTopLayout ? 'mt-7' : 'mt-4'
+                      }`}
+                    >
                       <svg
                         className="header-cta__icon"
                         width="16"
