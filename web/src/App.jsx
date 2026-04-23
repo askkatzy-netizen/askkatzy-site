@@ -142,6 +142,11 @@ const redStats = [
   { value: 'Millions', label: 'impacted users' },
 ]
 
+const sponsorshipStats = [
+  { value: '+ 20%', label: 'Campaign starts' },
+  { value: '- 95%', label: 'UX related support tickets' },
+]
+
 function CaseStudyFooter({ variant = 'home' }) {
   const isCaseStudy = variant === 'case-study'
 
@@ -371,6 +376,124 @@ function BossAiCaseStudyPage({ onBack }) {
         </div>
       </div>
     </main>
+  )
+}
+
+function SponsorshipsCaseStudyPage({ onBack }) {
+  return (
+    <main className="min-h-screen bg-[#2700FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="flex min-w-0 flex-col gap-10">
+              <div className="flex flex-col gap-4">
+                <p className="font-roboto-slab max-w-[504px] text-[48px] leading-[1.15] font-semibold text-black/90">
+                  Creators Sponsorships
+                </p>
+                <p className="text-[16px] leading-[1.4] font-medium text-black/50">StreamElements, 2025</p>
+              </div>
+
+              <SponsorshipStatsRow />
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                The <strong className="font-bold text-black/70">StreamElements</strong> Sponsorship program is
+                built on a ‘creators first’ approach - our tools are free, and we only earn when our
+                creators do. The program bridges the gap between brands and creators looking for a
+                reliable way to earn from their streams.
+              </p>
+              <p>
+                As the team’s design lead, my focus is on translating that partnership into an interface
+                that actually respects a creator&apos;s time and effort.
+              </p>
+              <div>
+                <p>We designed the experience to quickly and clearly answer three main questions for every creator:</p>
+                <ul className="mt-4 list-disc pl-7 text-[16px]">
+                  <li className="font-semibold text-black/80">Is there a brand fit for my community?</li>
+                  <li className="font-semibold text-black/80">What exactly do I need to do?</li>
+                  <li className="font-semibold text-black/80">How much will I be paid?</li>
+                </ul>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Clarity', 'Ease', 'Simplicity', 'Flexibility'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#D3CCF8] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Internal, based on Material ui', 'Material design icons'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#D3CCF8] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+          <div className="rounded-[20px] border border-dashed border-black/20 bg-black/[0.03] p-6 text-center">
+            <p className="font-roboto-slab text-[28px] leading-[1.2] font-semibold text-black/80">
+              Sponsorships content placeholder
+            </p>
+            <p className="mt-3 text-[16px] leading-[1.4] text-black/60">
+              TODO: Add the full Sponsorships case study content section.
+            </p>
+          </div>
+        </section>
+
+        <div className="mt-8">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function SponsorshipStatsRow() {
+  const [firstStat, secondStat] = sponsorshipStats
+
+  return (
+    <div className="flex flex-wrap items-start gap-y-3">
+      <div className="shrink-0 pr-3 text-left">
+        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">{firstStat.value}</p>
+        <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{firstStat.label}</p>
+      </div>
+
+      <span aria-hidden="true" className="h-[66px] self-center border-l border-black/15" />
+
+      <div className="shrink-0 pl-3 text-left">
+        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">{secondStat.value}</p>
+        <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{secondStat.label}</p>
+      </div>
+    </div>
   )
 }
 
@@ -1023,6 +1146,8 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
+  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons'])
+
   const renderCaseStudyCard = (project, index) => (
     <article
       key={project.key}
@@ -1031,11 +1156,11 @@ function App() {
       }}
       className={`case-study-item fade-up group ${
         !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
-      } ${project.key === 'boss-ai' ? 'case-study-item--clickable' : ''}`}
+      } ${interactiveCaseStudyKeys.has(project.key) ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
-      onClick={project.key === 'boss-ai' ? () => openCaseStudy(project.key) : undefined}
+      onClick={interactiveCaseStudyKeys.has(project.key) ? () => openCaseStudy(project.key) : undefined}
       onKeyDown={
-        project.key === 'boss-ai'
+        interactiveCaseStudyKeys.has(project.key)
           ? (event) => {
               if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault()
@@ -1044,9 +1169,15 @@ function App() {
             }
           : undefined
       }
-      role={project.key === 'boss-ai' ? 'button' : undefined}
-      tabIndex={project.key === 'boss-ai' ? 0 : undefined}
-      aria-label={project.key === 'boss-ai' ? 'Open BOSS.AI case study page' : undefined}
+      role={interactiveCaseStudyKeys.has(project.key) ? 'button' : undefined}
+      tabIndex={interactiveCaseStudyKeys.has(project.key) ? 0 : undefined}
+      aria-label={
+        project.key === 'boss-ai'
+          ? 'Open BOSS.AI case study page'
+          : project.key === 'creators-spons'
+            ? 'Open Sponsorships case study page'
+            : undefined
+      }
     >
       <div
         className={`case-thumb ${
@@ -1232,6 +1363,17 @@ function App() {
   if (activeCaseStudy === 'boss-ai') {
     return (
       <BossAiCaseStudyPage
+        onBack={() => {
+          setActiveCaseStudy(null)
+          window.scrollTo({ top: 0, behavior: 'auto' })
+        }}
+      />
+    )
+  }
+
+  if (activeCaseStudy === 'creators-spons') {
+    return (
+      <SponsorshipsCaseStudyPage
         onBack={() => {
           setActiveCaseStudy(null)
           window.scrollTo({ top: 0, behavior: 'auto' })
