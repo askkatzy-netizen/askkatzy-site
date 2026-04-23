@@ -322,7 +322,7 @@ function RedPopupModal({ open, onClose }) {
             onMouseLeave={handleHeadMouseLeave}
           >
             <div className="relative">
-              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">REDRED</p>
+              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">RED</p>
               <RedStatsRow />
               <div
                 className="red-popup__shape-layer pointer-events-none absolute -left-[314px] top-[501px] flex h-[674px] w-[680px] items-center justify-center transition-transform duration-150 ease-out max-[892px]:hidden"
@@ -1203,12 +1203,7 @@ function App() {
             {beyondLines.map((line) => (
               <p key={line}>{line}</p>
             ))}
-            <p>
-              <TooltipWord imageSrc={tooltipHappilyMarried} imageMaxWidth={360}>
-                Happily married
-              </TooltipWord>{' '}
-              and a proud dad to two amazing, curly-haired daughters.
-            </p>
+            <p>Happily married and a proud dad to two amazing, curly-haired daughters.</p>
             <p>
               <TooltipWord imageSrc={tooltipNela}>Nela</TooltipWord>{' '}
               is a great addition to any
