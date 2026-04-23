@@ -27,6 +27,35 @@ import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
 import chevronDownIcon from './assets/chevron-down.svg'
 import chevronUpIcon from './assets/chevron-up.svg'
+import arrowLeftIcon from './assets/arrow-left.svg'
+import boss01Image from './assets/boss-01.png'
+import boss02Image from './assets/boss-02.png'
+import boss03Image from './assets/boss-03.png'
+import boss04Image from './assets/boss-04.png'
+import boss05Image from './assets/boss-05.png'
+
+const bossCaseSections = [
+  {
+    key: 'boss-01',
+    title: 'A first time friendly start',
+    images: [boss01Image],
+  },
+  {
+    key: 'boss-02',
+    title: 'Give AI context and let it work for you',
+    images: [boss02Image, boss03Image],
+  },
+  {
+    key: 'boss-03',
+    title: 'Minimal campaign setup',
+    images: [boss04Image],
+  },
+  {
+    key: 'boss-04',
+    title: 'Automated creator groups, curated for outreach',
+    images: [boss05Image],
+  },
+]
 
 const projectCards = [
   {
@@ -103,6 +132,144 @@ const redStats = [
   { value: '500+', label: 'projects delivered' },
   { value: 'Millions', label: 'impacted users' },
 ]
+
+function CaseStudyFooter() {
+  return (
+    <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-0 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
+      <p className="text-[14px] text-white/90 font-semibold italic">🌻 Let’s do nice things together...</p>
+      <a
+        href={GMAIL_COMPOSE_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="boss-back-cta header-cta--case-studies"
+      >
+        <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+        <span>askkatzy@gmail.com</span>
+      </a>
+    </footer>
+  )
+}
+
+function BossAiCaseStudyPage({ onBack }) {
+  return (
+    <main className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_504px]">
+            <div className="flex min-w-0 flex-col gap-4">
+              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">BOSS.AI</p>
+              <p className="text-[16px] leading-[1.4] font-medium text-black/50">StreamElements, Work in progress</p>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                <strong className="font-bold text-black/70">BOSS</strong>
+                {' is a robust engine that manages creator campaigns at scale. Originally built for internal personnel, it required specialized training to navigate. '}
+              </p>
+              <p>
+                We are currently transforming BOSS into an intuitive, self-service, AI-powered platform.
+                By simplifying complex configurations and stripping away non-essential features, the system
+                now leverages AI to identify target audiences, automate creator outreach, streamline
+                content approvals, and provide data-backed performance predictions.
+              </p>
+              <p>
+                As this project is in active development, details are limited - stay tuned for the full
+                release.
+              </p>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Robust', 'Flexible', 'Smart'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#b3ecde] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
+                <div className="flex flex-wrap gap-2">
+                  {['shadcn/ui', 'Lucide icons'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#b3ecde] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-t-none max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+          <div className="mb-10 flex flex-col items-center gap-4 text-center max-[700px]:mb-6">
+            <p className="text-[14px] leading-[1.4] font-medium text-black/70">A glimpse at the new flow</p>
+            <p className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-black/90">
+              Campaign creation, simplified
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-10 max-[700px]:gap-6">
+            {bossCaseSections.map((section, index) => (
+              <section key={section.key} className="boss-case-content-section">
+                <div className="mb-4 flex flex-col gap-2">
+                  <p className="text-[16px] leading-[1.4] font-medium text-black/90">
+                    {section.title}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  {section.images.map((src, imageIndex) => (
+                    <div
+                      key={`${section.key}-${imageIndex}`}
+                      className={`boss-case-image-shell ${
+                        index === bossCaseSections.length - 1 && imageIndex === section.images.length - 1
+                          ? 'boss-case-image-shell--no-shadow'
+                          : ''
+                      }`}
+                    >
+                      <img
+                        src={src}
+                        alt={`BOSS.AI product flow section ${index + 1}, image ${imageIndex + 1}`}
+                        className="boss-case-image block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+
+          <p className="mt-10 text-center text-[16px] leading-[1.4] text-black/70 max-[700px]:mt-6">
+            Details limited - work in progress.
+          </p>
+        </section>
+
+        <div className="mt-8">
+          <CaseStudyFooter />
+        </div>
+      </div>
+    </main>
+  )
+}
 
 function RedStatsRow() {
   const containerRef = useRef(null)
@@ -626,6 +793,7 @@ function App() {
   const streamElementsCards = projectCards.filter((project) => project.section === 'stream-elements')
   const redCards = projectCards.filter((project) => project.section === 'red')
   const [isRedModalOpen, setIsRedModalOpen] = useState(false)
+  const [activeCaseStudy, setActiveCaseStudy] = useState(null)
   const [supportsHover, setSupportsHover] = useState(true)
   const [isIntroExpanded, setIsIntroExpanded] = useState(false)
   const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
@@ -747,6 +915,11 @@ function App() {
     }
   }, [isIntroTopLayout, isIntroExpanded])
 
+  const openCaseStudy = (projectKey) => {
+    setActiveCaseStudy(projectKey)
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+
   const renderCaseStudyCard = (project, index) => (
     <article
       key={project.key}
@@ -755,8 +928,22 @@ function App() {
       }}
       className={`case-study-item fade-up group ${
         !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
-      }`}
+      } ${project.key === 'boss-ai' ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
+      onClick={project.key === 'boss-ai' ? () => openCaseStudy(project.key) : undefined}
+      onKeyDown={
+        project.key === 'boss-ai'
+          ? (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                openCaseStudy(project.key)
+              }
+            }
+          : undefined
+      }
+      role={project.key === 'boss-ai' ? 'button' : undefined}
+      tabIndex={project.key === 'boss-ai' ? 0 : undefined}
+      aria-label={project.key === 'boss-ai' ? 'Open BOSS.AI case study page' : undefined}
     >
       <div
         className={`case-thumb ${
@@ -938,6 +1125,10 @@ function App() {
       </p>
     </article>
   )
+
+  if (activeCaseStudy === 'boss-ai') {
+    return <BossAiCaseStudyPage onBack={() => setActiveCaseStudy(null)} />
+  }
 
   return (
     <main className="min-h-screen bg-white px-[56px] py-5 text-[#111111] max-[700px]:px-4">
@@ -1237,18 +1428,7 @@ function App() {
 
         <div className="separator-line" />
 
-        <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
-          <p className="text-[14px] text-black/70 font-semibold italic">🌻 Let’s do nice things together...</p>
-          <a
-            href={GMAIL_COMPOSE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="header-cta--case-studies header-cta--ghost"
-          >
-            <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
-            <span>askkatzy@gmail.com</span>
-          </a>
-        </footer>
+        <CaseStudyFooter />
 
         <div className="separator-line" />
 
