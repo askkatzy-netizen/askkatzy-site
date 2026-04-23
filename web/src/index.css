@@ -143,10 +143,18 @@ body {
   transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out;
 }
 
+.case-study-floater--sponsorships .case-study-floater__button {
+  background: #1f00cc;
+}
+
 .case-study-floater__button:focus-visible {
   background: #4cbba5;
   border-color: rgb(255 255 255 / 70%);
   box-shadow: 0 0 0 4px rgb(255 255 255 / 20%);
+}
+
+.case-study-floater--sponsorships .case-study-floater__button:focus-visible {
+  background: #1f00cc;
 }
 
 .case-study-floater__icon-chip {
@@ -194,6 +202,11 @@ body {
     background: #4cbba5;
     border-color: rgb(255 255 255 / 70%);
     box-shadow: 0 0 0 4px rgb(255 255 255 / 20%);
+  }
+
+  .case-study-floater--sponsorships .case-study-floater__button:hover,
+  .case-study-floater--sponsorships.case-study-floater:hover .case-study-floater__button {
+    background: #1f00cc;
   }
 
   .case-study-floater__button:hover .case-study-floater__icon-chip,
