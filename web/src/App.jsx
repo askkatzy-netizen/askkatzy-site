@@ -871,14 +871,19 @@ function SponsorshipCampaignCardSection() {
           <div className="flex w-full max-w-[324px] flex-col items-center gap-2">
             <button
               type="button"
-              className="header-cta--case-studies inline-flex touch-manipulation select-none [-webkit-touch-callout:none] !bg-black/5 hover:!bg-white"
+              className="header-cta--case-studies inline-flex touch-manipulation select-none [-webkit-touch-callout:none] !border-[#2b00ff] !bg-white !px-4 !py-3 !text-black shadow-[0_0_0_4px_rgb(43_0_255_/_20%)]"
               aria-label="Hold to simulate desktop hover"
               onPointerDown={handleHoldPointerDown}
               onPointerUp={handleHoldPointerEnd}
               onPointerCancel={handleHoldPointerEnd}
               onPointerLeave={handleHoldPointerEnd}
             >
-              <img src={pointerSvg} alt="" aria-hidden className="header-cta__icon" />
+              <img
+                src={pointerSvg}
+                alt=""
+                aria-hidden
+                className="header-cta__icon !h-[26px] !w-[26px] !opacity-100"
+              />
               <span>Hold here</span>
             </button>
             <p className="text-center text-[14px] italic leading-[1.4] text-black/90">
