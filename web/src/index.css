@@ -143,8 +143,6 @@ body {
   transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out;
 }
 
-.case-study-floater__button:hover,
-.case-study-floater:hover .case-study-floater__button,
 .case-study-floater__button:focus-visible {
   background: #4cbba5;
   border-color: rgb(255 255 255 / 70%);
@@ -177,23 +175,42 @@ body {
   transition: color 160ms ease-out;
 }
 
-.case-study-floater__button:hover .case-study-floater__icon-chip,
-.case-study-floater:hover .case-study-floater__button .case-study-floater__icon-chip,
 .case-study-floater__button:focus-visible .case-study-floater__icon-chip {
   background: #ffffff;
   opacity: 1;
 }
 
-.case-study-floater__button:hover .case-study-floater__label,
-.case-study-floater:hover .case-study-floater__button .case-study-floater__label,
 .case-study-floater__button:focus-visible .case-study-floater__label {
   color: #ffffff;
 }
 
-.case-study-floater__button:hover .case-study-floater__icon,
-.case-study-floater:hover .case-study-floater__button .case-study-floater__icon,
 .case-study-floater__button:focus-visible .case-study-floater__icon {
   filter: brightness(0) saturate(100%);
+}
+
+@media (hover: hover) {
+  .case-study-floater__button:hover,
+  .case-study-floater:hover .case-study-floater__button {
+    background: #4cbba5;
+    border-color: rgb(255 255 255 / 70%);
+    box-shadow: 0 0 0 4px rgb(255 255 255 / 20%);
+  }
+
+  .case-study-floater__button:hover .case-study-floater__icon-chip,
+  .case-study-floater:hover .case-study-floater__button .case-study-floater__icon-chip {
+    background: #ffffff;
+    opacity: 1;
+  }
+
+  .case-study-floater__button:hover .case-study-floater__label,
+  .case-study-floater:hover .case-study-floater__button .case-study-floater__label {
+    color: #ffffff;
+  }
+
+  .case-study-floater__button:hover .case-study-floater__icon,
+  .case-study-floater:hover .case-study-floater__button .case-study-floater__icon {
+    filter: brightness(0) saturate(100%);
+  }
 }
 
 .case-study-floater--visible {
