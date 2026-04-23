@@ -33,27 +33,36 @@ import boss02Image from './assets/boss-02.png'
 import boss03Image from './assets/boss-03.png'
 import boss04Image from './assets/boss-04.png'
 import boss05Image from './assets/boss-05.png'
+import boss01MobileImage from './assets/boss-01-mobile.png'
+import boss02MobileImage from './assets/boss-02-mobile.png'
+import boss03MobileImage from './assets/boss-03-mobile.png'
+import boss04MobileImage from './assets/boss-04-mobile.png'
+import boss05MobileImage from './assets/boss-05-mobile.png'
 
 const bossCaseSections = [
   {
     key: 'boss-01',
     title: 'A first time friendly start',
     images: [boss01Image],
+    mobileImages: [boss01MobileImage],
   },
   {
     key: 'boss-02',
     title: 'Give AI context and let it work for you',
     images: [boss02Image, boss03Image],
+    mobileImages: [boss02MobileImage, boss03MobileImage],
   },
   {
     key: 'boss-03',
     title: 'Minimal campaign setup',
     images: [boss04Image],
+    mobileImages: [boss04MobileImage],
   },
   {
     key: 'boss-04',
     title: 'Automated creator groups, curated for outreach',
     images: [boss05Image],
+    mobileImages: [boss05MobileImage],
   },
 ]
 
@@ -245,12 +254,18 @@ function BossAiCaseStudyPage({ onBack }) {
                           : ''
                       }`}
                     >
-                      <img
-                        src={src}
-                        alt={`BOSS.AI product flow section ${index + 1}, image ${imageIndex + 1}`}
-                        className="boss-case-image block h-auto w-full"
-                        loading="lazy"
-                      />
+                      <picture>
+                        <source
+                          media="(max-width: 700px)"
+                          srcSet={section.mobileImages?.[imageIndex] ?? src}
+                        />
+                        <img
+                          src={src}
+                          alt={`BOSS.AI product flow section ${index + 1}, image ${imageIndex + 1}`}
+                          className="boss-case-image block h-auto w-full"
+                          loading="lazy"
+                        />
+                      </picture>
                     </div>
                   ))}
                 </div>
