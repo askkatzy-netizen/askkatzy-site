@@ -871,7 +871,7 @@ function SponsorshipCampaignCardSection() {
           <div className="flex w-full max-w-[324px] flex-col items-center gap-2">
             <button
               type="button"
-              className="header-cta--case-studies inline-flex touch-manipulation !bg-black/5 hover:!bg-white"
+              className="header-cta--case-studies inline-flex touch-manipulation select-none [-webkit-touch-callout:none] !bg-black/5 hover:!bg-white"
               aria-label="Hold to simulate desktop hover"
               onPointerDown={handleHoldPointerDown}
               onPointerUp={handleHoldPointerEnd}
