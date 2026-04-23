@@ -22,6 +22,7 @@ import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
 import rocketSvg from './assets/rocket.svg'
+import pointerSvg from './assets/pointer.svg'
 import wowShapeSvg from './assets/wow-shape.svg'
 import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
@@ -717,17 +718,15 @@ function SponsorshipCampaignCardSection() {
     return undefined
   }, [hovered])
 
-  const handlePointerEnter = () => {
+  const handleCardPointerEnter = () => {
     if (!isMobile) setHovered(true)
   }
 
-  const handlePointerLeave = () => {
-    clearHoldTimer()
-    setHovered(false)
+  const handleCardPointerLeave = () => {
+    if (!isMobile) setHovered(false)
   }
 
-  const handlePointerDown = () => {
-    if (!isMobile) return
+  const handleHoldPointerDown = () => {
     clearHoldTimer()
     holdTimerRef.current = window.setTimeout(() => {
       holdTimerRef.current = null
@@ -735,8 +734,7 @@ function SponsorshipCampaignCardSection() {
     }, 220)
   }
 
-  const handlePointerUp = () => {
-    if (!isMobile) return
+  const handleHoldPointerEnd = () => {
     clearHoldTimer()
     setHovered(false)
   }
@@ -756,11 +754,8 @@ function SponsorshipCampaignCardSection() {
                 ? 'bg-[#232428] shadow-[0_8px_16px_0_rgba(0,0,0,0.1)]'
                 : 'bg-[#131315] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
             }`}
-            onPointerEnter={handlePointerEnter}
-            onPointerLeave={handlePointerLeave}
-            onPointerDown={handlePointerDown}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
+            onPointerEnter={handleCardPointerEnter}
+            onPointerLeave={handleCardPointerLeave}
           >
           <div className="flex flex-col gap-3">
             <div className="relative h-[164px] w-full overflow-hidden rounded-[4px] bg-black">
@@ -872,9 +867,29 @@ function SponsorshipCampaignCardSection() {
           </div>
         </div>
 
-        <p className="text-center text-[14px] font-semibold italic leading-[1.4] text-black/90">
-          {isMobile ? 'Hold card to simulate desktop hover' : '👆 Hover card for details'}
-        </p>
+        {isMobile ? (
+          <div className="flex w-full max-w-[324px] flex-col items-center gap-2">
+            <button
+              type="button"
+              className="header-cta--case-studies inline-flex touch-manipulation !bg-black/5 hover:!bg-white"
+              aria-label="Hold to simulate desktop hover"
+              onPointerDown={handleHoldPointerDown}
+              onPointerUp={handleHoldPointerEnd}
+              onPointerCancel={handleHoldPointerEnd}
+              onPointerLeave={handleHoldPointerEnd}
+            >
+              <img src={pointerSvg} alt="" aria-hidden className="header-cta__icon" />
+              <span>Hold here</span>
+            </button>
+            <p className="text-center text-[14px] italic leading-[1.4] text-black/90">
+              to simulate desktop hover
+            </p>
+          </div>
+        ) : (
+          <p className="text-center text-[14px] font-semibold italic leading-[1.4] text-black/90">
+            👆 Hover card for details
+          </p>
+        )}
       </div>
     </div>
   )
