@@ -160,11 +160,77 @@ function CaseStudyFooter() {
 }
 
 function BossAiCaseStudyPage({ onBack }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 }
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const isScrollingUp = currentScrollY < lastScrollYRef.current
+      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 400
+
+      if (isAtTop) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingUp) {
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
   return (
     <main className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
+            ref={topHomeButtonRef}
             type="button"
             onClick={onBack}
             className="boss-back-cta header-cta--case-studies inline-flex"
@@ -173,6 +239,20 @@ function BossAiCaseStudyPage({ onBack }) {
             <span>Home</span>
           </button>
         </header>
+
+        <div className={`case-study-floater ${showFloatingHome ? 'case-study-floater--visible' : ''}`}>
+          <button
+            type="button"
+            onClick={onBack}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">BOSS.AI</span>
+          </button>
+        </div>
 
         <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
           <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_504px]">
@@ -1142,7 +1222,14 @@ function App() {
   )
 
   if (activeCaseStudy === 'boss-ai') {
-    return <BossAiCaseStudyPage onBack={() => setActiveCaseStudy(null)} />
+    return (
+      <BossAiCaseStudyPage
+        onBack={() => {
+          setActiveCaseStudy(null)
+          window.scrollTo({ top: 0, behavior: 'auto' })
+        }}
+      />
+    )
   }
 
   return (
