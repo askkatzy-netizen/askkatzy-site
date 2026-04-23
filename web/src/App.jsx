@@ -38,6 +38,11 @@ import boss02MobileImage from './assets/boss-02-mobile.png'
 import boss03MobileImage from './assets/boss-03-mobile.png'
 import boss04MobileImage from './assets/boss-04-mobile.png'
 import boss05MobileImage from './assets/boss-05-mobile.png'
+import sponsListCard1Image from './assets/spons-list-card-1.png'
+import sponsListCard2Image from './assets/spons-list-card-2.png'
+import sponsListCard3Image from './assets/spons-list-card-3.png'
+import sponsListCard4Image from './assets/spons-list-card-4.png'
+import sponsListCard5Image from './assets/spons-list-card-5.png'
 
 const bossCaseSections = [
   {
@@ -145,6 +150,34 @@ const redStats = [
 const sponsorshipStats = [
   { value: '+ 20%', label: 'Campaign starts' },
   { value: '- 95%', label: 'UX related support tickets' },
+]
+
+const sponsorshipOfferCards = [
+  {
+    key: 'hello-fresh',
+    image: sponsListCard1Image,
+    title: 'HelloFresh',
+  },
+  {
+    key: 'call-of-dragons',
+    image: sponsListCard2Image,
+    title: 'Call of Dragons',
+  },
+  {
+    key: 'raid-shadow-legends',
+    image: sponsListCard3Image,
+    title: 'Raid Shadow Legends',
+  },
+  {
+    key: 'star-trek',
+    image: sponsListCard4Image,
+    title: 'Star Trek Fleet Command',
+  },
+  {
+    key: 'royal-match',
+    image: sponsListCard5Image,
+    title: 'Royal Match',
+  },
 ]
 
 function CaseStudyFooter({ variant = 'home' }) {
@@ -459,12 +492,58 @@ function SponsorshipsCaseStudyPage({ onBack }) {
         </section>
 
         <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
-          <div className="rounded-[20px] border border-dashed border-black/20 bg-black/[0.03] p-6 text-center">
+          <div className="overflow-hidden rounded-[20px] bg-[#111319] p-6 text-white max-[700px]:rounded-[16px] max-[700px]:p-4">
+            <div className="hidden grid-cols-1 gap-6 min-[1080px]:grid min-[1080px]:grid-cols-3">
+              <div className="flex flex-col gap-4 rounded-[16px] bg-[#111319] p-2 max-[700px]:p-0">
+                <h3 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-white/90">
+                  The offer wall
+                </h3>
+                <p className="text-[20px] leading-[1.4] font-semibold italic text-white/90">
+                  Moving from ‘Push’ to ‘Pull’
+                </p>
+                <p className="w-full text-[16px] leading-[1.4] text-white/70">
+                  We moved away from single offer invites to a full gallery. Now, eligible creators can
+                  browse multiple campaigns and quickly pick what works best for them.
+                </p>
+              </div>
+
+              {sponsorshipOfferCards.map((card) => (
+                <article key={card.key} className="overflow-hidden rounded-[16px] bg-[#17191f]">
+                  <img src={card.image} alt={`${card.title} sponsorship card`} className="block h-auto w-full" />
+                </article>
+              ))}
+            </div>
+
+            <div className="min-[1080px]:hidden">
+              <div className="mb-6 flex flex-col gap-4 rounded-[16px] bg-[#111319] p-2 max-[700px]:p-0">
+                <h3 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-white/90">
+                  The offer wall
+                </h3>
+                <p className="text-[20px] leading-[1.4] font-semibold italic text-white/90">
+                  Moving from ‘Push’ to ‘Pull’
+                </p>
+                <p className="w-full text-[16px] leading-[1.4] text-white/70">
+                  We moved away from single offer invites to a full gallery. Now, eligible creators can
+                  browse multiple campaigns and quickly pick what works best for them.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                {sponsorshipOfferCards.slice(0, 4).map((card) => (
+                  <article key={card.key} className="overflow-hidden rounded-[16px] bg-[#17191f]">
+                    <img src={card.image} alt={`${card.title} sponsorship card`} className="block h-auto w-full" />
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-[20px] border border-dashed border-black/20 bg-black/[0.03] p-6 text-center">
             <p className="font-roboto-slab text-[28px] leading-[1.2] font-semibold text-black/80">
               Sponsorships content placeholder
             </p>
             <p className="mt-3 text-[16px] leading-[1.4] text-black/60">
-              TODO: Add the full Sponsorships case study content section.
+              TODO: Add the next Sponsorships content sections.
             </p>
           </div>
         </section>
