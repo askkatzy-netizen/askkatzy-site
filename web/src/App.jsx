@@ -43,6 +43,7 @@ import sponsListCard2Image from './assets/spons-list-card-2.png'
 import sponsListCard3Image from './assets/spons-list-card-3.png'
 import sponsListCard4Image from './assets/spons-list-card-4.png'
 import sponsListCard5Image from './assets/spons-list-card-5.png'
+import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-match.png'
 
 const bossCaseSections = [
   {
@@ -622,6 +623,8 @@ function SponsorshipsCaseStudyPage({ onBack }) {
             </div>
           </div>
 
+          <SponsorshipCampaignCardSection />
+
           <div className="mt-8 rounded-[20px] border border-dashed border-black/20 bg-black/[0.03] p-6 text-center">
             <p className="font-roboto-slab text-[28px] leading-[1.2] font-semibold text-black/80">
               Sponsorships content placeholder
@@ -655,6 +658,223 @@ function SponsorshipStatsRow() {
       <div className="shrink-0 pl-3 text-left">
         <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">{secondStat.value}</p>
         <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{secondStat.label}</p>
+      </div>
+    </div>
+  )
+}
+
+function SponsorshipCampaignCardSection() {
+  const [hovered, setHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches
+  )
+  const hypeVideoRef = useRef(null)
+  const holdTimerRef = useRef(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 700px)')
+    const sync = () => setIsMobile(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  const clearHoldTimer = () => {
+    if (holdTimerRef.current != null) {
+      window.clearTimeout(holdTimerRef.current)
+      holdTimerRef.current = null
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      if (holdTimerRef.current != null) {
+        window.clearTimeout(holdTimerRef.current)
+        holdTimerRef.current = null
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const video = hypeVideoRef.current
+    if (!video) return undefined
+
+    if (!hovered) {
+      video.pause()
+      try {
+        video.currentTime = 0
+      } catch {
+        // ignore seek errors before metadata loads
+      }
+      return undefined
+    }
+
+    const playPromise = video.play()
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {})
+    }
+
+    return undefined
+  }, [hovered])
+
+  const handlePointerEnter = () => {
+    if (!isMobile) setHovered(true)
+  }
+
+  const handlePointerLeave = () => {
+    clearHoldTimer()
+    setHovered(false)
+  }
+
+  const handlePointerDown = () => {
+    if (!isMobile) return
+    clearHoldTimer()
+    holdTimerRef.current = window.setTimeout(() => {
+      holdTimerRef.current = null
+      setHovered(true)
+    }, 220)
+  }
+
+  const handlePointerUp = () => {
+    if (!isMobile) return
+    clearHoldTimer()
+    setHovered(false)
+  }
+
+  return (
+    <div className="mt-10 flex w-full flex-col items-center gap-[50px] rounded-[16px] bg-black/[0.05] px-6 py-10 max-[700px]:px-4 max-[700px]:py-8">
+      <div className="flex w-full max-w-[1048px] flex-col items-center gap-4 text-center leading-[1.4] text-black/90">
+        <h2 className="font-roboto-slab w-full text-[36px] font-semibold">Campaign card</h2>
+        <p className="w-full text-[20px] font-semibold italic">Designed to scan offers at a Glance</p>
+      </div>
+
+      <div className="flex w-full flex-col items-center gap-6">
+        <div className="mx-auto w-fit rounded-[16px] bg-[#121213] p-[24px] max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:p-0">
+          <div
+            className={`w-full max-w-[324px] overflow-hidden rounded-[16px] p-4 transition-[colors,box-shadow] duration-300 ease-out touch-manipulation ${
+              hovered
+                ? 'bg-[#232428] shadow-[0_8px_16px_0_rgba(0,0,0,0.1)]'
+                : 'bg-[#131315] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
+            }`}
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+          >
+          <div className="flex flex-col gap-3">
+            <div className="relative h-[164px] w-full overflow-hidden rounded-[4px] bg-black">
+                <div
+                  className={`absolute inset-0 z-0 origin-center transition-transform duration-300 ease-out ${
+                    hovered ? 'scale-[1.2]' : 'scale-100'
+                  }`}
+                >
+                  <img
+                    src={sponsCampaignCardRoyalMatchIdle}
+                    alt="Royal Match campaign artwork"
+                    className="block h-full w-full object-cover"
+                    draggable={false}
+                  />
+                </div>
+
+                <video
+                  ref={hypeVideoRef}
+                  className={`pointer-events-none absolute inset-y-0 left-0 z-[1] h-full w-[calc(100%+1px)] object-cover transition-opacity duration-300 ease-out ${
+                    hovered ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  src="/SE_HYPE_ROYAL_MATCH_20s_v01.mp4"
+                  muted
+                  playsInline
+                  loop
+                  preload="metadata"
+                  aria-hidden="true"
+                />
+
+                <div
+                  className={`absolute inset-x-0 bottom-0 z-10 flex h-[63px] items-end justify-center overflow-hidden bg-gradient-to-b from-transparent to-transparent px-1 pb-3 pt-7 transition-transform duration-300 ease-out ${
+                    hovered ? 'translate-y-0' : 'translate-y-full'
+                  }`}
+                >
+                  <div className="rounded-[4px] bg-black/50 px-2 py-1">
+                    <p className="text-center font-nunito-sans text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.7)]">
+                      345 creators grabbed this campaign
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pointer-events-none absolute left-1 top-1 z-10 flex items-center gap-1 rounded-[2px] bg-black/70 py-[3px] pl-1 pr-2">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="shrink-0 text-[#00F29B]"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 2l2.9 6.8L22 9.7l-5.5 4.7 1.7 7.2L12 18.8 5.8 21.6l1.7-7.2L2 9.7l7.1-.9L12 2z"
+                    />
+                  </svg>
+                  <span className="font-nunito-sans text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[#00F29B]">
+                    New
+                  </span>
+                </div>
+              </div>
+
+              <div className="font-nunito-sans">
+                <div className="flex flex-col gap-2">
+                  <p className="pb-1 text-[16px] font-bold leading-[1.5] tracking-[0.1px] text-[rgba(255,255,255,0.87)]">
+                    Royal Match
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-1">
+                    <div className="flex flex-wrap gap-2">
+                      <span className="inline-flex items-center rounded-[20px] border border-solid border-white/50 px-2 py-1">
+                        <span className="text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)]">
+                          Puzzle
+                        </span>
+                      </span>
+                      <span className="inline-flex items-center rounded-[20px] border border-solid border-white/50 px-2 py-1">
+                        <span className="text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)]">
+                          3 Match
+                        </span>
+                      </span>
+                    </div>
+                    <span className="inline-flex items-center gap-[6px] rounded-[24px] bg-[#282829] px-2 py-1">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        className="shrink-0 text-[rgba(255,255,255,0.87)]"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M16 2H8a2 2 0 00-2 2v16a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zm-4 18a1 1 0 111.001-2A1 1 0 0112 20zm4-4H8V6h8v10z"
+                        />
+                      </svg>
+                      <span className="text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)]">
+                        Mobile Only
+                      </span>
+                    </span>
+                  </div>
+
+                  <p className="text-[14px] font-bold leading-[1.5] tracking-[0.25px] text-[rgba(255,255,255,0.87)]">
+                    $800 Max payout
+                  </p>
+
+                  <p className="text-[14px] font-normal leading-[1.5] tracking-[0.25px] text-[#f98215]">
+                    Last spots left
+                  </p>
+                </div>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <p className="text-center text-[14px] font-semibold italic leading-[1.4] text-black/90">
+          {isMobile ? 'Hold card to simulate desktop hover' : '👆 Hover card for details'}
+        </p>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto+Slab:wght@500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto+Slab:wght@500;600&display=swap");
 @import "tailwindcss";
 
 html,
@@ -20,6 +20,11 @@ body {
 
 .font-roboto-slab {
   font-family: "Roboto Slab", Georgia, "Times New Roman", serif;
+}
+
+.font-nunito-sans {
+  font-family: "Nunito Sans", "Segoe UI", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 .header-cta--case-studies {
