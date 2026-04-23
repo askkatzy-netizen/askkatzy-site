@@ -322,7 +322,7 @@ function RedPopupModal({ open, onClose }) {
             onMouseLeave={handleHeadMouseLeave}
           >
             <div className="relative">
-              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">RED</p>
+              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">RRREEEDDD</p>
               <RedStatsRow />
               <div
                 className="red-popup__shape-layer pointer-events-none absolute -left-[314px] top-[501px] flex h-[674px] w-[680px] items-center justify-center transition-transform duration-150 ease-out max-[892px]:hidden"
