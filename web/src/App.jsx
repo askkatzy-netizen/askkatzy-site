@@ -142,15 +142,23 @@ const redStats = [
   { value: 'Millions', label: 'impacted users' },
 ]
 
-function CaseStudyFooter() {
+function CaseStudyFooter({ variant = 'home' }) {
+  const isCaseStudy = variant === 'case-study'
+
   return (
-    <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-0 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
-      <p className="text-[14px] text-white/90 font-semibold italic">🌻 Let’s do nice things together...</p>
+    <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
+      <p className={`text-[14px] font-semibold italic ${isCaseStudy ? 'text-white/90' : 'text-black/70'}`}>
+        🌻 Let’s do nice things together...
+      </p>
       <a
         href={GMAIL_COMPOSE_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="boss-back-cta header-cta--case-studies"
+        className={
+          isCaseStudy
+            ? 'boss-back-cta header-cta--case-studies'
+            : 'header-cta--case-studies header-cta--ghost'
+        }
       >
         <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
         <span>askkatzy@gmail.com</span>
@@ -196,7 +204,7 @@ function BossAiCaseStudyPage({ onBack }) {
       const isScrollingUp = currentScrollY < lastScrollYRef.current
       const isScrollingDown = currentScrollY > lastScrollYRef.current
       const isAtTop = currentScrollY <= 2
-      const hasScrolledPastThreshold = currentScrollY >= 400
+      const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
         setShowFloatingHome(false)
@@ -359,7 +367,7 @@ function BossAiCaseStudyPage({ onBack }) {
         </section>
 
         <div className="mt-8 mb-4">
-          <CaseStudyFooter />
+          <CaseStudyFooter variant="case-study" />
         </div>
       </div>
     </main>
