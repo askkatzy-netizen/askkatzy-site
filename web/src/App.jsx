@@ -263,7 +263,7 @@ function BossAiCaseStudyPage({ onBack }) {
           </p>
         </section>
 
-        <div className="mt-8">
+        <div className="mt-8 mb-4">
           <CaseStudyFooter />
         </div>
       </div>
