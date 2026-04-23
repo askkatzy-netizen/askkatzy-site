@@ -991,6 +991,8 @@ body {
 /* RED modal */
 .red-popup__corner-close {
   position: fixed;
+  top: 72px;
+  right: max(56px, calc((100vw - 1200px) / 2));
   z-index: 130;
   display: inline-flex;
   align-items: center;
@@ -1066,6 +1068,29 @@ body {
     background: #ffffff !important;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+  }
+
+  .red-popup__corner-close {
+    position: fixed;
+    top: calc(13dvh - 60px); /* card top (13dvh) - (48px button + 12px gap) */
+    right: 24px;
+    transform: translateY(72px);
+  }
+
+  .red-popup__corner-close--entered {
+    transform: translateY(0);
+  }
+
+  .red-popup__corner-close:hover,
+  .red-popup__corner-close:focus-visible {
+    width: 48px;
+    height: 48px;
+    transform: translateY(72px) scale(1.3333);
+  }
+
+  .red-popup__corner-close--entered:hover,
+  .red-popup__corner-close--entered:focus-visible {
+    transform: translateY(0) scale(1.3333);
   }
 
   .red-popup__card-content {

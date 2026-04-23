@@ -170,18 +170,20 @@ function RedStatsRow() {
 }
 
 const RED_POPUP_TRANSITION_MS = 240
-const RED_POPUP_CORNER_CLOSE_IDLE_SIZE = 48
-const RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD = 12
-const RED_POPUP_CORNER_CLOSE_INSET = 12
+const RED_POPUP_DESKTOP_CLOSE_TOP = 72
+const RED_POPUP_CLOSE_DELAY_MS = 80
 
 function RedPopupModal({ open, onClose }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
   const [entered, setEntered] = useState(false)
+  const [closeEntered, setCloseEntered] = useState(false)
   const [mounted, setMounted] = useState(open)
   const overlayRef = useRef(null)
   const cardRef = useRef(null)
-  const [cornerClosePosition, setCornerClosePosition] = useState({ top: 0, left: 0 })
-  const [cornerCloseReady, setCornerCloseReady] = useState(false)
+  const [desktopClosePosition, setDesktopClosePosition] = useState({
+    top: RED_POPUP_DESKTOP_CLOSE_TOP,
+    left: 0,
+  })
 
   useLayoutEffect(() => {
     /* DOM overlay enter/exit: reset `entered` before paint (reopen animation + closing transition). */
@@ -189,9 +191,10 @@ function RedPopupModal({ open, onClose }) {
     if (open) {
       setMounted(true)
       setEntered(false)
-      setCornerCloseReady(false)
+      setCloseEntered(false)
     } else if (mounted) {
       setEntered(false)
+      setCloseEntered(false)
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [open, mounted])
@@ -204,6 +207,13 @@ function RedPopupModal({ open, onClose }) {
     })
     return () => window.cancelAnimationFrame(id)
   }, [open, mounted])
+
+  useEffect(() => {
+    if (!open || !mounted || !entered) return undefined
+
+    const timerId = window.setTimeout(() => setCloseEntered(true), RED_POPUP_CLOSE_DELAY_MS)
+    return () => window.clearTimeout(timerId)
+  }, [open, mounted, entered])
 
   useEffect(() => {
     if (open || !mounted) return undefined
@@ -229,54 +239,27 @@ function RedPopupModal({ open, onClose }) {
   }, [mounted, onClose])
 
   useEffect(() => {
-    if (!mounted || !open || !entered) return undefined
+    if (!mounted || !open) return undefined
 
-    const cardEl = cardRef.current
-    if (!cardEl) return undefined
-
-    const updateCornerClosePosition = () => {
-      const rect = cardEl.getBoundingClientRect()
-      const mobileSheet = window.matchMedia('(max-width: 700px)').matches
-      if (mobileSheet) {
-        const radius = RED_POPUP_CORNER_CLOSE_IDLE_SIZE / 2
-        setCornerClosePosition({
-          top: rect.top - RED_POPUP_CORNER_CLOSE_GAP_ABOVE_CARD - radius,
-          left: rect.right - RED_POPUP_CORNER_CLOSE_INSET - radius,
-        })
-      } else {
-        /* Desktop / tablet: anchor at card top-right (matches pre–iOS-fix behavior). */
-        setCornerClosePosition({ top: rect.top, left: rect.right })
-      }
+    const updateDesktopClosePosition = () => {
+      if (window.innerWidth <= 700) return
+      const rect = cardRef.current?.getBoundingClientRect()
+      if (!rect) return
+      setDesktopClosePosition({ top: RED_POPUP_DESKTOP_CLOSE_TOP, left: rect.right })
     }
 
     const frameId = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(updateCornerClosePosition)
+      window.requestAnimationFrame(updateDesktopClosePosition)
     })
-    const settleTimer = window.setTimeout(() => {
-      updateCornerClosePosition()
-      setCornerCloseReady(true)
-    }, RED_POPUP_TRANSITION_MS)
-    window.addEventListener('resize', updateCornerClosePosition)
-    const overlayElement = overlayRef.current
-    overlayElement?.addEventListener('scroll', updateCornerClosePosition, { passive: true })
-    const visualViewport = window.visualViewport
-    visualViewport?.addEventListener('resize', updateCornerClosePosition)
-    visualViewport?.addEventListener('scroll', updateCornerClosePosition)
-    const resizeObserver =
-      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => updateCornerClosePosition()) : null
-    resizeObserver?.observe(cardEl)
+    window.addEventListener('resize', updateDesktopClosePosition)
+    window.visualViewport?.addEventListener('resize', updateDesktopClosePosition)
 
     return () => {
       window.cancelAnimationFrame(frameId)
-      window.clearTimeout(settleTimer)
-      window.removeEventListener('resize', updateCornerClosePosition)
-      overlayElement?.removeEventListener('scroll', updateCornerClosePosition)
-      visualViewport?.removeEventListener('resize', updateCornerClosePosition)
-      visualViewport?.removeEventListener('scroll', updateCornerClosePosition)
-      resizeObserver?.unobserve(cardEl)
-      resizeObserver?.disconnect()
+      window.removeEventListener('resize', updateDesktopClosePosition)
+      window.visualViewport?.removeEventListener('resize', updateDesktopClosePosition)
     }
-  }, [mounted, open, entered])
+  }, [mounted, open])
 
   if (!mounted) return null
 
@@ -322,7 +305,7 @@ function RedPopupModal({ open, onClose }) {
         aria-label="About RED"
       >
         <div
-          className={`red-popup__enter pointer-events-auto flex w-full flex-col items-center gap-[32px] ${
+          className={`red-popup__enter pointer-events-auto relative flex w-full flex-col items-center gap-[32px] ${
             open
               ? `transition-transform duration-[240ms] ease-out ${entered ? 'translate-y-0' : 'translate-y-[100px]'}`
               : ''
@@ -449,9 +432,13 @@ function RedPopupModal({ open, onClose }) {
             type="button"
             onClick={onClose}
             className={`red-popup__corner-close pointer-events-auto ${
-              entered && cornerCloseReady ? 'red-popup__corner-close--entered' : ''
+              closeEntered ? 'red-popup__corner-close--entered' : ''
             }`}
-            style={{ top: `${cornerClosePosition.top}px`, left: `${cornerClosePosition.left}px` }}
+            style={
+              typeof window !== 'undefined' && window.innerWidth > 700
+                ? { top: `${desktopClosePosition.top}px`, left: `${desktopClosePosition.left}px`, right: 'auto' }
+                : undefined
+            }
             aria-label="Close"
           >
             <span aria-hidden="true" className="red-popup__corner-close-icon">✕</span>
@@ -1173,6 +1160,7 @@ function App() {
                         />
                       </button>
                     </div>
+
                   </>
                 )}
               </>
