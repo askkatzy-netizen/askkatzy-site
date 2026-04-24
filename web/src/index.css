@@ -1282,6 +1282,7 @@ body {
     -webkit-overflow-scrolling: touch;
     padding-bottom: 40px !important;
   }
+
 }
 
 @media (max-width: 480px) {
@@ -1353,8 +1354,8 @@ body {
 .red-partner__thumb {
   position: relative;
   display: inline-flex;
-  width: 64px;
-  height: 64px;
+  width: 96px;
+  height: 96px;
   border-radius: 999px;
   overflow: hidden;
 }

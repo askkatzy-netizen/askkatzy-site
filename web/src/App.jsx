@@ -45,6 +45,7 @@ import sponsListCard3Image from './assets/spons-list-card-3.png'
 import sponsListCard4Image from './assets/spons-list-card-4.png'
 import sponsListCard5Image from './assets/spons-list-card-5.png'
 import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-match.png'
+import sponsOfferMainContentImage from './assets/spons-offer-main-content.png'
 
 const bossCaseSections = [
   {
@@ -671,14 +672,29 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
           <SponsorshipCampaignCardSection />
 
-          <div className="mt-8 rounded-[20px] border border-dashed border-black/20 bg-black/[0.03] p-6 text-center">
-            <p className="font-roboto-slab text-[28px] leading-[1.2] font-semibold text-black/80">
-              Sponsorships content placeholder
-            </p>
-            <p className="mt-3 text-[16px] leading-[1.4] text-black/60">
-              TODO: Add the next Sponsorships content sections.
-            </p>
-          </div>
+          <section className="mt-8 flex w-full flex-col gap-4 rounded-[16px] bg-black/[0.05] p-6 max-[700px]:rounded-[12px] max-[700px]:p-4">
+            <div className="flex w-full flex-col gap-2 text-black/90">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold">The offer</h2>
+              <p className="text-[20px] leading-[1.4] font-semibold italic">Designing for the "Skimmer"</p>
+              <p className="max-w-[1048px] text-[16px] leading-[1.4] text-black/70">
+                To respect the creator&apos;s time, we restructured the offer page into three easy-to-digest
+                sections: <strong className="font-semibold text-black/80">The Game</strong>,{' '}
+                <strong className="font-semibold text-black/80">The Gig</strong>, and{' '}
+                <strong className="font-semibold text-black/80">The Gold</strong>. By simplifying the process
+                and adding a real-time earnings calculator, we removed the guesswork, allowing creators
+                to focus on the community fit rather than the fine print.
+              </p>
+            </div>
+
+            <div className="overflow-hidden rounded-[12px] bg-[#111319] p-10 max-[700px]:p-4">
+              <img
+                src={sponsOfferMainContentImage}
+                alt="Sponsorship offer details showing The Game, The Gig, and The Gold sections"
+                className="block h-auto w-full"
+                loading="lazy"
+              />
+            </div>
+          </section>
         </section>
 
         <div className="mt-8">
@@ -1227,7 +1243,7 @@ function RedPopupModal({ open, onClose }) {
                       <img
                         src={ramsterAvatar}
                         alt="Ramster"
-                        className="h-16 w-16 rounded-full object-cover"
+                        className="h-full w-full rounded-full object-cover"
                       />
                       <div className="red-partner__mask" aria-hidden="true">
                         <img src={rocketSvg} alt="" className="red-partner__rocket" />
@@ -1242,7 +1258,7 @@ function RedPopupModal({ open, onClose }) {
                     rel="noreferrer"
                   >
                     <div className="red-partner__thumb">
-                      <img src={luluAvatar} alt="Lulu" className="h-16 w-16 rounded-full object-cover" />
+                      <img src={luluAvatar} alt="Lulu" className="h-full w-full rounded-full object-cover" />
                       <div className="red-partner__mask" aria-hidden="true">
                         <img src={rocketSvg} alt="" className="red-partner__rocket" />
                       </div>
