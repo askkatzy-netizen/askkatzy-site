@@ -154,6 +154,51 @@ const sponsorshipStats = [
   { value: '- 95%', label: 'UX related support tickets' },
 ]
 
+function AnimatedStatValue({ value, duration = 560, delay = 0 }) {
+  const firstDigitIndex = value.search(/\d/)
+  const lastDigitIndex = value.search(/\d(?!.*\d)/)
+  const hasNumber = firstDigitIndex !== -1 && lastDigitIndex !== -1
+  const prefix = hasNumber ? value.slice(0, firstDigitIndex) : ''
+  const numericPart = hasNumber ? value.slice(firstDigitIndex, lastDigitIndex + 1) : ''
+  const suffix = hasNumber ? value.slice(lastDigitIndex + 1) : ''
+  const targetValue = hasNumber ? Number(numericPart.replace(/[^\d.]/g, '')) : 0
+  const [currentValue, setCurrentValue] = useState(hasNumber ? 0 : value)
+
+  useEffect(() => {
+    if (!hasNumber || Number.isNaN(targetValue)) {
+      setCurrentValue(value)
+      return undefined
+    }
+
+    let animationFrameId = null
+    let startTimestamp = null
+    const timeoutId = window.setTimeout(() => {
+      const animate = (timestamp) => {
+        if (startTimestamp == null) startTimestamp = timestamp
+        const elapsed = timestamp - startTimestamp
+        const progress = Math.min(elapsed / duration, 1)
+        setCurrentValue(Math.round(targetValue * progress))
+
+        if (progress < 1) {
+          animationFrameId = window.requestAnimationFrame(animate)
+        }
+      }
+
+      animationFrameId = window.requestAnimationFrame(animate)
+    }, delay)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      if (animationFrameId != null) {
+        window.cancelAnimationFrame(animationFrameId)
+      }
+    }
+  }, [delay, duration, hasNumber, targetValue, value])
+
+  if (!hasNumber || Number.isNaN(targetValue)) return value
+  return `${prefix}${currentValue}${suffix}`
+}
+
 const sponsorshipOfferCards = [
   {
     key: 'hello-fresh',
@@ -650,14 +695,18 @@ function SponsorshipStatsRow() {
   return (
     <div className="flex flex-wrap items-start gap-y-3">
       <div className="shrink-0 pr-3 text-left">
-        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">{firstStat.value}</p>
+        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">
+          <AnimatedStatValue value={firstStat.value} delay={0} />
+        </p>
         <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{firstStat.label}</p>
       </div>
 
       <span aria-hidden="true" className="h-[66px] self-center border-l border-black/15" />
 
       <div className="shrink-0 pl-3 text-left">
-        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">{secondStat.value}</p>
+        <p className="font-roboto-slab text-[42px] leading-[1.05] font-semibold text-black">
+          <AnimatedStatValue value={secondStat.value} delay={120} />
+        </p>
         <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{secondStat.label}</p>
       </div>
     </div>
@@ -956,7 +1005,7 @@ function RedStatsRow() {
             />
           )}
           <p className="font-roboto-slab text-[32px] leading-[1.4] font-semibold">
-            {stat.value}
+            <AnimatedStatValue value={stat.value} delay={index * 80} />
           </p>
           <p className="text-[12px] leading-[1.4]">{stat.label}</p>
         </div>
