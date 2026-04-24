@@ -52,6 +52,14 @@ import sponsTrackingOverviewImage from './assets/overview.png'
 import sponsCarousel1Image from './assets/Spons-carousel-1.png'
 import sponsCarousel2Image from './assets/Spons-carousel-2.png'
 import sponsCarousel3Image from './assets/spons_carousel-3b.png'
+import gt1Image from './assets/GT-1.png'
+import gt2Image from './assets/GT-2b.png'
+import gt3Image from './assets/GT-3.png'
+import gt4Image from './assets/GT-4b.png'
+import gt5Image from './assets/GT-5.png'
+import gtCharacterImage from './assets/GT-character.png'
+import gtLogoImage from './assets/GT-logo.png'
+import graptapLinkIcon from './assets/graptap-link.svg'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
@@ -170,6 +178,7 @@ const sponsorshipStats = [
 const CASE_STUDY_PATHS = {
   'boss-ai': '/case-studies/boss-ai',
   'creators-spons': '/case-studies/sponsorships',
+  graptap: '/case-studies/graptap',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -275,6 +284,15 @@ const sponsorshipBeneathSurfaceSlides = [
     image: `${sponsCarousel3Image}?v=3b-20260424-2`,
     alt: 'My campaigns state variants',
   },
+]
+
+const grabTapCaseScreens = [
+  { key: 'gt-logo', title: 'Brand / GrabTap logo', image: gtLogoImage },
+  { key: 'gt-1', title: 'Core flow / Screen 1', image: gt1Image },
+  { key: 'gt-2', title: 'Core flow / Screen 2', image: gt2Image },
+  { key: 'gt-3', title: 'Core flow / Screen 3', image: gt3Image },
+  { key: 'gt-4', title: 'Core flow / Screen 4', image: gt4Image },
+  { key: 'gt-5', title: 'Core flow / Screen 5', image: gt5Image },
 ]
 
 function CaseStudyImageCarousel({ slides, className = '' }) {
@@ -1137,6 +1155,383 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
             <CaseStudyImageCarousel slides={sponsorshipBeneathSurfaceSlides} />
           </section>
+        </section>
+
+        <div className="mt-8">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function GrabTapCaseStudyPage({ onBack }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const isScrollingUp = currentScrollY < lastScrollYRef.current
+      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingUp) {
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
+  return (
+    <main className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <div
+          className={`case-study-floater case-study-floater--graptap ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">GrabTap</span>
+          </button>
+        </div>
+
+        <section className="relative overflow-hidden rounded-t-[40px] rounded-b-none bg-[#D7FF00] px-10 pt-10 pb-0 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-0">
+          <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="relative flex min-w-0 flex-col gap-10 min-[980px]:pb-[0px]">
+              <div className="flex flex-col gap-4">
+                <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black">GrabTap</p>
+                <p className="text-[16px] leading-[1.4] font-medium text-black">StreamElements, 2025</p>
+              </div>
+
+              <div className="flex w-full max-w-[516px] items-center gap-3">
+                {[
+                  { value: '496k', label: 'Players' },
+                  { value: '330k', label: 'Games started' },
+                  { value: '44k', label: 'Redeem requests' },
+                ].map((stat, index) => (
+                  <div key={stat.label} className="flex items-center">
+                    {index > 0 ? <span aria-hidden="true" className="mr-3 h-[66px] w-px bg-black/70" /> : null}
+                    <div className="flex w-[120px] flex-col items-center text-center leading-[1.4] text-black">
+                      <p className="font-roboto-slab text-[32px] font-semibold leading-[1.4]">
+                        <AnimatedStatValue value={stat.value} delay={index * 120} />
+                      </p>
+                      <p className="text-[12px] leading-[1.4]">{stat.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black min-[980px]:pb-10">
+              <p>
+                <strong className="font-bold">GrabTap</strong> is a "Play-to-Earn" platform that turns mobile
+                gaming into rewards. It marked a strategic shift for <strong className="font-bold">StreamElements</strong>,
+                directly engaging communities by offering gift cards in exchange for supporting their favorite creators.
+              </p>
+              <p>
+                As the lead designer, I owned the end-to-end core experience - from user research and complex flow mapping
+                to designing and building a scalable design system.
+              </p>
+              <p>
+                I led the iterative design process, ensuring the interface remained intuitive and frictionless as the
+                product rapidly expanded.
+              </p>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black">Design guidelines</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Mobile first', 'Community-Centric', 'Reliable'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] border border-[#686868] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black">Design libraries</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Internal, based on shadcn/ui', 'Lucide icons'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] border border-[#686868] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <a
+                href="https://www.grabtap.com"
+                target="_blank"
+                rel="noreferrer"
+                className="graptap-link-cta header-cta--case-studies header-cta--ghost mt-1 inline-flex h-12 w-fit !bg-transparent !px-4 !py-3 !text-[14px] !text-black/70 hover:!bg-white focus-visible:!bg-white"
+              >
+                <img src={graptapLinkIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+                www.grabtap.com
+              </a>
+            </div>
+          </div>
+
+          <img
+            src={gtCharacterImage}
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none mx-auto mt-6 block h-auto w-full max-w-[298px] object-contain min-[980px]:absolute min-[980px]:bottom-0 min-[980px]:left-1/4 min-[980px]:mt-0 min-[980px]:-translate-x-1/2"
+            loading="lazy"
+          />
+        </section>
+
+        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+          <div className="flex flex-col gap-8 max-[700px]:gap-6">
+            {grabTapCaseScreens.map((screen) => (
+              screen.key === 'gt-logo' || screen.key === 'gt-1' ? (
+                <section key={screen.key} className="flex flex-col items-center">
+                  <img
+                    src={screen.image}
+                    alt={`GrabTap ${screen.title}`}
+                    className={`block h-auto w-full ${screen.key === 'gt-logo' ? 'max-w-[240px]' : ''}`}
+                    loading="lazy"
+                  />
+                  {screen.key === 'gt-1' ? (
+                    <p className="mt-[56px] mb-0 text-[14px] leading-[1.4] font-medium text-black/70">
+                      Selected screens
+                    </p>
+                  ) : null}
+                </section>
+              ) : screen.key === 'gt-2' ? (
+                <section
+                  key={screen.key}
+                  className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
+                >
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                    <div className="flex flex-col gap-4 leading-[1.4] text-black">
+                      <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Games page</p>
+                      <div className="flex flex-col gap-2 text-[16px] text-black/70">
+                        <p>
+                          Once onboarding is complete, users arrive here. We designed this page to make starting
+                          a game effortless - literally one click away.
+                        </p>
+                        <p>
+                          It serves as the primary hub where users can discover eligible games, access their
+                          supported communities, or explore new ones to join.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mx-auto w-full max-w-[375px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                      <img
+                        src={screen.image}
+                        alt="GrabTap games page mobile screen"
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </section>
+              ) : screen.key === 'gt-3' ? (
+                <section
+                  key={screen.key}
+                  className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
+                >
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                    <div className="flex flex-col gap-4 leading-[1.4] text-black">
+                      <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Offer page</p>
+                      <div className="flex flex-col gap-4 text-[16px] text-black/70">
+                        <p>
+                          Designed to eliminate friction and ensure a "game-fit," this page provides
+                          transparency before users commit:
+                        </p>
+                        <ul className="list-disc pl-7">
+                          <li>
+                            <strong className="font-bold text-black/80">Community:</strong> Highlights supported
+                            creators to foster belonging.
+                          </li>
+                          <li>
+                            <strong className="font-bold text-black/80">Gameplay:</strong> Uses autoplay video for
+                            instant game understanding.
+                          </li>
+                          <li>
+                            <strong className="font-bold text-black/80">Value:</strong> Shows "effort vs. potential
+                            earn" for informed decisions.
+                          </li>
+                        </ul>
+                        <p>
+                          We also introduced progressive bonuses for daily play and in-game spending to drive
+                          long term retention.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mx-auto w-full max-w-[553px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                      <img
+                        src={screen.image}
+                        alt="GrabTap offer page mobile screen"
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </section>
+              ) : screen.key === 'gt-4' ? (
+                <section
+                  key={screen.key}
+                  className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
+                >
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                    <div className="flex flex-col gap-4 leading-[1.4] text-black">
+                      <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Community page</p>
+                      <div className="flex flex-col gap-2 text-[16px] text-black/70">
+                        <p>
+                          By highlighting collective stats offering community competitions, and leaderboards,
+                          we invite users to contribute.
+                        </p>
+                        <p>
+                          Games that support the community can be started instantly, while a clear CTA
+                          provides a frictionless path for new visitors to join.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mx-auto w-full max-w-[375px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                      <img
+                        src={screen.image}
+                        alt="GrabTap community page mobile screen"
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </section>
+              ) : screen.key === 'gt-5' ? (
+                <section
+                  key={screen.key}
+                  className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
+                >
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                    <div className="flex flex-col gap-3 leading-[1.4] text-black">
+                      <p className="font-roboto-slab text-[56px] font-semibold leading-[1.1] text-black/90">Missions</p>
+                      <p className="text-[16px] text-black/70">
+                        Missions are the core of every offer. We designed various mission types to drive retention,
+                        motivating players to progress and maximize their earnings.
+                      </p>
+                      <p className="text-[16px] text-black/70">
+                        To keep the experience predictable, we maintained a consistent for:
+                      </p>
+                      <ul className="list-disc pl-7 text-[40px] text-black/70">
+                        <li className="text-[16px]">
+                          <strong className="font-bold text-black/80">Points:</strong> Standardized display of rewards.
+                        </li>
+                        <li className="text-[16px]">
+                          <strong className="font-bold text-black/80">Social proof:</strong> Completion counts to build trust.
+                        </li>
+                        <li className="text-[16px]">
+                          <strong className="font-bold text-black/80">Details:</strong> Uniform info for quick scannability.
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div className="mx-auto w-full max-w-[595px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                      <img
+                        src={screen.image}
+                        alt="GrabTap missions screen list"
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </section>
+              ) : (
+                <section key={screen.key} className="boss-case-content-section">
+                  <div className="mb-4 flex flex-col gap-2">
+                    <p className="text-[16px] leading-[1.4] font-medium text-black/90">{screen.title}</p>
+                  </div>
+                  <div className="boss-case-image-shell">
+                    <img
+                      src={screen.image}
+                      alt={`GrabTap ${screen.title}`}
+                      className="boss-case-image block h-auto w-full"
+                      loading="lazy"
+                    />
+                  </div>
+                </section>
+              )
+            ))}
+          </div>
         </section>
 
         <div className="mt-8">
@@ -2084,7 +2479,7 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
-  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons'])
+  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons', 'graptap'])
 
   const renderCaseStudyCard = (project, index) => (
     <article
@@ -2114,6 +2509,8 @@ function App() {
           ? 'Open BOSS.AI case study page'
           : project.key === 'creators-spons'
             ? 'Open Sponsorships case study page'
+            : project.key === 'graptap'
+              ? 'Open GrabTap case study page'
             : undefined
       }
     >
@@ -2309,6 +2706,14 @@ function App() {
   if (activeCaseStudy === 'creators-spons') {
     return (
       <SponsorshipsCaseStudyPage
+        onBack={goHome}
+      />
+    )
+  }
+
+  if (activeCaseStudy === 'graptap') {
+    return (
+      <GrabTapCaseStudyPage
         onBack={goHome}
       />
     )

@@ -103,6 +103,21 @@ body {
   background: transparent;
 }
 
+.graptap-link-cta:hover,
+.graptap-link-cta:focus-visible {
+  background: #ffffff !important;
+}
+
+.graptap-link-cta .header-cta__icon {
+  opacity: 0.6;
+}
+
+.graptap-link-cta:hover .header-cta__icon,
+.graptap-link-cta:focus-visible .header-cta__icon {
+  opacity: 0.9 !important;
+  filter: brightness(0) saturate(100%) !important;
+}
+
 .spons-prototype-copy-cta__icon {
   width: 18px !important;
   height: 18px !important;
@@ -182,6 +197,10 @@ body {
   background: #1f00cc;
 }
 
+.case-study-floater--graptap .case-study-floater__button {
+  background: #000000;
+}
+
 .case-study-floater__button:focus-visible {
   background: #4cbba5;
   border-color: rgb(255 255 255 / 70%);
@@ -190,6 +209,10 @@ body {
 
 .case-study-floater--sponsorships .case-study-floater__button:focus-visible {
   background: #1f00cc;
+}
+
+.case-study-floater--graptap .case-study-floater__button:focus-visible {
+  background: #000000;
 }
 
 .case-study-floater__icon-chip {
@@ -242,6 +265,11 @@ body {
   .case-study-floater--sponsorships .case-study-floater__button:hover,
   .case-study-floater--sponsorships.case-study-floater:hover .case-study-floater__button {
     background: #1f00cc;
+  }
+
+  .case-study-floater--graptap .case-study-floater__button:hover,
+  .case-study-floater--graptap.case-study-floater:hover .case-study-floater__button {
+    background: #000000;
   }
 
   .case-study-floater__button:hover .case-study-floater__icon-chip,
