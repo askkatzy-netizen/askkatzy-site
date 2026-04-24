@@ -46,6 +46,12 @@ import sponsListCard4Image from './assets/spons-list-card-4.png'
 import sponsListCard5Image from './assets/spons-list-card-5.png'
 import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-match.png'
 import sponsOfferMainContentImage from './assets/spons-offer-main-content.png'
+import sponsPricingCardImage from './assets/spons-pricing-card.png'
+import twitchIcon from './assets/twitch.svg'
+import youtubeIcon from './assets/youtube.svg'
+import tiktokIcon from './assets/tiktok.svg'
+import figmaIcon from './assets/figma.svg'
+import link2Icon from './assets/link-2.svg'
 
 const bossCaseSections = [
   {
@@ -373,7 +379,7 @@ function BossAiCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
                   {['Robust', 'Flexible', 'Smart'].map((tag) => (
                     <span
                       key={tag}
@@ -387,7 +393,7 @@ function BossAiCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
                   {['shadcn/ui', 'Lucide icons'].map((tag) => (
                     <span
                       key={tag}
@@ -464,8 +470,50 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const copyFeedbackTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches,
+  )
+  const [showPrototypeCopied, setShowPrototypeCopied] = useState(false)
+
+  const pricingPrototypeUrl =
+    'https://www.figma.com/proto/sALpRqwxhV0Y4Da15q0DHR/Pricing-Card_prototype?node-id=1-21789&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A21789'
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 700px)')
+    const sync = () => setIsMobile(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(
+    () => () => {
+      if (copyFeedbackTimerRef.current != null) {
+        window.clearTimeout(copyFeedbackTimerRef.current)
+      }
+    },
+    [],
+  )
+
+  const handleCopyPrototypeLink = async () => {
+    if (!isMobile) return
+    try {
+      await navigator.clipboard.writeText(pricingPrototypeUrl)
+      setShowPrototypeCopied(true)
+      if (copyFeedbackTimerRef.current != null) {
+        window.clearTimeout(copyFeedbackTimerRef.current)
+      }
+      copyFeedbackTimerRef.current = window.setTimeout(() => {
+        setShowPrototypeCopied(false)
+        copyFeedbackTimerRef.current = null
+      }, 3000)
+    } catch {
+      // no-op when clipboard is unavailable
+    }
+  }
 
   useEffect(() => {
     const topButton = topHomeButtonRef.current
@@ -594,7 +642,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
                   {['Clarity', 'Ease', 'Simplicity', 'Flexibility'].map((tag) => (
                     <span
                       key={tag}
@@ -608,7 +656,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
                   {['Internal, based on Material ui', 'Material design icons'].map((tag) => (
                     <span
                       key={tag}
@@ -694,6 +742,140 @@ function SponsorshipsCaseStudyPage({ onBack }) {
                 loading="lazy"
               />
             </div>
+          </section>
+
+          <section className="mt-8 flex w-full flex-col gap-4 rounded-[16px] bg-black/[0.05] p-6 max-[700px]:rounded-[12px] max-[700px]:p-4">
+            <div className="flex w-full flex-col items-center gap-2 text-center text-black/90">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold">Pricing card</h2>
+              <p className="max-w-[760px] text-[16px] leading-[1.4] text-black/70">
+                We built a modular pricing system that handles deep complexity across platforms and payout
+                methods - ensuring the creator always gets a clear, consistent answer.
+              </p>
+            </div>
+
+            <div className="mx-auto my-4 overflow-hidden rounded-[12px] bg-[#111319] p-10 max-[700px]:w-fit max-[700px]:max-w-full max-[700px]:p-4">
+              <img
+                src={sponsPricingCardImage}
+                alt="Pricing card with guaranteed base, per-player payout, and join campaign action"
+                className="mx-auto block h-auto w-full max-w-[360px]"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="mt-1 border-t border-black/15">
+              <div className="flex w-full items-center gap-4 border-b border-black/15 py-4 max-[700px]:flex-col max-[700px]:items-start">
+                <p className="min-w-[180px] flex-1 text-[16px] font-semibold leading-[1.4] text-black/70">Platforms</p>
+                <div className="ml-auto flex w-full max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                  <span className="inline-flex items-center gap-2 rounded-[80px] border border-black/50 bg-white px-4 py-2">
+                    <img src={twitchIcon} alt="" aria-hidden className="h-4 w-4" />
+                    <span className="text-[14px] leading-[1.4] text-black/70">Twitch</span>
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-[80px] border border-black/50 bg-white px-4 py-2">
+                    <img src={youtubeIcon} alt="" aria-hidden className="h-4 w-4" />
+                    <span className="text-[14px] leading-[1.4] text-black/70">YouTube</span>
+                  </span>
+                  <span className="inline-flex items-center gap-2 rounded-[80px] border border-black/50 bg-white px-4 py-2">
+                    <img src={tiktokIcon} alt="" aria-hidden className="h-4 w-4" />
+                    <span className="text-[14px] leading-[1.4] text-black/70">TikTok</span>
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex w-full items-center gap-4 border-b border-black/15 py-4 max-[700px]:flex-col max-[700px]:items-start">
+                <p className="min-w-[180px] flex-1 text-[16px] font-semibold leading-[1.4] text-black/70">
+                  Pricing communication
+                </p>
+                <div className="ml-auto flex w-full max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                  {['Average', 'Max', 'Both'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-[50px] border border-black/50 bg-white px-4 py-[6px] text-[14px] leading-[1.4] text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex w-full items-center gap-4 border-b border-black/15 py-4 max-[700px]:flex-col max-[700px]:items-start">
+                <p className="min-w-[180px] flex-1 text-[16px] font-semibold leading-[1.4] text-black/70">
+                  Pricing methods
+                </p>
+                <div className="ml-auto flex w-full max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                  {['Base', 'Performance', 'CPM views', 'Fixed', 'Rev share'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-[50px] border border-black/50 bg-white px-4 py-[6px] text-[14px] leading-[1.4] text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex w-full items-center gap-4 border-b border-black/15 py-4 max-[700px]:flex-col max-[700px]:items-start">
+                <p className="min-w-[180px] flex-1 text-[16px] font-semibold leading-[1.4] text-black/70">User types</p>
+                <div className="ml-auto flex w-full max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                  {['Auto served', 'SE manually served', 'Has Agency'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center rounded-[50px] border border-black/50 bg-white px-4 py-[6px] text-[14px] leading-[1.4] text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {isMobile ? (
+              showPrototypeCopied ? (
+                <div className="mx-auto mt-2 inline-flex h-12 box-border items-center justify-center gap-2 rounded-[999px] border border-[#14cc76] bg-white px-4 shadow-[0_0_0_4px_rgba(20,204,118,0.2)]">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    className="shrink-0"
+                  >
+                    <path
+                      d="M5 12.5L9.5 17L19 7.5"
+                      stroke="#000000"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="font-poppins text-[14px] leading-none text-black">Link coppied</p>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleCopyPrototypeLink}
+                  className="spons-prototype-copy-cta header-cta--case-studies header-cta--ghost mx-auto mt-2 inline-flex h-12 box-border !bg-transparent !text-[#2B00FF]"
+                >
+                  <img
+                    src={link2Icon}
+                    alt=""
+                    aria-hidden
+                    className="header-cta__icon spons-prototype-copy-cta__icon"
+                  />
+                  Copy prototype link (desktop only)
+                </button>
+              )
+            ) : (
+              <a
+                href={pricingPrototypeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="header-cta--case-studies header-cta--ghost mx-auto mt-2 inline-flex !bg-black/5 hover:!bg-white"
+              >
+                <img src={figmaIcon} alt="" aria-hidden className="header-cta__icon" />
+                View Figma prototype
+              </a>
+            )}
           </section>
         </section>
 
