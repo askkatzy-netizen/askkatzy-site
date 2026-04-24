@@ -60,6 +60,9 @@ import gt5Image from './assets/GT-5.png'
 import gtCharacterImage from './assets/GT-character.png'
 import gtLogoImage from './assets/GT-logo.png'
 import graptapLinkIcon from './assets/graptap-link.svg'
+import briefsCheckIcon from './assets/briefs-check.png'
+import briefMappingImage from './assets/brief-mapping.png'
+import briefCmsImage from './assets/Brief-CMS.png'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
@@ -179,6 +182,7 @@ const CASE_STUDY_PATHS = {
   'boss-ai': '/case-studies/boss-ai',
   'creators-spons': '/case-studies/sponsorships',
   graptap: '/case-studies/graptap',
+  'campaign-brief': '/case-studies/briefs',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -589,7 +593,7 @@ function BossAiCaseStudyPage({ onBack }) {
         </div>
 
         <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
-          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_504px]">
+          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <div className="flex min-w-0 flex-col gap-4">
               <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">BOSS.AI</p>
               <p className="text-[16px] leading-[1.4] font-medium text-black/50">StreamElements, Work in progress</p>
@@ -613,7 +617,7 @@ function BossAiCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
-                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
                   {['Robust', 'Flexible', 'Smart'].map((tag) => (
                     <span
                       key={tag}
@@ -627,7 +631,7 @@ function BossAiCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
-                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
                   {['shadcn/ui', 'Lucide icons'].map((tag) => (
                     <span
                       key={tag}
@@ -690,6 +694,242 @@ function BossAiCaseStudyPage({ onBack }) {
           <p className="mt-10 text-center text-[16px] leading-[1.4] text-black/70 max-[700px]:mt-6">
             Details limited - work in progress.
           </p>
+        </section>
+
+        <div className="mt-8 mb-4">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
+  )
+}
+
+function BriefsCaseStudyPage({ onBack }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const isScrollingUp = currentScrollY < lastScrollYRef.current
+      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingUp) {
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
+  return (
+    <main className="min-h-screen bg-[#FF83A0] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <div
+          className={`case-study-floater case-study-floater--briefs ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">Campaign briefs</span>
+          </button>
+        </div>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="flex min-w-0 flex-col gap-10">
+              <div className="flex flex-col gap-4">
+                <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">
+                  Campaign briefs
+                </p>
+                <p className="text-[16px] leading-[1.4] font-medium text-black/50">StreamElements, 2024</p>
+              </div>
+
+              <div className="flex w-full flex-wrap items-end gap-x-4 gap-y-4 min-[700px]:flex-nowrap">
+                <div className="flex min-h-[106px] flex-col items-center justify-end text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[42px] font-semibold">
+                    <AnimatedStatValue value="- 95%" />
+                  </p>
+                  <p className="mt-1 text-[12px]">related support tickets</p>
+                </div>
+                <span aria-hidden="true" className="h-[66px] w-px bg-black/15" />
+                <div className="flex min-h-[106px] flex-col items-center justify-end text-center leading-[1.4] text-black">
+                  <span className="mb-[2px] inline-flex h-[45px] w-[45px] items-center justify-center overflow-hidden">
+                    <img
+                      src={briefsCheckIcon}
+                      alt=""
+                      aria-hidden="true"
+                      className="h-[40px] w-[40px] object-contain"
+                    />
+                  </span>
+                  <p className="mt-1 text-[12px]">Increased productivity</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                <strong className="font-bold text-black/70">The Problem</strong> - Previously, campaign briefs
+                were &quot;locked&quot; until a creator committed. This forced them to start campaigns just to see
+                details, creating friction and skewing our metrics.
+              </p>
+              <p>
+                <strong className="font-bold text-black/70">The Iteration</strong> - We initially used manual
+                Google Slides briefs to unlock information, but they were prone to human error and couldn't sync
+                with our automated campaign data - like duration, goals, and supported devices.
+              </p>
+              <p>
+                <strong className="font-bold text-black/70">The Solution</strong> - We built a dynamic system
+                that auto-populates core specs while allowing CMs to add custom content.
+              </p>
+              <p>
+                Our focus was on providing creators with the clarity needed to make informed decisions, automating
+                technical data so CMs can focus on custom work, and maintaining a flexible framework that adapts
+                to unique campaign needs.
+              </p>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Clear', 'Accessible', 'Intuitive'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#FFCDD9] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-t-none max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+          <section className="flex w-full flex-col items-center gap-6 rounded-[16px] bg-[#131315] p-10 text-white max-[700px]:rounded-[12px] max-[700px]:p-4">
+            <div className="flex w-full flex-col gap-4 p-4 max-[700px]:p-0">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-white/90">
+                Mapping the brief
+              </h2>
+              <p className="text-[16px] leading-[1.4] text-white/70">
+                After auditing the information creators needed, we mapped our content to distinguish between
+                automated data and manual input.
+              </p>
+              <p className="text-[16px] leading-[1.4] text-white/70">
+                We built a dedicated CMS section for custom content, allowing CMs to input unique campaign
+                details. To ensure accuracy, we added a preview mode so CMs could verify the creator&apos;s view
+                before going live.
+              </p>
+            </div>
+
+            <div className="h-px w-full bg-white/15" />
+
+            <p className="text-center text-[14px] leading-[1.4] text-white/70">
+              Sample - YouTube short brief / content mapping👇
+            </p>
+
+            <img
+              src={briefMappingImage}
+              alt="Campaign brief mapping sample"
+              className="block h-auto w-full max-w-[690px]"
+              loading="lazy"
+            />
+
+            <div className="w-full">
+              <div className="inline-flex items-center gap-1.5">
+                <span className="inline-block h-[11px] w-[11px] rounded-full border-[3.2px] border-[#040404] bg-[#AEFF91] shadow-[4.8px_4px_0_rgba(0,0,0,0.7)]" />
+                <p className="font-nunito-sans text-[12px] leading-[1.3] tracking-[-0.08px] text-white/70">
+                  Fields inserted in brief
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-8 flex w-full flex-col gap-6 rounded-[16px] bg-black/5 p-10 text-black max-[700px]:rounded-[12px] max-[700px]:p-4">
+            <div className="flex w-full flex-col gap-4 p-4 max-[700px]:p-0">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-black/90">
+                The CM side
+              </h2>
+              <p className="text-[16px] leading-[1.4] text-black/70">
+                An easy to manage CMS dedicated for briefs
+              </p>
+            </div>
+
+            <img
+              src={briefCmsImage}
+              alt="Campaign brief CMS interface"
+              className="block h-auto w-full rounded-[8px] border border-black/30"
+              loading="lazy"
+            />
+          </section>
         </section>
 
         <div className="mt-8 mb-4">
@@ -876,7 +1116,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
-                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
                   {['Clarity', 'Ease', 'Simplicity', 'Flexibility'].map((tag) => (
                     <span
                       key={tag}
@@ -890,7 +1130,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design libraries</p>
-                <div className="ml-auto flex max-w-[620px] flex-wrap justify-end gap-2 max-[700px]:ml-0 max-[700px]:max-w-none max-[700px]:justify-start">
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
                   {['Internal, based on Material ui', 'Material design icons'].map((tag) => (
                     <span
                       key={tag}
@@ -2516,7 +2756,7 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
-  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons', 'graptap'])
+  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons', 'graptap', 'campaign-brief'])
 
   const renderCaseStudyCard = (project, index) => (
     <article
@@ -2548,6 +2788,8 @@ function App() {
             ? 'Open Sponsorships case study page'
             : project.key === 'graptap'
               ? 'Open GrabTap case study page'
+              : project.key === 'campaign-brief'
+                ? 'Open Campaign briefs case study page'
             : undefined
       }
     >
@@ -2751,6 +2993,14 @@ function App() {
   if (activeCaseStudy === 'graptap') {
     return (
       <GrabTapCaseStudyPage
+        onBack={goHome}
+      />
+    )
+  }
+
+  if (activeCaseStudy === 'campaign-brief') {
+    return (
+      <BriefsCaseStudyPage
         onBack={goHome}
       />
     )
