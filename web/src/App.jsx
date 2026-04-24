@@ -479,7 +479,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   const [showPrototypeCopied, setShowPrototypeCopied] = useState(false)
 
   const pricingPrototypeUrl =
-    'https://www.figma.com/proto/sALpRqwxhV0Y4Da15q0DHR/Pricing-Card_prototype?node-id=1-21789&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A21789'
+    'https://embed.figma.com/proto/sALpRqwxhV0Y4Da15q0DHR/Pricing-Card_prototype?node-id=1-21789&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A21789&embed-host=share&hide-ui=1'
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 700px)')
