@@ -53,6 +53,7 @@ import sponsCarousel1Image from './assets/Spons-carousel-1.png'
 import sponsCarousel2Image from './assets/Spons-carousel-2.png'
 import sponsCarousel3Image from './assets/spons_carousel-3b.png'
 import gt1Image from './assets/GT-1.png'
+import gt1MobileImage from './assets/GT1-mobile.png'
 import gt2Image from './assets/GT-2b.png'
 import gt3Image from './assets/GT-3.png'
 import gt4Image from './assets/GT-4b.png'
@@ -1638,12 +1639,24 @@ function GrabTapCaseStudyPage({ onBack }) {
             {grabTapCaseScreens.map((screen) => (
               screen.key === 'gt-logo' || screen.key === 'gt-1' ? (
                 <section key={screen.key} className="flex flex-col items-center">
-                  <img
-                    src={screen.image}
-                    alt={`GrabTap ${screen.title}`}
-                    className={`block h-auto w-full ${screen.key === 'gt-logo' ? 'max-w-[240px]' : ''}`}
-                    loading="lazy"
-                  />
+                  {screen.key === 'gt-1' ? (
+                    <picture className="block w-full">
+                      <source media="(max-width: 699px)" srcSet={gt1MobileImage} />
+                      <img
+                        src={screen.image}
+                        alt={`GrabTap ${screen.title}`}
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </picture>
+                  ) : (
+                    <img
+                      src={screen.image}
+                      alt={`GrabTap ${screen.title}`}
+                      className="block h-auto w-full max-w-[240px]"
+                      loading="lazy"
+                    />
+                  )}
                   {screen.key === 'gt-1' ? (
                     <p className="mt-[56px] mb-0 text-[14px] leading-[1.4] font-medium text-black/70">
                       Selected screens
