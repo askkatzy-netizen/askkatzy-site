@@ -1169,8 +1169,11 @@ function GrabTapCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const kpiRowRef = useRef(null)
+  const kpiItemRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+  const [isRedeemOnNewLine, setIsRedeemOnNewLine] = useState(false)
 
   useEffect(() => {
     const topButton = topHomeButtonRef.current
@@ -1231,6 +1234,29 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
   }, [isTopHomeInView])
 
+  useEffect(() => {
+    const rowEl = kpiRowRef.current
+    if (!rowEl) return undefined
+
+    const updateRedeemLineState = () => {
+      const firstEl = kpiItemRefs.current[0]
+      const redeemEl = kpiItemRefs.current[2]
+      if (!firstEl || !redeemEl) return
+      setIsRedeemOnNewLine(redeemEl.offsetTop > firstEl.offsetTop)
+    }
+
+    updateRedeemLineState()
+
+    const observer = new ResizeObserver(updateRedeemLineState)
+    observer.observe(rowEl)
+    window.addEventListener('resize', updateRedeemLineState)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateRedeemLineState)
+    }
+  }, [])
+
   return (
     <main className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px]">
@@ -1272,14 +1298,25 @@ function GrabTapCaseStudyPage({ onBack }) {
                 <p className="text-[16px] leading-[1.4] font-medium text-black">StreamElements, 2025</p>
               </div>
 
-              <div className="flex w-full max-w-[516px] items-center gap-3">
+              <div ref={kpiRowRef} className="flex w-full max-w-[516px] flex-wrap items-center gap-x-3 gap-y-4">
                 {[
                   { value: '496k', label: 'Players' },
                   { value: '330k', label: 'Games started' },
                   { value: '44k', label: 'Redeem requests' },
                 ].map((stat, index) => (
-                  <div key={stat.label} className="flex items-center">
-                    {index > 0 ? <span aria-hidden="true" className="mr-3 h-[66px] w-px bg-black/70" /> : null}
+                  <div
+                    key={stat.label}
+                    ref={(el) => {
+                      kpiItemRefs.current[index] = el
+                    }}
+                    className="flex items-center"
+                  >
+                    {index > 0 ? (
+                      <span
+                        aria-hidden="true"
+                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'hidden' : ''}`}
+                      />
+                    ) : null}
                     <div className="flex w-[120px] flex-col items-center text-center leading-[1.4] text-black">
                       <p className="font-roboto-slab text-[32px] font-semibold leading-[1.4]">
                         <AnimatedStatValue value={stat.value} delay={index * 120} />
