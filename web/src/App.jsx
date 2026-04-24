@@ -51,7 +51,7 @@ import sponsPricingCardImage from './assets/spons-pricing-card.png'
 import sponsTrackingOverviewImage from './assets/overview.png'
 import sponsCarousel1Image from './assets/Spons-carousel-1.png'
 import sponsCarousel2Image from './assets/Spons-carousel-2.png'
-import sponsCarousel3Image from './assets/Spons-carousel-3.png'
+import sponsCarousel3Image from './assets/spons_carousel-3b.png'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
@@ -271,8 +271,8 @@ const sponsorshipBeneathSurfaceSlides = [
   },
   {
     key: 'my-campaign-states',
-    label: "Variants / 'My campaigns' states",
-    image: sponsCarousel3Image,
+    label: 'Variants / Campaign assets: 1x1',
+    image: `${sponsCarousel3Image}?v=3b-20260424-2`,
     alt: 'My campaigns state variants',
   },
 ]
@@ -371,14 +371,14 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
               className="shrink-0"
               style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
             >
-              <p className="mb-3 text-[18px] leading-[1.4] font-medium text-black/90 max-[700px]:text-[16px]">
+              <p className="mb-3 text-[14px] leading-[1.4] font-medium text-black/90">
                 {slide.label}
               </p>
-              <div className="flex w-full items-center justify-center rounded-[16px] bg-black/[0.05] px-8 py-5 max-[700px]:p-4">
+              <div className="flex h-[504px] w-full items-center justify-center rounded-[16px] bg-black/[0.05] px-8 py-[40px] max-[900px]:h-[432px] max-[700px]:h-[336px] max-[700px]:p-4">
                 <img
                   src={slide.image}
                   alt={slide.alt}
-                  className="block h-auto w-full object-contain"
+                  className="block h-[461px] w-auto max-w-full object-contain max-[900px]:h-[403px] max-[700px]:h-[317px]"
                   loading="lazy"
                 />
               </div>
@@ -394,7 +394,7 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
             type="button"
             onClick={() => goToIndex(index)}
             className={`h-2.5 rounded-full transition-all ${
-              activeIndex === index ? 'w-6 bg-[#BEB1FF]' : 'w-2.5 bg-black/10'
+              activeIndex === index ? 'w-6 bg-[#A79BF8]' : 'w-2.5 bg-[#E3DEFC]'
             }`}
             aria-label={`Go to slide ${index + 1}`}
             aria-current={activeIndex === index ? 'true' : undefined}
