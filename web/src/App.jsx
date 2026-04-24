@@ -16,6 +16,7 @@ import tooltipPacman from './assets/type_pac-man.png'
 import tooltipNela from './assets/type_Nela.png'
 import tooltipHappilyMarried from './assets/happily-married.png'
 import linkedInIcon from './assets/arrow-right.svg'
+import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
 import profileFace from './assets/profile-face.png'
@@ -47,11 +48,16 @@ import sponsListCard5Image from './assets/spons-list-card-5.png'
 import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-match.png'
 import sponsOfferMainContentImage from './assets/spons-offer-main-content.png'
 import sponsPricingCardImage from './assets/spons-pricing-card.png'
+import sponsTrackingOverviewImage from './assets/overview.png'
+import sponsCarousel1Image from './assets/Spons-carousel-1.png'
+import sponsCarousel2Image from './assets/Spons-carousel-2.png'
+import sponsCarousel3Image from './assets/Spons-carousel-3.png'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
 import figmaIcon from './assets/figma.svg'
 import link2Icon from './assets/link-2.svg'
+import startCampaignImage from './assets/_start campaign.gif'
 
 const bossCaseSections = [
   {
@@ -249,6 +255,200 @@ const sponsorshipOfferCards = [
     title: 'Royal Match',
   },
 ]
+
+const sponsorshipBeneathSurfaceSlides = [
+  {
+    key: 'campaign-head-states',
+    label: 'Variants / Campaign head states',
+    image: sponsCarousel1Image,
+    alt: 'Campaign head states variants',
+  },
+  {
+    key: 'goal-tracking-cards',
+    label: 'Variants / Goal tracking cards',
+    image: sponsCarousel2Image,
+    alt: 'Goal tracking card variants',
+  },
+  {
+    key: 'my-campaign-states',
+    label: "Variants / 'My campaigns' states",
+    image: sponsCarousel3Image,
+    alt: 'My campaigns state variants',
+  },
+]
+
+function CaseStudyImageCarousel({ slides, className = '' }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [hoveredArrow, setHoveredArrow] = useState(null)
+  const touchStartXRef = useRef(null)
+  const touchDeltaXRef = useRef(0)
+  const viewportRef = useRef(null)
+  const [slideWidth, setSlideWidth] = useState(0)
+  const slideGap = 40
+
+  const totalSlides = slides.length
+
+  const goToPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
+  }
+
+  const goToNext = () => {
+    setActiveIndex((prev) => (prev + 1) % totalSlides)
+  }
+
+  const goToIndex = (index) => {
+    setActiveIndex(index)
+  }
+
+  const handleTouchStart = (event) => {
+    touchStartXRef.current = event.touches[0]?.clientX ?? null
+    touchDeltaXRef.current = 0
+  }
+
+  const handleTouchMove = (event) => {
+    if (touchStartXRef.current == null) return
+    const currentX = event.touches[0]?.clientX ?? touchStartXRef.current
+    touchDeltaXRef.current = currentX - touchStartXRef.current
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStartXRef.current == null) return
+    if (Math.abs(touchDeltaXRef.current) > 48) {
+      if (touchDeltaXRef.current < 0) goToNext()
+      else goToPrev()
+    }
+    touchStartXRef.current = null
+    touchDeltaXRef.current = 0
+  }
+
+  useEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return undefined
+
+    const updateSlideWidth = () => {
+      setSlideWidth(viewport.clientWidth)
+    }
+
+    updateSlideWidth()
+    const observer = new ResizeObserver(updateSlideWidth)
+    observer.observe(viewport)
+    window.addEventListener('resize', updateSlideWidth)
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateSlideWidth)
+    }
+  }, [])
+
+  if (!Array.isArray(slides) || totalSlides === 0) return null
+
+  return (
+    <section
+      className={`relative flex w-full flex-col gap-4 rounded-[16px] border border-dashed border-[#2B00FF] p-4 max-[700px]:p-3 ${className}`}
+      onKeyDown={(event) => {
+        if (event.key === 'ArrowLeft') goToPrev()
+        if (event.key === 'ArrowRight') goToNext()
+      }}
+      tabIndex={0}
+      aria-label="Image carousel"
+    >
+      <div
+        ref={viewportRef}
+        className="overflow-hidden rounded-[12px]"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{
+            gap: `${slideGap}px`,
+            transform: `translateX(-${activeIndex * (slideWidth + slideGap)}px)`,
+          }}
+        >
+          {slides.map((slide) => (
+            <div
+              key={slide.key}
+              className="shrink-0"
+              style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
+            >
+              <p className="mb-3 text-[18px] leading-[1.4] font-medium text-black/90 max-[700px]:text-[16px]">
+                {slide.label}
+              </p>
+              <div className="flex w-full items-center justify-center rounded-[16px] bg-black/[0.05] px-8 py-5 max-[700px]:p-4">
+                <img
+                  src={slide.image}
+                  alt={slide.alt}
+                  className="block h-auto w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.key}
+            type="button"
+            onClick={() => goToIndex(index)}
+            className={`h-2.5 rounded-full transition-all ${
+              activeIndex === index ? 'w-6 bg-[#BEB1FF]' : 'w-2.5 bg-black/10'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={activeIndex === index ? 'true' : undefined}
+          />
+        ))}
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 z-10 block">
+        <button
+          type="button"
+          onClick={goToPrev}
+          onMouseEnter={() => setHoveredArrow('prev')}
+          onMouseLeave={() => setHoveredArrow(null)}
+          className={`pointer-events-auto absolute left-0 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
+            hoveredArrow === 'prev'
+              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+              : 'h-12 w-12 border-black bg-white'
+          }`}
+          aria-label="Previous slide"
+        >
+          <img
+            src={arrowLeftIcon}
+            alt=""
+            aria-hidden="true"
+            className={`opacity-90 transition-all duration-200 ${
+              hoveredArrow === 'prev' ? 'h-7 w-7' : 'h-5 w-5'
+            }`}
+          />
+        </button>
+        <button
+          type="button"
+          onClick={goToNext}
+          onMouseEnter={() => setHoveredArrow('next')}
+          onMouseLeave={() => setHoveredArrow(null)}
+          className={`pointer-events-auto absolute right-0 top-1/2 flex translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
+            hoveredArrow === 'next'
+              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+              : 'h-12 w-12 border-black bg-white'
+          }`}
+          aria-label="Next slide"
+        >
+          <img
+            src={arrowRightIcon}
+            alt=""
+            aria-hidden="true"
+            className={`opacity-100 transition-all duration-200 ${
+              hoveredArrow === 'next' ? 'h-7 w-7' : 'h-5 w-5'
+            }`}
+          />
+        </button>
+      </div>
+    </section>
+  )
+}
 
 function CaseStudyFooter({ variant = 'home' }) {
   const isCaseStudy = variant === 'case-study'
@@ -892,6 +1092,50 @@ function SponsorshipsCaseStudyPage({ onBack }) {
                 View Figma prototype
               </a>
             )}
+          </section>
+
+          <section className="mt-8 flex w-full flex-col gap-4 text-black/90">
+            <div className="flex w-full flex-col gap-2">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold">Tracking page</h2>
+              <p className="text-[20px] leading-[1.4] font-semibold italic">Real-time Trust</p>
+              <p className="max-w-[1048px] text-[16px] leading-[1.4] text-black/70">
+                Trust is earned through transparency. We designed the tracking page to give creators an
+                honest, real-time look at their campaign progress; by showing the exact stream duration
+                and recorded events, we eliminate the &quot;black box&quot; feeling and ensure they feel
+                confident in the data.
+              </p>
+            </div>
+
+            <img
+              src={sponsTrackingOverviewImage}
+              alt="Sponsorship tracking page overview"
+              className="block h-auto w-full rounded-[16px]"
+              loading="lazy"
+            />
+          </section>
+
+          <div className="mt-8 flex w-full justify-center">
+            <img
+              src={startCampaignImage}
+              alt="Start campaign visual"
+              className="block h-auto w-full max-w-[230px]"
+              loading="lazy"
+            />
+          </div>
+
+          <section className="mt-8 flex w-full flex-col gap-4 text-black/90">
+            <div className="flex w-full flex-col gap-2">
+              <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold">Beneath the surface</h2>
+              <p className="max-w-[1048px] text-[16px] leading-[1.4] text-black/70">
+                My first move upon joining the Sponsorship squad was to audit our components and
+                libraries - refining variants, increasing accessibility, fixing gaps in mobile views, and
+                <strong className="font-semibold text-black/80"> taking full ownership</strong> of every
+                pixel. This foundation allowed us to keep our workflow fast and our interface predictable.
+                👇
+              </p>
+            </div>
+
+            <CaseStudyImageCarousel slides={sponsorshipBeneathSurfaceSlides} />
           </section>
         </section>
 
