@@ -789,20 +789,22 @@ function SponsorshipCampaignCardSection() {
   }
 
   return (
-    <div className="mt-10 flex w-full flex-col items-center gap-[50px] rounded-[16px] bg-black/[0.05] px-6 py-10 max-[700px]:px-4 max-[700px]:py-8">
+    <div className="mt-10 flex w-full flex-col items-center gap-8 rounded-[16px] bg-black/[0.05] px-6 py-10 max-[700px]:px-4 max-[700px]:py-8">
       <div className="flex w-full max-w-[1048px] flex-col items-center gap-4 text-center leading-[1.4] text-black/90">
         <h2 className="font-roboto-slab w-full text-[36px] font-semibold">Campaign card</h2>
-        <p className="w-full text-[20px] font-semibold italic">Designed to scan offers at a Glance</p>
+        <p className="w-full text-[16px] font-normal">
+          Optimized for scannability, focused on fit and trust.
+        </p>
       </div>
 
       <div className="flex w-full flex-col items-center gap-6">
         <div className="mx-auto w-fit rounded-[16px] bg-[#121213] p-[24px] max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:p-0">
           <div
-            className={`w-full max-w-[324px] overflow-hidden rounded-[16px] p-4 transition-[colors,box-shadow] duration-300 ease-out touch-manipulation ${
+            className={`w-full max-w-[324px] overflow-hidden rounded-[16px] p-4 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] touch-manipulation ${
               hovered
-                ? 'bg-[#232428] shadow-[0_8px_16px_0_rgba(0,0,0,0.1)]'
+                ? 'bg-[#232428] shadow-[4px_4px_16px_0_rgba(0,0,0,0.4)]'
                 : 'bg-[#131315] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
-            }`}
+            } ${hovered ? '-translate-y-2' : 'translate-y-0'}`}
             onPointerEnter={handleCardPointerEnter}
             onPointerLeave={handleCardPointerLeave}
           >
