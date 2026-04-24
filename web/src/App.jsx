@@ -862,7 +862,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
                     aria-hidden
                     className="header-cta__icon spons-prototype-copy-cta__icon"
                   />
-                  Copy prototype link (desktop only)
+                  Copy prototype link (desktop)
                 </button>
               )
             ) : (
