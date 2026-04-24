@@ -161,6 +161,22 @@ const sponsorshipStats = [
   { value: '- 95%', label: 'UX related support tickets' },
 ]
 
+const CASE_STUDY_PATHS = {
+  'boss-ai': '/case-studies/boss-ai',
+  'creators-spons': '/case-studies/sponsorships',
+}
+
+const CASE_STUDY_BY_PATH = Object.fromEntries(
+  Object.entries(CASE_STUDY_PATHS).map(([key, path]) => [path, key]),
+)
+
+const normalizePathname = (pathname) => {
+  const normalized = pathname.replace(/\/+$/, '')
+  return normalized === '' ? '/' : normalized
+}
+
+const getCaseStudyFromPathname = (pathname) => CASE_STUDY_BY_PATH[normalizePathname(pathname)] ?? null
+
 function AnimatedStatValue({ value, duration = 560, delay = 0 }) {
   const firstDigitIndex = value.search(/\d/)
   const lastDigitIndex = value.search(/\d(?!.*\d)/)
@@ -1671,7 +1687,9 @@ function App() {
   const streamElementsCards = projectCards.filter((project) => project.section === 'stream-elements')
   const redCards = projectCards.filter((project) => project.section === 'red')
   const [isRedModalOpen, setIsRedModalOpen] = useState(false)
-  const [activeCaseStudy, setActiveCaseStudy] = useState(null)
+  const [activeCaseStudy, setActiveCaseStudy] = useState(() =>
+    typeof window === 'undefined' ? null : getCaseStudyFromPathname(window.location.pathname),
+  )
   const [supportsHover, setSupportsHover] = useState(true)
   const [isIntroExpanded, setIsIntroExpanded] = useState(false)
   const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
@@ -1793,7 +1811,31 @@ function App() {
     }
   }, [isIntroTopLayout, isIntroExpanded])
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+
+    const syncFromLocation = () => {
+      setActiveCaseStudy(getCaseStudyFromPathname(window.location.pathname))
+    }
+
+    syncFromLocation()
+    window.addEventListener('popstate', syncFromLocation)
+    return () => window.removeEventListener('popstate', syncFromLocation)
+  }, [])
+
+  const goHome = () => {
+    if (typeof window !== 'undefined' && normalizePathname(window.location.pathname) !== '/') {
+      window.history.pushState({}, '', '/')
+    }
+    setActiveCaseStudy(null)
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+
   const openCaseStudy = (projectKey) => {
+    const targetPath = CASE_STUDY_PATHS[projectKey]
+    if (typeof window !== 'undefined' && targetPath && normalizePathname(window.location.pathname) !== targetPath) {
+      window.history.pushState({}, '', targetPath)
+    }
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
@@ -2015,10 +2057,7 @@ function App() {
   if (activeCaseStudy === 'boss-ai') {
     return (
       <BossAiCaseStudyPage
-        onBack={() => {
-          setActiveCaseStudy(null)
-          window.scrollTo({ top: 0, behavior: 'auto' })
-        }}
+        onBack={goHome}
       />
     )
   }
@@ -2026,10 +2065,7 @@ function App() {
   if (activeCaseStudy === 'creators-spons') {
     return (
       <SponsorshipsCaseStudyPage
-        onBack={() => {
-          setActiveCaseStudy(null)
-          window.scrollTo({ top: 0, behavior: 'auto' })
-        }}
+        onBack={goHome}
       />
     )
   }
