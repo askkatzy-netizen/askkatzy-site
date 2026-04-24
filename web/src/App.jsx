@@ -854,7 +854,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
                 <button
                   type="button"
                   onClick={handleCopyPrototypeLink}
-                  className="spons-prototype-copy-cta header-cta--case-studies header-cta--ghost mx-auto mt-2 inline-flex h-12 box-border !bg-transparent !text-[#2B00FF]"
+                  className="spons-prototype-copy-cta header-cta--case-studies header-cta--ghost mx-auto mt-2 inline-flex h-12 box-border whitespace-nowrap !gap-1.5 !bg-transparent !pl-2 !pr-2 !text-[13px] !text-[#2B00FF]"
                 >
                   <img
                     src={link2Icon}
