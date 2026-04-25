@@ -1329,17 +1329,39 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
               </div>
             </div>
             <div className="border-t border-black/20 bg-black/5 p-6 min-[980px]:p-8">
-              <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
-                {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).map((imageSrc, index) => (
+              {activeDsTab === 'bizzabo' ? (
+                <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
                   <img
-                    key={`${activeDsCaseStudy.title}-${index + 1}`}
-                    src={imageSrc}
-                    alt={`${activeDsCaseStudy.imageAlt} ${index + 1}`}
+                    src={activeDsCaseStudy.images?.[0] ?? activeDsCaseStudy.image}
+                    alt={`${activeDsCaseStudy.imageAlt} 1`}
                     className="mx-auto block h-auto w-full rounded-[8px] object-cover"
                     loading="lazy"
                   />
-                ))}
-              </div>
+                  <div className="grid w-full grid-cols-1 gap-6 min-[700px]:grid-cols-2 min-[980px]:gap-8">
+                    {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).slice(1).map((imageSrc, index) => (
+                      <img
+                        key={`${activeDsCaseStudy.title}-${index + 2}`}
+                        src={imageSrc}
+                        alt={`${activeDsCaseStudy.imageAlt} ${index + 2}`}
+                        className="mx-auto block h-auto w-full rounded-[8px] object-cover min-[700px]:h-[260px]"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
+                  {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).map((imageSrc, index) => (
+                    <img
+                      key={`${activeDsCaseStudy.title}-${index + 1}`}
+                      src={imageSrc}
+                      alt={`${activeDsCaseStudy.imageAlt} ${index + 1}`}
+                      className="mx-auto block h-auto w-full rounded-[8px] object-cover"
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </section>
 
