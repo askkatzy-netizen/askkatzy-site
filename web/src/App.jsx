@@ -269,6 +269,13 @@ const getSquareFishCharacterOffsetX = (characterKey) => {
   return 0
 }
 
+const hiddenSquareFishCharacterKeysAtTwoPerRow = new Set([
+  'spanish-dancer',
+  'shrimp',
+  'turtle',
+  'teeth',
+])
+
 const CASE_STUDY_PATHS = {
   'boss-ai': '/case-studies/boss-ai',
   'creators-spons': '/case-studies/sponsorships',
@@ -2682,6 +2689,9 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const [isSquareFishMobile, setIsSquareFishMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches,
   )
+  const [isSquareFishTwoPerRow, setIsSquareFishTwoPerRow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 500px)').matches,
+  )
   const [activeSquareFishCharacterIndex, setActiveSquareFishCharacterIndex] = useState(-1)
   const [crabOffsetX, setCrabOffsetX] = useState(0)
   const [jellyOffsetX, setJellyOffsetX] = useState(0)
@@ -2785,6 +2795,23 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     mediaQuery.addEventListener('change', syncMobile)
     return () => mediaQuery.removeEventListener('change', syncMobile)
   }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 500px)')
+    const syncTwoPerRow = () => setIsSquareFishTwoPerRow(mediaQuery.matches)
+    syncTwoPerRow()
+    mediaQuery.addEventListener('change', syncTwoPerRow)
+    return () => mediaQuery.removeEventListener('change', syncTwoPerRow)
+  }, [])
+
+  useEffect(() => {
+    if (activeSquareFishCharacterIndex < 0) return
+    const activeCharacter = squareFishCharacters[activeSquareFishCharacterIndex]
+    if (!activeCharacter) return
+    if (isSquareFishTwoPerRow && hiddenSquareFishCharacterKeysAtTwoPerRow.has(activeCharacter.key)) {
+      setActiveSquareFishCharacterIndex(-1)
+    }
+  }, [activeSquareFishCharacterIndex, isSquareFishTwoPerRow])
 
   useEffect(() => {
     if (!isSquareFishMobile) return
@@ -2988,7 +3015,9 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
                   ref={(el) => {
                     squareFishCharacterRefs.current[index] = el
                   }}
-                  className="group relative h-[140px] w-[140px]"
+                  className={`group relative h-[140px] w-[140px] ${
+                    hiddenSquareFishCharacterKeysAtTwoPerRow.has(character.key) ? 'max-[500px]:hidden' : ''
+                  }`}
                   onClick={() => {
                     if (!isSquareFishMobile) return
                     setActiveSquareFishCharacterIndex((current) => (current === index ? -1 : index))
