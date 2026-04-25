@@ -10,7 +10,7 @@ import { HumanDesignBanner } from './HumanDesignBanner.jsx'
 import squareFishDefault from './assets/Piranha_default.png'
 import squareFishHover from './assets/Piranha_hover.png'
 import tooltipHorse from './assets/type_horse.png'
-import tooltipAskkatzy from './assets/type_Askkatzy.png'
+import tooltipAskkatzy from './assets/type-askkatzy-2.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
 import tooltipPacman from './assets/type_pac-man.png'
 import tooltipNela from './assets/type_Nela.png'
@@ -3021,6 +3021,8 @@ function App() {
   const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const caseItemRefs = useRef([])
+  const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
+  const suppressCaseClickUntilRef = useRef(0)
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -3162,9 +3164,33 @@ function App() {
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const handleCaseStudyTouchStart = (event) => {
+    if (supportsHover) return
+    const touch = event.touches?.[0]
+    if (!touch) return
+    caseTouchRef.current = { x: touch.clientX, y: touch.clientY, moved: false }
+  }
+  const handleCaseStudyTouchMove = (event) => {
+    if (supportsHover) return
+    const touch = event.touches?.[0]
+    if (!touch) return
+    const deltaX = Math.abs(touch.clientX - caseTouchRef.current.x)
+    const deltaY = Math.abs(touch.clientY - caseTouchRef.current.y)
+    if (deltaX > 8 || deltaY > 8) caseTouchRef.current.moved = true
+  }
   const handleCaseStudyTouchEnd = (event, projectKey) => {
     if (!interactiveCaseStudyKeys.has(projectKey) || supportsHover) return
+    suppressCaseClickUntilRef.current = Date.now() + 450
+    if (caseTouchRef.current.moved) return
     event.preventDefault()
+    openCaseStudy(projectKey)
+  }
+  const handleCaseStudyClick = (event, projectKey) => {
+    if (!interactiveCaseStudyKeys.has(projectKey)) return
+    if (!supportsHover && Date.now() < suppressCaseClickUntilRef.current) {
+      event.preventDefault()
+      return
+    }
     openCaseStudy(projectKey)
   }
   const openDesignSprintsFromRed = () => {
@@ -3190,7 +3216,13 @@ function App() {
         !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
       } ${interactiveCaseStudyKeys.has(project.key) ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
-      onClick={interactiveCaseStudyKeys.has(project.key) ? () => openCaseStudy(project.key) : undefined}
+      onClick={
+        interactiveCaseStudyKeys.has(project.key)
+          ? (event) => handleCaseStudyClick(event, project.key)
+          : undefined
+      }
+      onTouchStart={interactiveCaseStudyKeys.has(project.key) ? handleCaseStudyTouchStart : undefined}
+      onTouchMove={interactiveCaseStudyKeys.has(project.key) ? handleCaseStudyTouchMove : undefined}
       onTouchEnd={
         interactiveCaseStudyKeys.has(project.key)
           ? (event) => handleCaseStudyTouchEnd(event, project.key)
