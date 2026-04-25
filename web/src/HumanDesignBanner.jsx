@@ -33,7 +33,7 @@ export function HumanDesignBanner() {
 
   return (
     <section
-      className="human-design-banner pointer-events-none mt-16 flex -translate-y-[12px] justify-center px-4 pb-[56px]"
+      className="human-design-banner pointer-events-none mt-16 mb-4 flex -translate-y-[12px] justify-center px-4 pb-[56px]"
       aria-label="Human design"
     >
       <div

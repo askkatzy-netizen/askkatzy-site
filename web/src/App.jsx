@@ -60,6 +60,7 @@ import gt4Image from './assets/GT-4b.png'
 import gt5Image from './assets/GT-5.png'
 import gtCharacterImage from './assets/GT-character.png'
 import gtLogoImage from './assets/GT-logo.png'
+import gtCardsImage from './assets/cards.png'
 import graptapLinkIcon from './assets/graptap-link.svg'
 import briefsCheckIcon from './assets/briefs-check.png'
 import briefMappingImage from './assets/brief-mapping2.png'
@@ -495,7 +496,11 @@ function CaseStudyFooter({ variant = 'home' }) {
   const isCaseStudy = variant === 'case-study'
 
   return (
-    <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
+    <footer
+      className={`footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d] ${
+        isCaseStudy ? 'pb-8' : ''
+      }`}
+    >
       <p className={`text-[14px] font-semibold italic ${isCaseStudy ? 'text-white/90' : 'text-black/70'}`}>
         🌻 Let’s do nice things together...
       </p>
@@ -1629,7 +1634,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
           </div>
         </section>
 
-        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+        <section className="rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 !pb-0 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:!pb-0">
           <div className="overflow-hidden rounded-[20px] bg-[#111319] p-6 text-white max-[700px]:rounded-[16px] max-[700px]:p-4">
             <div className="hidden grid-cols-1 gap-6 min-[1080px]:grid min-[1080px]:grid-cols-3">
               <div className="flex flex-col gap-4 rounded-[16px] bg-[#111319] p-2 max-[700px]:p-0">
@@ -1856,7 +1861,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
             />
           </section>
 
-          <div className="mt-8 flex w-full justify-center">
+          <div className="mt-8 mb-0 flex w-full justify-center">
             <img
               src={startCampaignImage}
               alt="Start campaign visual"
@@ -2146,7 +2151,7 @@ function GrabTapCaseStudyPage({ onBack }) {
           />
         </section>
 
-        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+        <section className="rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-0 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-0">
           <div className="flex flex-col gap-8 max-[700px]:gap-6">
             {grabTapCaseScreens.map((screen) => (
               screen.key === 'gt-logo' || screen.key === 'gt-1' ? (
@@ -2333,6 +2338,14 @@ function GrabTapCaseStudyPage({ onBack }) {
                 </section>
               )
             ))}
+          </div>
+          <div className="mt-10 mb-0 flex w-full justify-center">
+            <img
+              src={gtCardsImage}
+              alt="GrabTap cards visual"
+              className="mb-0 block h-auto w-full max-w-[505px] translate-y-px align-bottom"
+              loading="lazy"
+            />
           </div>
         </section>
 
