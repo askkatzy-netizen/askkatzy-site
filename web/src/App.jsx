@@ -605,6 +605,11 @@ function BossAiCaseStudyPage({ onBack }) {
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -819,6 +824,11 @@ function BriefsCaseStudyPage({ onBack }) {
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -1117,6 +1127,11 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -1430,6 +1445,11 @@ function SponsorshipsCaseStudyPage({ onBack }) {
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -1882,6 +1902,11 @@ function GrabTapCaseStudyPage({ onBack }) {
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -3137,6 +3162,11 @@ function App() {
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const handleCaseStudyTouchEnd = (event, projectKey) => {
+    if (!interactiveCaseStudyKeys.has(projectKey) || supportsHover) return
+    event.preventDefault()
+    openCaseStudy(projectKey)
+  }
   const openDesignSprintsFromRed = () => {
     setIsRedModalOpen(false)
     openCaseStudy('design-sprints')
@@ -3161,6 +3191,11 @@ function App() {
       } ${interactiveCaseStudyKeys.has(project.key) ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
       onClick={interactiveCaseStudyKeys.has(project.key) ? () => openCaseStudy(project.key) : undefined}
+      onTouchEnd={
+        interactiveCaseStudyKeys.has(project.key)
+          ? (event) => handleCaseStudyTouchEnd(event, project.key)
+          : undefined
+      }
       onKeyDown={
         interactiveCaseStudyKeys.has(project.key)
           ? (event) => {
