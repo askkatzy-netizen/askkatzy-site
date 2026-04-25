@@ -1792,6 +1792,18 @@ body {
   pointer-events: auto;
 }
 
+.human-design-banner__stage:focus-visible .human-design-banner__hover-layer {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  pointer-events: auto;
+}
+
+.human-design-banner__stage--tools-active .human-design-banner__hover-layer {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  pointer-events: auto;
+}
+
 .human-design-banner__stage:hover .human-design-banner__tools,
 .human-design-banner__stage--tools-active .human-design-banner__tools {
   opacity: 1;

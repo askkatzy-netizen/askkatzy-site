@@ -10,7 +10,9 @@ export function HumanDesignBanner() {
   const [supportsHover, setSupportsHover] = useState(true)
   const stageRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const tools = [tool1Figma, tool2Cursor, tool3Gemini, tool4Github]
+  const MOBILE_TOOLS_HIDE_UP_SCROLL_PX = 80
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -44,19 +46,28 @@ export function HumanDesignBanner() {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const deltaY = currentScrollY - lastScrollYRef.current
+      const isScrollingUp = deltaY < 0
+      const isScrollingDown = deltaY > 0
 
       if (isScrollingUp) {
-        setIsToolsActive(false)
+        upScrollDistanceRef.current += Math.abs(deltaY)
+        if (upScrollDistanceRef.current >= MOBILE_TOOLS_HIDE_UP_SCROLL_PX) {
+          setIsToolsActive(false)
+          upScrollDistanceRef.current = 0
+        }
       } else if (isScrollingDown && isStageVisibleInViewport()) {
         setIsToolsActive(true)
+        upScrollDistanceRef.current = 0
+      } else if (!isScrollingUp) {
+        upScrollDistanceRef.current = 0
       }
 
       lastScrollYRef.current = currentScrollY
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [supportsHover])
