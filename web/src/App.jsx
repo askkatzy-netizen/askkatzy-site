@@ -10,7 +10,7 @@ import { HumanDesignBanner } from './HumanDesignBanner.jsx'
 import squareFishDefault from './assets/Piranha_default.png'
 import squareFishHover from './assets/Piranha_hover.png'
 import tooltipHorse from './assets/type_horse.png'
-import tooltipAskkatzy from './assets/type-askkatzy-2.png'
+import tooltipAskkatzy from './assets/type-askkatzy-3.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
 import tooltipPacman from './assets/type_pac-man.png'
 import tooltipNela from './assets/type_Nela.png'
@@ -519,6 +519,7 @@ function CaseStudyFooter({ variant = 'home' }) {
 function BossAiCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -551,21 +552,29 @@ function BossAiCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingUp) {
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -574,6 +583,7 @@ function BossAiCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
@@ -735,6 +745,7 @@ function BossAiCaseStudyPage({ onBack }) {
 function BriefsCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -766,21 +777,29 @@ function BriefsCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingUp) {
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -789,6 +808,7 @@ function BriefsCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
@@ -979,6 +999,7 @@ function BriefsCaseStudyPage({ onBack }) {
 function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -1065,25 +1086,34 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
       if (Date.now() < suppressFloaterUntilRef.current) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         lastScrollYRef.current = currentScrollY
         return
       }
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingUp) {
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -1092,6 +1122,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
@@ -1314,6 +1345,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
 function SponsorshipsCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const copyFeedbackTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -1387,21 +1419,29 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingUp) {
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -1410,6 +1450,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
@@ -1787,6 +1828,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 function GrabTapCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const kpiRowRef = useRef(null)
   const kpiItemRefs = useRef([])
@@ -1821,21 +1863,29 @@ function GrabTapCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingUp) {
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -1844,6 +1894,7 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
@@ -2548,6 +2599,7 @@ function RedStatsRow() {
 const RED_POPUP_TRANSITION_MS = 240
 const RED_POPUP_DESKTOP_CLOSE_TOP = 72
 const RED_POPUP_CLOSE_DELAY_MS = 80
+const MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX = 56
 
 function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
