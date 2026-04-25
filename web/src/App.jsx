@@ -2524,7 +2524,7 @@ const RED_POPUP_TRANSITION_MS = 240
 const RED_POPUP_DESKTOP_CLOSE_TOP = 72
 const RED_POPUP_CLOSE_DELAY_MS = 80
 
-function RedPopupModal({ open, onClose }) {
+function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
   const [entered, setEntered] = useState(false)
   const [closeEntered, setCloseEntered] = useState(false)
@@ -2709,7 +2709,15 @@ function RedPopupModal({ open, onClose }) {
                 In 2018, we pivoted RED toward Design Sprints and partnered with{' '}
                 <strong className="text-black/90">Google Israel</strong> as their local chapter. Beyond
                 running sprints, we launched an education program to train new facilitators. I
-                mentored them on the <span className="text-[#2b00ff]">prototyping phase</span> - sharing
+                mentored them on the{' '}
+                <button
+                  type="button"
+                  className="intro__red-action"
+                  onClick={onOpenDesignSprints}
+                >
+                  prototyping phase
+                </button>{' '}
+                - sharing
                 our experience on how to turn abstract ideas into functional experiences in a matter
                 of hours.
               </p>
@@ -3129,6 +3137,10 @@ function App() {
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const openDesignSprintsFromRed = () => {
+    setIsRedModalOpen(false)
+    openCaseStudy('design-sprints')
+  }
 
   const interactiveCaseStudyKeys = new Set([
     'boss-ai',
@@ -3395,7 +3407,11 @@ function App() {
           onBack={goHome}
           onOpenRed={() => setIsRedModalOpen(true)}
         />
-        <RedPopupModal open={isRedModalOpen} onClose={() => setIsRedModalOpen(false)} />
+        <RedPopupModal
+          open={isRedModalOpen}
+          onClose={() => setIsRedModalOpen(false)}
+          onOpenDesignSprints={openDesignSprintsFromRed}
+        />
       </>
     )
   }
@@ -3704,7 +3720,11 @@ function App() {
 
         <HumanDesignBanner />
       </div>
-      <RedPopupModal open={isRedModalOpen} onClose={() => setIsRedModalOpen(false)} />
+      <RedPopupModal
+        open={isRedModalOpen}
+        onClose={() => setIsRedModalOpen(false)}
+        onOpenDesignSprints={openDesignSprintsFromRed}
+      />
     </main>
   )
 }
