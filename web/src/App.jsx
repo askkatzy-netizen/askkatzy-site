@@ -64,6 +64,23 @@ import graptapLinkIcon from './assets/graptap-link.svg'
 import briefsCheckIcon from './assets/briefs-check.png'
 import briefMappingImage from './assets/brief-mapping.png'
 import briefCmsImage from './assets/Brief-CMS.png'
+import bzLogo from './assets/BZ-logo.svg'
+import mceLogo from './assets/MCE-logo.svg'
+import husLogo from './assets/HuS-logo.svg'
+import bz1Image from './assets/BZ-1.png'
+import bz2Image from './assets/BZ-2.png'
+import bz3Image from './assets/BZ-3.png'
+import bz4Image from './assets/BZ-4.png'
+import bz5Image from './assets/BZ-5.png'
+import dsBookImage from './assets/DS-book.png'
+import mce1Image from './assets/MCE-01.png'
+import mce2Image from './assets/MCE-02.png'
+import mce3Image from './assets/MCE-03.png'
+import mce4Image from './assets/MCE-04.png'
+import hus1Image from './assets/HuS-01.png'
+import hus2Image from './assets/HuS-02.png'
+import hus3Image from './assets/HuS-03.png'
+import hus4Image from './assets/HuS-04.png'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
@@ -184,6 +201,7 @@ const CASE_STUDY_PATHS = {
   'creators-spons': '/case-studies/sponsorships',
   graptap: '/case-studies/graptap',
   'campaign-brief': '/case-studies/briefs',
+  'design-sprints': '/case-studies/design-sprints',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -936,6 +954,231 @@ function BriefsCaseStudyPage({ onBack }) {
         <div className="mt-8 mb-4">
           <CaseStudyFooter variant="case-study" />
         </div>
+      </div>
+    </main>
+  )
+}
+
+function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
+  const [activeDsTab, setActiveDsTab] = useState('bizzabo')
+  const dsTabsetRef = useRef(null)
+  const dsTabOrder = ['bizzabo', 'mce', 'hub-security']
+  const dsTabs = [
+    { key: 'bizzabo', label: 'Bizzabo', logo: bzLogo, logoClassName: 'h-[32px] w-auto' },
+    { key: 'mce', label: 'MCE', logo: mceLogo, logoClassName: 'h-[20px] w-auto' },
+    { key: 'hub-security', label: 'HUB Security', logo: husLogo, logoClassName: 'h-[32px] w-auto' },
+  ]
+  const dsCaseStudies = {
+    bizzabo: {
+      title: 'Bizzabo',
+      year: '2020',
+      description:
+        'Challenged by the 2020 pandemic, Bizzabo needed to move fast. We ran a Design Sprint to validate a shift from physical to hybrid events. We transformed their most pressing business questions into a functional prototype, giving them the clarity needed to maintain their market leadership and adapt for the future.',
+      image: bz1Image,
+      images: [bz1Image, bz2Image, bz3Image, bz4Image, bz5Image],
+      imageAlt: 'Bizzabo design sprint prototype sample',
+    },
+    mce: {
+      title: 'MCE',
+      year: '2022',
+      description:
+        'MCE needed to adapt their mobile diagnostic technology for self-service kiosks in major retail stores. We ran a Design Sprint to bridge the gap between their complex testing backend and a simplified user experience. This allowed them to validate the product requirements needed for customers to confidently trade in devices and receive instant refunds.',
+      image: mce1Image,
+      images: [mce1Image, mce2Image, mce3Image, mce4Image],
+      imageAlt: 'MCE design sprint prototype sample',
+    },
+    'hub-security': {
+      title: 'HUB Security',
+      year: '2022',
+      description:
+        'Operating in the high-stakes cybersecurity sector, HUB Security needed to define its product vision from the ground up. We led a Design Sprint to transform complex security concepts into a polished, branded UI. This functional prototype served as a powerful tool for the sales team and provided the project team with a validated roadmap before development began.',
+      image: hus1Image,
+      images: [hus1Image, hus2Image, hus3Image, hus4Image],
+      imageAlt: 'HUB Security design sprint prototype sample',
+    },
+  }
+  const activeDsCaseStudy = dsCaseStudies[activeDsTab]
+  const activeDsTabIndex = dsTabOrder.indexOf(activeDsTab)
+  const nextDsTabKey = dsTabOrder[(activeDsTabIndex + 1) % dsTabOrder.length]
+  const nextDsTab = dsTabs.find((tab) => tab.key === nextDsTabKey)
+  const goToNextDsTab = () => {
+    setActiveDsTab(nextDsTabKey)
+    dsTabsetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  return (
+    <main className="min-h-screen bg-[#036EDC] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            type="button"
+            onClick={onBack}
+            className="header-cta--case-studies inline-flex bg-white/90"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[24px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-8 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[980px]:gap-10">
+            <div className="flex min-w-0 flex-col gap-10">
+              <div className="flex flex-col gap-4 leading-[1.4]">
+                <h1 className="font-roboto-slab text-[48px] font-semibold text-black/90">
+                  Design Sprints Prototyping
+                </h1>
+                <p className="text-[16px] font-medium text-black/40">RED</p>
+              </div>
+
+              <div className="flex w-full flex-wrap items-center gap-x-4 gap-y-4 min-[700px]:flex-nowrap">
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="4" />
+                  </p>
+                  <p className="text-[12px]">Years of practice</p>
+                </div>
+                <span aria-hidden="true" className="h-[66px] w-px bg-black/15" />
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="~100" delay={120} />
+                  </p>
+                  <p className="text-[12px]">Design Sprints</p>
+                </div>
+                <span aria-hidden="true" className="h-[66px] w-px bg-black/15" />
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="~75" delay={240} />
+                  </p>
+                  <p className="text-[12px]">Iteration sprints</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                In 2018, we shifted{' '}
+                <button type="button" className="intro__red-action" onClick={onOpenRed}>
+                  RED
+                </button>{' '}
+                towards Design Sprints - a methodology designed to test big ideas while creating immediate
+                clarity and alignment for stakeholders.
+              </p>
+              <p>
+                I led the process of transforming complex business questions into high-fidelity, functional
+                prototypes <span className="font-bold text-[#FF5100B3]">in just a single day</span>.
+              </p>
+              <p>
+                This allowed our clients to validate market fit and solve user pain points before writing a
+                single line of code.
+              </p>
+
+              <a
+                href="https://www.red-id.com"
+                target="_blank"
+                rel="noreferrer"
+                className="header-cta--case-studies header-cta--ghost mt-3 inline-flex h-12 w-fit !bg-black/5 !px-[22px] !py-[14px] !text-[14px] !text-black/70 hover:!bg-white"
+              >
+                <img src={rocketSvg} alt="" aria-hidden="true" className="header-cta__icon" />
+                www.red-id.com
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="overflow-hidden rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-10 max-[700px]:rounded-t-none max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-6">
+          <section ref={dsTabsetRef} className="mt-4 flex w-full flex-col items-center gap-6">
+            <p className="text-center text-[14px] leading-[1.4] font-medium text-black/70">
+              Selected case studies
+            </p>
+            <div className="grid w-full max-w-[390px] grid-cols-3 gap-0.5 rounded-[80px]">
+              {dsTabs.map((tab) => {
+                const isCurrent = activeDsTab === tab.key
+                return (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setActiveDsTab(tab.key)}
+                    className={`group relative flex h-20 flex-col items-center justify-center overflow-hidden rounded-[4px] px-2 py-1 transition-colors duration-200 ${
+                      isCurrent ? 'cursor-default bg-[#036EDC]' : 'cursor-pointer bg-black/5'
+                    }`}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                        className={`flex flex-col items-center transition-all duration-200 ${
+                          isCurrent ? 'gap-[6px] translate-y-0' : 'gap-0 translate-y-0 group-hover:gap-[6px] group-hover:translate-y-0'
+                        }`}
+                      >
+                        <div className="flex h-8 items-center justify-center">
+                          <img
+                            src={tab.logo}
+                            alt={tab.label}
+                            className={`${tab.logoClassName} ${isCurrent ? 'brightness-0 invert' : ''}`}
+                          />
+                        </div>
+                        <span
+                          className={`overflow-hidden text-[14px] leading-none font-medium transition-all duration-200 ${
+                            isCurrent
+                              ? 'max-h-[14px] translate-y-0 opacity-100 text-white/90'
+                              : 'max-h-0 translate-y-2 opacity-0 text-black/70 group-hover:max-h-[14px] group-hover:translate-y-0 group-hover:opacity-100'
+                          }`}
+                        >
+                          {tab.label}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          <section className="mt-7 overflow-hidden rounded-[16px] border border-black/20 max-[700px]:rounded-[12px]">
+            <div className="grid grid-cols-1 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <div className="p-6 min-[980px]:p-8">
+                <h2 className="font-roboto-slab text-[36px] leading-[1.1] font-semibold text-black/90">
+                  {activeDsCaseStudy.title}
+                </h2>
+                <p className="mt-2 text-[14px] leading-[1.4] text-black/70">{activeDsCaseStudy.year}</p>
+              </div>
+              <div className="border-t border-black/20 p-6 pt-0 text-[16px] leading-[1.4] text-black/70 max-[979px]:border-t-0 min-[980px]:border-t-0 min-[980px]:border-l min-[980px]:p-8">
+                <p>{activeDsCaseStudy.description}</p>
+              </div>
+            </div>
+            <div className="border-t border-black/20 bg-black/5 p-6 min-[980px]:p-8">
+              <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
+                {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).map((imageSrc, index) => (
+                  <img
+                    key={`${activeDsCaseStudy.title}-${index + 1}`}
+                    src={imageSrc}
+                    alt={`${activeDsCaseStudy.imageAlt} ${index + 1}`}
+                    className="mx-auto block h-auto w-full rounded-[8px] object-cover"
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <div className="mt-8 flex w-full justify-center">
+            <button
+              type="button"
+              onClick={goToNextDsTab}
+              className="ds-next-cta header-cta--case-studies header-top-cta inline-flex"
+            >
+              <img src={arrowRightIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+              {nextDsTab?.label ?? ''}
+            </button>
+          </div>
+
+          <div className="mt-10 flex w-full justify-center">
+            <img
+              src={dsBookImage}
+              alt="Sprint book visual"
+              className="block h-auto w-full max-w-[336px]"
+              loading="lazy"
+            />
+          </div>
+        </section>
       </div>
     </main>
   )
@@ -2769,7 +3012,13 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
-  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons', 'graptap', 'campaign-brief'])
+  const interactiveCaseStudyKeys = new Set([
+    'boss-ai',
+    'creators-spons',
+    'graptap',
+    'campaign-brief',
+    'design-sprints',
+  ])
 
   const renderCaseStudyCard = (project, index) => (
     <article
@@ -2803,6 +3052,8 @@ function App() {
               ? 'Open GrabTap case study page'
               : project.key === 'campaign-brief'
                 ? 'Open Campaign briefs case study page'
+                : project.key === 'design-sprints'
+                  ? 'Open Design Sprints case study page'
             : undefined
       }
     >
@@ -3016,6 +3267,18 @@ function App() {
       <BriefsCaseStudyPage
         onBack={goHome}
       />
+    )
+  }
+
+  if (activeCaseStudy === 'design-sprints') {
+    return (
+      <>
+        <DesignSprintsCaseStudyPage
+          onBack={goHome}
+          onOpenRed={() => setIsRedModalOpen(true)}
+        />
+        <RedPopupModal open={isRedModalOpen} onClose={() => setIsRedModalOpen(false)} />
+      </>
     )
   }
 

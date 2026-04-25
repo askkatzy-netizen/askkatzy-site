@@ -118,6 +118,10 @@ body {
   filter: brightness(0) saturate(100%) !important;
 }
 
+.ds-next-cta {
+  cursor: pointer;
+}
+
 .spons-prototype-copy-cta__icon {
   width: 18px !important;
   height: 18px !important;
@@ -161,7 +165,7 @@ body {
 
 .boss-back-cta:hover,
 .boss-back-cta:focus-visible {
-  border-color: #2ea58d;
+  border-color: #ff83a0;
   box-shadow: 0 0 0 4px rgb(255 255 255 / 20%);
 }
 
@@ -201,6 +205,10 @@ body {
   background: #000000;
 }
 
+.case-study-floater--briefs .case-study-floater__button {
+  background: #ff83a0;
+}
+
 .case-study-floater__button:focus-visible {
   background: #4cbba5;
   border-color: rgb(255 255 255 / 70%);
@@ -213,6 +221,10 @@ body {
 
 .case-study-floater--graptap .case-study-floater__button:focus-visible {
   background: #000000;
+}
+
+.case-study-floater--briefs .case-study-floater__button:focus-visible {
+  background: #ff83a0;
 }
 
 .case-study-floater__icon-chip {
@@ -270,6 +282,11 @@ body {
   .case-study-floater--graptap .case-study-floater__button:hover,
   .case-study-floater--graptap.case-study-floater:hover .case-study-floater__button {
     background: #000000;
+  }
+
+  .case-study-floater--briefs .case-study-floater__button:hover,
+  .case-study-floater--briefs.case-study-floater:hover .case-study-floater__button {
+    background: #ff83a0;
   }
 
   .case-study-floater__button:hover .case-study-floater__icon-chip,
