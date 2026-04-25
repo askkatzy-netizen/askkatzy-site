@@ -520,6 +520,7 @@ function BossAiCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -969,6 +970,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const [activeDsTab, setActiveDsTab] = useState('bizzabo')
@@ -1013,8 +1015,16 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
   const nextDsTabKey = dsTabOrder[(activeDsTabIndex + 1) % dsTabOrder.length]
   const nextDsTab = dsTabs.find((tab) => tab.key === nextDsTabKey)
   const goToNextDsTab = () => {
-    setActiveDsTab(nextDsTabKey)
-    dsTabsetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    suppressFloaterUntilRef.current = Date.now() + 900
+    setShowFloatingHome(false)
+    setActiveDsTab((currentTab) => {
+      const currentIndex = dsTabOrder.indexOf(currentTab)
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0
+      return dsTabOrder[(safeIndex + 1) % dsTabOrder.length]
+    })
+    requestAnimationFrame(() => {
+      dsTabsetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
   }
 
   useEffect(() => {
@@ -1044,6 +1054,11 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterUntilRef.current) {
+        setShowFloatingHome(false)
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const isScrollingUp = currentScrollY < lastScrollYRef.current
       const isScrollingDown = currentScrollY > lastScrollYRef.current
       const isAtTop = currentScrollY <= 2
@@ -1271,10 +1286,11 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
             />
           </div>
 
-          <div className="mt-8 mb-4">
-            <CaseStudyFooter variant="case-study" />
-          </div>
         </section>
+
+        <div className="mt-8 mb-4">
+          <CaseStudyFooter variant="case-study" />
+        </div>
       </div>
     </main>
   )
