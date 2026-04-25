@@ -3,11 +3,13 @@ import tool1Figma from './assets/tool1-Figma.svg'
 import tool2Cursor from './assets/tool2-Cursor.svg'
 import tool3Gemini from './assets/tool3-Gemini.svg'
 import tool4Github from './assets/tool4-Github.svg'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export function HumanDesignBanner() {
   const [isToolsActive, setIsToolsActive] = useState(false)
   const [supportsHover, setSupportsHover] = useState(true)
+  const stageRef = useRef(null)
+  const lastScrollYRef = useRef(0)
   const tools = [tool1Figma, tool2Cursor, tool3Gemini, tool4Github]
 
   useEffect(() => {
@@ -31,12 +33,41 @@ export function HumanDesignBanner() {
     return () => document.removeEventListener('pointerdown', closeOnOutsidePointerDown, true)
   }, [isToolsActive, supportsHover])
 
+  useEffect(() => {
+    if (supportsHover || typeof window === 'undefined') return undefined
+
+    const isStageVisibleInViewport = () => {
+      const rect = stageRef.current?.getBoundingClientRect()
+      if (!rect) return false
+      return rect.bottom > 0 && rect.top < window.innerHeight - 100
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const isScrollingUp = currentScrollY < lastScrollYRef.current
+      const isScrollingDown = currentScrollY > lastScrollYRef.current
+
+      if (isScrollingUp) {
+        setIsToolsActive(false)
+      } else if (isScrollingDown && isStageVisibleInViewport()) {
+        setIsToolsActive(true)
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [supportsHover])
+
   return (
     <section
       className="human-design-banner pointer-events-none mt-16 mb-4 flex -translate-y-[12px] justify-center px-4 pb-[56px]"
       aria-label="Human design"
     >
       <div
+        ref={stageRef}
         className={`human-design-banner__stage pointer-events-auto shrink-0 ${
           isToolsActive ? 'human-design-banner__stage--tools-active' : ''
         }`}
