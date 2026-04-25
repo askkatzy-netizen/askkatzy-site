@@ -541,6 +541,7 @@ function BossAiCaseStudyPage({ onBack }) {
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
   const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -564,10 +565,20 @@ function BossAiCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
     }
 
     const onScroll = () => {
@@ -591,7 +602,7 @@ function BossAiCaseStudyPage({ onBack }) {
         const shouldHideFloater =
           window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
-        if (shouldHideFloater) {
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
         }
@@ -641,7 +652,27 @@ function BossAiCaseStudyPage({ onBack }) {
           </button>
         </header>
 
-        <div className={`case-study-floater ${showFloatingHome ? 'case-study-floater--visible' : ''}`}>
+        <div
+          className={`case-study-floater ${showFloatingHome ? 'case-study-floater--visible' : ''}`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
           <button
             type="button"
             onClick={onBack}
@@ -778,6 +809,7 @@ function BriefsCaseStudyPage({ onBack }) {
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -800,10 +832,20 @@ function BriefsCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
     }
 
     const onScroll = () => {
@@ -827,7 +869,7 @@ function BriefsCaseStudyPage({ onBack }) {
         const shouldHideFloater =
           window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
-        if (shouldHideFloater) {
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
         }
@@ -881,6 +923,24 @@ function BriefsCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--briefs ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
@@ -1040,6 +1100,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
   const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -1116,10 +1177,20 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
     }
 
     const onScroll = () => {
@@ -1150,7 +1221,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
         const shouldHideFloater =
           window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
-        if (shouldHideFloater) {
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
         }
@@ -1204,6 +1275,24 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
           className={`case-study-floater case-study-floater--design-sprints ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
@@ -1420,6 +1509,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
   const copyFeedbackTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -1484,10 +1574,20 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
     }
 
     const onScroll = () => {
@@ -1511,7 +1611,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
         const shouldHideFloater =
           window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
-        if (shouldHideFloater) {
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
         }
@@ -1565,6 +1665,24 @@ function SponsorshipsCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--sponsorships ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
@@ -1914,6 +2032,7 @@ function GrabTapCaseStudyPage({ onBack }) {
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
   const kpiRowRef = useRef(null)
   const kpiItemRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -1939,10 +2058,20 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
     }
 
     const onScroll = () => {
@@ -1966,7 +2095,7 @@ function GrabTapCaseStudyPage({ onBack }) {
         const shouldHideFloater =
           window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
-        if (shouldHideFloater) {
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
         }
@@ -2043,6 +2172,24 @@ function GrabTapCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--graptap ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
