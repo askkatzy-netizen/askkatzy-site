@@ -14,6 +14,35 @@ import { DesignSprintsWordmark } from './DesignSprintsWordmark.jsx'
 import { HumanDesignBanner } from './HumanDesignBanner.jsx'
 import squareFishDefault from './assets/Piranha_default.png'
 import squareFishHover from './assets/Piranha_hover.png'
+import squareFishLogo from './assets/SF_Logo.png'
+import sfRocksImage from './assets/SF-rocks.png'
+import sfPiranhaDefault from './assets/_SF-Piranha_default.png'
+import sfPiranhaJump from './assets/_SF-Piranha_jumppng.png'
+import sfOctopusDefault from './assets/_SF-octopus_default.gif'
+import sfOctopusJump from './assets/_SF-octopus_jump.gif'
+import sfDuckyDefault from './assets/_SF-ducky_default.gif'
+import sfDuckyJump from './assets/_SF-ducky_jump.gif'
+import sfSharkiDefault from './assets/_SF-sharki_default.gif'
+import sfSharkiJump from './assets/_SF-sharki_jump.gif'
+import sfRoundiDefault from './assets/_SF-roundi_default.gif'
+import sfRoundiJump from './assets/_SF-roundi_jump.gif'
+import sfDolphinDefault from './assets/_SF-dolphin_default.gif'
+import sfDolphinJump from './assets/_SF-dolphin_jump.gif'
+import sfTurtleDefault from './assets/_SF-turtle_default.gif'
+import sfTurtleJump from './assets/_SF-turtle_jump.gif'
+import sfSpanishDancerDefault from './assets/_SF-spanishDancer_default.gif'
+import sfSpanishDancerJump from './assets/_SF-spanishDancer_jump.gif'
+import sfUnicornDefault from './assets/_SF-unicorn_default.gif'
+import sfUnicornJump from './assets/_SF-unicorn_jump.gif'
+import sfWalrusDefault from './assets/_SF-walrus_default.gif'
+import sfWalrusJump from './assets/_SF-walrus_jump.gif'
+import sfShrimpDefault from './assets/_SF-shrimp_default.gif'
+import sfShrimpJump from './assets/_SF-shrimp_jump.gif'
+import sfTeethDefault from './assets/_SF-teeth_default.gif'
+import sfTeethJump from './assets/_SF-teeth_jump.gif'
+import sfCropMarks from './assets/_SF-CropMarks.svg'
+import sfCrab from './assets/_SF-crab.gif'
+import sfJellyFish from './assets/_SF-JellyFish.gif'
 import tooltipHorse from './assets/type_horse.png'
 import tooltipAskkatzy from './assets/type-askkatzy-3.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
@@ -210,6 +239,35 @@ const sponsorshipStats = [
   { value: '+ 20%', label: 'Campaign starts' },
   { value: '- 95%', label: 'UX related support tickets' },
 ]
+
+const squareFishCharacters = [
+  { key: 'piranha', defaultSrc: sfPiranhaDefault, jumpSrc: sfPiranhaJump, alt: 'Piranha character' },
+  { key: 'octopus', defaultSrc: sfOctopusDefault, jumpSrc: sfOctopusJump, alt: 'Octopus character' },
+  { key: 'ducky', defaultSrc: sfDuckyDefault, jumpSrc: sfDuckyJump, alt: 'Ducky character' },
+  { key: 'sharki', defaultSrc: sfSharkiDefault, jumpSrc: sfSharkiJump, alt: 'Sharki character' },
+  { key: 'roundi', defaultSrc: sfRoundiDefault, jumpSrc: sfRoundiJump, alt: 'Roundi character' },
+  { key: 'dolphin', defaultSrc: sfDolphinDefault, jumpSrc: sfDolphinJump, alt: 'Dolphin character' },
+  { key: 'turtle', defaultSrc: sfTurtleDefault, jumpSrc: sfTurtleJump, alt: 'Turtle character' },
+  { key: 'spanish-dancer', defaultSrc: sfSpanishDancerDefault, jumpSrc: sfSpanishDancerJump, alt: 'Spanish dancer character' },
+  { key: 'unicorn', defaultSrc: sfUnicornDefault, jumpSrc: sfUnicornJump, alt: 'Unicorn character' },
+  { key: 'walrus', defaultSrc: sfWalrusDefault, jumpSrc: sfWalrusJump, alt: 'Walrus character' },
+  { key: 'shrimp', defaultSrc: sfShrimpDefault, jumpSrc: sfShrimpJump, alt: 'Shrimp character' },
+  { key: 'teeth', defaultSrc: sfTeethDefault, jumpSrc: sfTeethJump, alt: 'Teeth character' },
+]
+
+const getSquareFishCharacterScale = (characterKey) => {
+  if (characterKey === 'piranha') return 1.5
+  if (characterKey === 'ducky') return 0.8
+  if (characterKey === 'teeth') return 0.9
+  if (characterKey === 'turtle' || characterKey === 'walrus') return 1.25
+  return 1
+}
+
+const getSquareFishCharacterOffsetX = (characterKey) => {
+  if (characterKey === 'walrus') return -5
+  if (characterKey === 'piranha') return -10
+  return 0
+}
 
 const CASE_STUDY_PATHS = {
   'boss-ai': '/case-studies/boss-ai',
@@ -2616,8 +2674,16 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
   const suppressFloaterOnResizeUntilRef = useRef(0)
+  const gangSectionRef = useRef(null)
+  const squareFishContentRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+  const [isSquareFishMobile, setIsSquareFishMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches,
+  )
+  const [activeSquareFishCharacterIndex, setActiveSquareFishCharacterIndex] = useState(-1)
+  const [crabOffsetX, setCrabOffsetX] = useState(0)
+  const [jellyOffsetX, setJellyOffsetX] = useState(0)
 
   useEffect(() => {
     const topButton = topHomeButtonRef.current
@@ -2711,6 +2777,14 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     }
   }, [isTopHomeInView])
 
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 700px)')
+    const syncMobile = () => setIsSquareFishMobile(mediaQuery.matches)
+    syncMobile()
+    mediaQuery.addEventListener('change', syncMobile)
+    return () => mediaQuery.removeEventListener('change', syncMobile)
+  }, [])
+
   return (
     <main
       className="min-h-screen bg-[#0093FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
@@ -2801,7 +2875,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
                 <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
-                  {['Fun', 'Engaging', 'Simple', '3D'].map((tag) => (
+                  {['Fun', 'Engaging', 'Simple'].map((tag) => (
                     <span
                       key={tag}
                       className="rounded-[50px] bg-[#CCE9FF] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
@@ -2822,6 +2896,142 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
               </div>
             </div>
           </div>
+        </section>
+
+        <section
+          ref={squareFishContentRef}
+          className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6"
+          onMouseMove={(event) => {
+            if (isSquareFishMobile) return
+            const sectionRect = squareFishContentRef.current?.getBoundingClientRect()
+            if (!sectionRect) return
+            const centerX = sectionRect.left + sectionRect.width / 2
+            const desiredOffset = event.clientX - centerX
+            const maxOffset = Math.max(0, sectionRect.width / 2 - 60)
+            const clampedOffset = Math.max(-maxOffset, Math.min(maxOffset, desiredOffset))
+            setJellyOffsetX(clampedOffset)
+          }}
+          onMouseLeave={() => {
+            if (isSquareFishMobile) return
+            setJellyOffsetX(0)
+          }}
+        >
+          <div className="flex w-full items-center justify-center py-6 max-[700px]:py-4">
+            <img
+              src={squareFishLogo}
+              alt="SquareFish logo"
+              className="block h-auto w-full max-w-[209px]"
+              loading="lazy"
+            />
+          </div>
+
+          <div className="relative mx-auto mb-2 flex h-[140px] w-full items-center justify-center">
+            <img
+              src={sfJellyFish}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none block h-[140px] w-auto transition-transform duration-[10000ms] ease-out"
+              style={{ transform: `translateX(${jellyOffsetX}px)` }}
+              loading="lazy"
+            />
+          </div>
+
+          <section
+            ref={gangSectionRef}
+            className="relative mt-8 overflow-hidden rounded-[16px] bg-[#0093FF] px-6 pt-10 pb-[210px] text-white max-[700px]:mt-6 max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-[178px]"
+            onMouseMove={(event) => {
+              if (isSquareFishMobile) return
+              const sectionRect = gangSectionRef.current?.getBoundingClientRect()
+              if (!sectionRect) return
+              const centerX = sectionRect.left + sectionRect.width / 2
+              const desiredOffset = event.clientX - centerX
+              const maxOffset = Math.max(0, sectionRect.width / 2 - 70)
+              const clampedOffset = Math.max(-maxOffset, Math.min(maxOffset, desiredOffset))
+              setCrabOffsetX(clampedOffset)
+            }}
+            onMouseLeave={() => {
+              if (isSquareFishMobile) return
+              setCrabOffsetX(0)
+            }}
+          >
+            <div className="relative z-[2] mb-4 flex w-full flex-col items-center gap-2">
+              <h2 className="text-center font-roboto-slab text-[36px] leading-[1.4] font-semibold text-white/90 max-[700px]:text-[32px]">
+                {isSquareFishMobile ? 'Meet the gang' : "Let's get it hover with..."}
+              </h2>
+              <p className="text-center text-[14px] leading-[1.4] font-medium text-white/70">
+                {isSquareFishMobile ? 'Tap to see them in action' : 'Hover the characters below to see them in action'}
+              </p>
+            </div>
+
+            <div className="relative z-[2] mx-auto mt-6 mb-10 grid w-full max-w-[1000px] grid-cols-4 justify-items-center gap-y-2 min-[1020px]:grid-cols-6 max-[700px]:grid-cols-3 max-[500px]:grid-cols-2">
+              {squareFishCharacters.map((character, index) => {
+                const isActiveOnMobile = isSquareFishMobile && activeSquareFishCharacterIndex === index
+                return (
+                <div
+                  key={character.key}
+                  className="group relative h-[140px] w-[140px]"
+                  onClick={() => {
+                    if (!isSquareFishMobile) return
+                    setActiveSquareFishCharacterIndex((current) => (current === index ? -1 : index))
+                  }}
+                >
+                  <img
+                    src={sfCropMarks}
+                    alt=""
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 z-[1] block h-full w-full object-contain transition-all duration-100 ${
+                      isActiveOnMobile
+                        ? 'opacity-100 scale-100'
+                        : 'opacity-0 scale-[0.92] group-hover:opacity-100 group-hover:scale-100'
+                    }`}
+                    loading="lazy"
+                  />
+                  <img
+                    src={character.defaultSrc}
+                    alt={character.alt}
+                    className={`pointer-events-none absolute inset-[10px] z-[2] block h-[120px] w-[120px] object-contain transition-opacity duration-200 ${
+                      isActiveOnMobile ? 'opacity-0' : 'opacity-100 group-hover:opacity-0'
+                    }`}
+                    style={{
+                      transform: `translateX(${getSquareFishCharacterOffsetX(character.key)}px) scale(${getSquareFishCharacterScale(character.key)})`,
+                      transformOrigin: 'center center',
+                    }}
+                    loading="lazy"
+                  />
+                  <img
+                    src={character.jumpSrc}
+                    alt=""
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-[10px] z-[2] block h-[120px] w-[120px] object-contain transition-opacity duration-200 ${
+                      isActiveOnMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
+                    style={{
+                      transform: `translateX(${getSquareFishCharacterOffsetX(character.key)}px) scale(${getSquareFishCharacterScale(character.key)})`,
+                      transformOrigin: 'center center',
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+              )})}
+            </div>
+
+            <img
+              src={sfRocksImage}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 left-1/2 z-[1] block h-auto w-[1048px] max-w-none -translate-x-1/2"
+              loading="lazy"
+            />
+
+            <img
+              src={sfCrab}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-[56px] left-1/2 z-[2] block h-auto w-[120px] transition-transform duration-[750ms] ease-out"
+              style={{ transform: `translateX(calc(-50% + ${crabOffsetX}px))` }}
+              loading="lazy"
+            />
+          </section>
         </section>
 
         <div className="mt-8 mb-4">
