@@ -2676,6 +2676,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const suppressFloaterOnResizeUntilRef = useRef(0)
   const gangSectionRef = useRef(null)
   const squareFishContentRef = useRef(null)
+  const squareFishCharacterRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const [isSquareFishMobile, setIsSquareFishMobile] = useState(
@@ -2784,6 +2785,21 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     mediaQuery.addEventListener('change', syncMobile)
     return () => mediaQuery.removeEventListener('change', syncMobile)
   }, [])
+
+  useEffect(() => {
+    if (!isSquareFishMobile) return
+    if (activeSquareFishCharacterIndex < 0) {
+      setCrabOffsetX(0)
+      return
+    }
+
+    const sectionRect = gangSectionRef.current?.getBoundingClientRect()
+    const characterRect = squareFishCharacterRefs.current[activeSquareFishCharacterIndex]?.getBoundingClientRect?.()
+    if (!sectionRect || !characterRect) return
+    const sectionCenterX = sectionRect.left + sectionRect.width / 2
+    const characterCenterX = characterRect.left + characterRect.width / 2
+    setCrabOffsetX(characterCenterX - sectionCenterX)
+  }, [activeSquareFishCharacterIndex, isSquareFishMobile])
 
   return (
     <main
@@ -2969,6 +2985,9 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
                 return (
                 <div
                   key={character.key}
+                  ref={(el) => {
+                    squareFishCharacterRefs.current[index] = el
+                  }}
                   className="group relative h-[140px] w-[140px]"
                   onClick={() => {
                     if (!isSquareFishMobile) return
