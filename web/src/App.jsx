@@ -62,7 +62,7 @@ import gtCharacterImage from './assets/GT-character.png'
 import gtLogoImage from './assets/GT-logo.png'
 import graptapLinkIcon from './assets/graptap-link.svg'
 import briefsCheckIcon from './assets/briefs-check.png'
-import briefMappingImage from './assets/brief-mapping.png'
+import briefMappingImage from './assets/brief-mapping2.png'
 import briefCmsImage from './assets/Brief-CMS.png'
 import bzLogo from './assets/BZ-logo.svg'
 import mceLogo from './assets/MCE-logo.svg'
@@ -955,23 +955,21 @@ function BriefsCaseStudyPage({ onBack }) {
           <section className="flex w-full flex-col items-center gap-6 rounded-[16px] bg-[#131315] p-10 text-white max-[700px]:rounded-[12px] max-[700px]:p-4">
             <div className="flex w-full flex-col gap-4 p-4 max-[700px]:p-0">
               <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-white/90">
-                Mapping the brief
+                3-step solution
               </h2>
-              <p className="text-[16px] leading-[1.4] text-white/70">
-                After auditing the information creators needed, we mapped our content to distinguish between
-                automated data and manual input.
-              </p>
-              <p className="text-[16px] leading-[1.4] text-white/70">
-                We built a dedicated CMS section for custom content, allowing CMs to input unique campaign
-                details. To ensure accuracy, we added a preview mode so CMs could verify the creator&apos;s view
-                before going live.
-              </p>
+              <ol className="list-decimal space-y-2 pl-5 text-[16px] leading-[1.4] text-white/70">
+                <li>Design the brief exactly as we want creators to experience it.</li>
+                <li>
+                  Map the automated technical data against the manual fields needed for custom context.
+                </li>
+                <li>Add the missing custom fields needed for the brief to the CMS.</li>
+              </ol>
             </div>
 
             <div className="h-px w-full bg-white/15" />
 
-            <p className="text-center text-[14px] leading-[1.4] text-white/70">
-              Sample - YouTube short brief / content mapping👇
+            <p className="mb-4 text-center text-[14px] leading-[1.4] font-medium text-white/70">
+              Sample content mapping👇
             </p>
 
             <img
@@ -981,12 +979,11 @@ function BriefsCaseStudyPage({ onBack }) {
               loading="lazy"
             />
 
-            <div className="w-full">
-              <div className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-[11px] w-[11px] rounded-full border-[3.2px] border-[#040404] bg-[#AEFF91] shadow-[4.8px_4px_0_rgba(0,0,0,0.7)]" />
-                <p className="font-nunito-sans text-[12px] leading-[1.3] tracking-[-0.08px] text-white/70">
-                  Fields inserted in brief
-                </p>
+            <div className="mt-10 flex w-full justify-center max-[700px]:mt-8 max-[700px]:mb-4">
+              <div className="inline-flex items-center">
+                <span className="inline-flex items-center rounded-[999px] bg-[#AEFF91] px-3 py-1 font-nunito-sans text-[12px] leading-[1.3] font-semibold tracking-[-0.08px] text-black/80">
+                  Brief custom fields
+                </span>
               </div>
             </div>
           </section>
