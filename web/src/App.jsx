@@ -543,6 +543,7 @@ function BossAiCaseStudyPage({ onBack }) {
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
   const suppressFloaterUntilRef = useRef(0)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -583,6 +584,10 @@ function BossAiCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const previousScrollY = lastScrollYRef.current
       const isScrollingUp = currentScrollY < previousScrollY
       const isScrollingDown = currentScrollY > previousScrollY
@@ -625,10 +630,18 @@ function BossAiCaseStudyPage({ onBack }) {
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
     downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -810,6 +823,7 @@ function BriefsCaseStudyPage({ onBack }) {
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -850,6 +864,10 @@ function BriefsCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const previousScrollY = lastScrollYRef.current
       const isScrollingUp = currentScrollY < previousScrollY
       const isScrollingDown = currentScrollY > previousScrollY
@@ -892,10 +910,18 @@ function BriefsCaseStudyPage({ onBack }) {
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
     downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -1101,6 +1127,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const suppressFloaterUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -1195,6 +1222,10 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       if (Date.now() < suppressFloaterUntilRef.current) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current = 0
@@ -1244,10 +1275,18 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
     downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -1510,6 +1549,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const copyFeedbackTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -1592,6 +1632,10 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const previousScrollY = lastScrollYRef.current
       const isScrollingUp = currentScrollY < previousScrollY
       const isScrollingDown = currentScrollY > previousScrollY
@@ -1634,10 +1678,18 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
     downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -2033,6 +2085,7 @@ function GrabTapCaseStudyPage({ onBack }) {
   const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
   const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const kpiRowRef = useRef(null)
   const kpiItemRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -2076,6 +2129,10 @@ function GrabTapCaseStudyPage({ onBack }) {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const previousScrollY = lastScrollYRef.current
       const isScrollingUp = currentScrollY < previousScrollY
       const isScrollingDown = currentScrollY > previousScrollY
@@ -2118,10 +2175,18 @@ function GrabTapCaseStudyPage({ onBack }) {
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
     downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -2633,7 +2698,7 @@ function SponsorshipCampaignCardSection() {
               hovered
                 ? 'bg-[#232428] shadow-[4px_4px_16px_0_rgba(0,0,0,0.4)]'
                 : 'bg-[#131315] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
-            } ${hovered ? '-translate-y-2' : 'translate-y-0'}`}
+            } ${hovered ? '-translate-y-4' : 'translate-y-0'}`}
             onPointerEnter={handleCardPointerEnter}
             onPointerLeave={handleCardPointerLeave}
           >

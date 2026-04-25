@@ -556,8 +556,8 @@ body {
   border: 1px solid rgb(0 0 0 / 15%);
   background: #ffffff;
   padding: 5px;
-  transition: transform 160ms ease-out, box-shadow 160ms ease-out,
-    border-color 160ms ease-out;
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out,
+    border-color 200ms ease-out;
 }
 
 /* Let Design Sprints decor (circles) show — default surface still clips translateX on the img */
@@ -1197,7 +1197,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--sponsorships {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: #2b00ff;
   box-shadow: 0 0 0 4px rgb(43 0 255 / 20%);
 }
@@ -1639,7 +1639,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--stream {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1660,7 +1660,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--graptap {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1671,7 +1671,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1682,7 +1682,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1695,7 +1695,7 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red {
   z-index: 4;
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1719,7 +1719,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--squarefish {
-  transform: translateY(-4px);
+  transform: translateY(-16px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -2060,7 +2060,7 @@ body {
   .case-study-item .case-thumb__design-sprints .sprint-fill-outline,
   .case-study-item .case-thumb__design-sprints .sprint-fill-accent,
   .case-study-item .case-thumb__design-sprints .sprint-fill-detail {
-    transition-duration: 300ms !important;
+    transition-duration: 200ms !important;
   }
 }
 

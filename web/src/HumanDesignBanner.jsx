@@ -11,6 +11,8 @@ export function HumanDesignBanner() {
   const stageRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const upScrollDistanceRef = useRef(0)
+  const suppressAutoToggleUntilRef = useRef(0)
+  const lastUserScrollIntentAtRef = useRef(0)
   const tools = [tool1Figma, tool2Cursor, tool3Gemini, tool4Github]
   const MOBILE_TOOLS_HIDE_UP_SCROLL_PX = 80
 
@@ -46,6 +48,15 @@ export function HumanDesignBanner() {
 
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressAutoToggleUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      // Ignore passive/layout-driven scroll position changes (e.g. resize reflow).
+      if (Date.now() - lastUserScrollIntentAtRef.current > 1200) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
       const deltaY = currentScrollY - lastScrollYRef.current
       const isScrollingUp = deltaY < 0
       const isScrollingDown = deltaY > 0
@@ -68,8 +79,26 @@ export function HumanDesignBanner() {
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
     upScrollDistanceRef.current = 0
+    suppressAutoToggleUntilRef.current = 0
+    const markUserScrollIntent = () => {
+      lastUserScrollIntentAtRef.current = Date.now()
+    }
+    const onResize = () => {
+      // Ignore synthetic/relayout scrolls caused by viewport width changes.
+      suppressAutoToggleUntilRef.current = Date.now() + 400
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+    }
+    window.addEventListener('wheel', markUserScrollIntent, { passive: true })
+    window.addEventListener('touchmove', markUserScrollIntent, { passive: true })
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('wheel', markUserScrollIntent)
+      window.removeEventListener('touchmove', markUserScrollIntent)
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [supportsHover])
 
   return (
