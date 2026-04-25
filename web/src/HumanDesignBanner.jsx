@@ -1,17 +1,62 @@
 import humanDesignHoverSvg from './assets/human-design-hover.svg?raw'
+import tool1Figma from './assets/tool1-Figma.svg'
+import tool2Cursor from './assets/tool2-Cursor.svg'
+import tool3Gemini from './assets/tool3-Gemini.svg'
+import tool4Github from './assets/tool4-Github.svg'
+import { useEffect, useState } from 'react'
 
 export function HumanDesignBanner() {
+  const [isToolsActive, setIsToolsActive] = useState(false)
+  const [supportsHover, setSupportsHover] = useState(true)
+  const tools = [tool1Figma, tool2Cursor, tool3Gemini, tool4Github]
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    const mediaQuery = window.matchMedia('(hover: hover)')
+    const sync = () => setSupportsHover(mediaQuery.matches)
+    sync()
+    mediaQuery.addEventListener('change', sync)
+    return () => mediaQuery.removeEventListener('change', sync)
+  }, [])
+
+  useEffect(() => {
+    if (!isToolsActive || supportsHover) return undefined
+    const closeOnOutsidePointerDown = (event) => {
+      const target = event.target
+      if (!(target instanceof Node)) return
+      if (target.closest('.human-design-banner__stage')) return
+      setIsToolsActive(false)
+    }
+    document.addEventListener('pointerdown', closeOnOutsidePointerDown, true)
+    return () => document.removeEventListener('pointerdown', closeOnOutsidePointerDown, true)
+  }, [isToolsActive, supportsHover])
+
   return (
     <section
-      className="human-design-banner pointer-events-none mt-16 flex -translate-y-[12px] justify-center px-4 pb-10"
+      className="human-design-banner pointer-events-none mt-16 flex -translate-y-[12px] justify-center px-4 pb-[56px]"
       aria-label="Human design"
     >
-      <div className="human-design-banner__stage pointer-events-auto shrink-0">
+      <div
+        className={`human-design-banner__stage pointer-events-auto shrink-0 ${
+          isToolsActive ? 'human-design-banner__stage--tools-active' : ''
+        }`}
+        onPointerUp={(event) => {
+          if (supportsHover || event.pointerType === 'mouse') return
+          setIsToolsActive((prev) => !prev)
+        }}
+      >
         <div
           className="human-design-banner__hover-layer"
           aria-hidden="true"
           dangerouslySetInnerHTML={{ __html: humanDesignHoverSvg }}
         />
+        <div className="human-design-banner__tools" aria-hidden="true">
+          {tools.map((toolSrc, index) => (
+            <span key={index} className="human-design-banner__tool-chip">
+              <img src={toolSrc} alt="" className="human-design-banner__tool-icon" />
+            </span>
+          ))}
+        </div>
 
         <div className="human-design-banner__idle">
           <div

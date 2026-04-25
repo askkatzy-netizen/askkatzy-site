@@ -1749,10 +1749,53 @@ body {
   height: 100%;
 }
 
+.human-design-banner__tools {
+  position: absolute;
+  left: 50%;
+  top: calc(50% + 95px);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  gap: 0;
+  transform: translate(-50%, -50%);
+  transition:
+    opacity 320ms cubic-bezier(0.33, 1, 0.68, 1),
+    gap 320ms cubic-bezier(0.33, 1, 0.68, 1);
+  pointer-events: none;
+}
+
+.human-design-banner__tool-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 21px;
+  height: 21px;
+}
+
+.human-design-banner__tool-icon {
+  display: block;
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.human-design-banner__tool-icon [opacity] {
+  opacity: 1 !important;
+}
+
 .human-design-banner__stage:hover .human-design-banner__hover-layer {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1) rotate(0deg);
   pointer-events: auto;
+}
+
+.human-design-banner__stage:hover .human-design-banner__tools,
+.human-design-banner__stage--tools-active .human-design-banner__tools {
+  opacity: 1;
+  gap: 16px;
 }
 
 .human-design-banner__idle {
@@ -1788,6 +1831,12 @@ body {
   box-shadow: none;
 }
 
+.human-design-banner__stage--tools-active .human-design-banner__icon-ring {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+}
+
 .human-design-banner__bot {
   position: relative;
   z-index: 3;
@@ -1804,6 +1853,11 @@ body {
 }
 
 .human-design-banner__stage:hover .human-design-banner__bot-path {
+  stroke: rgb(0 0 0 / 50%);
+  stroke-opacity: 1;
+}
+
+.human-design-banner__stage--tools-active .human-design-banner__bot-path {
   stroke: rgb(0 0 0 / 50%);
   stroke-opacity: 1;
 }
