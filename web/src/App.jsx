@@ -3132,6 +3132,17 @@ function App() {
   const caseItemRefs = useRef([])
   const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
   const suppressCaseClickUntilRef = useRef(0)
+  const pageThemeColor = activeCaseStudy === 'boss-ai'
+    ? '#4CBBA5'
+    : activeCaseStudy === 'campaign-brief'
+      ? '#FF83A0'
+      : activeCaseStudy === 'design-sprints'
+        ? '#036EDC'
+        : activeCaseStudy === 'creators-spons'
+          ? '#1F00CC'
+          : activeCaseStudy === 'graptap'
+            ? '#000000'
+            : '#ffffff'
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -3222,6 +3233,34 @@ function App() {
       if (frameId) window.cancelAnimationFrame(frameId)
     }
   }, [supportsHover])
+
+  useEffect(() => {
+    if (typeof document === 'undefined') return undefined
+
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]')
+    if (!themeColorMeta) {
+      themeColorMeta = document.createElement('meta')
+      themeColorMeta.setAttribute('name', 'theme-color')
+      document.head.appendChild(themeColorMeta)
+    }
+
+    const previousHtmlBg = document.documentElement.style.backgroundColor
+    const previousBodyBg = document.body.style.backgroundColor
+    const previousThemeColor = themeColorMeta.getAttribute('content')
+
+    themeColorMeta.setAttribute('content', pageThemeColor)
+    document.documentElement.style.backgroundColor = pageThemeColor
+    document.body.style.backgroundColor = pageThemeColor
+
+    return () => {
+      if (themeColorMeta) {
+        if (previousThemeColor) themeColorMeta.setAttribute('content', previousThemeColor)
+        else themeColorMeta.removeAttribute('content')
+      }
+      document.documentElement.style.backgroundColor = previousHtmlBg
+      document.body.style.backgroundColor = previousBodyBg
+    }
+  }, [pageThemeColor])
 
   useEffect(() => {
     if (!isIntroTopLayout) return undefined
