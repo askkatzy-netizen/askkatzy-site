@@ -1046,18 +1046,39 @@ body {
   transform: translateY(-50%);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 160ms ease-out;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 120ms ease-out;
+}
+
+.case-thumb__campaign-brief-vector-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
 }
 
 .case-thumb__campaign-brief-vector-img {
   display: block;
   width: 18px;
-  height: auto;
-  max-height: 100%;
+  height: 18px;
+  transform: translateX(-14px);
+  opacity: 0;
+  transition:
+    opacity 120ms ease-out,
+    transform 180ms cubic-bezier(0.2, 0.9, 0.25, 1);
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-vector {
   opacity: 1;
+}
+
+:is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-vector-img {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .case-thumb__campaign-brief-mark {

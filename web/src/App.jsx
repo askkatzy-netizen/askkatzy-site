@@ -4,7 +4,12 @@ import graptapLogoDefault from './assets/graptap-logo-default.svg'
 import graptapLogoHover from './assets/graptap-logo-hover.svg'
 import graptapBg from './assets/graptap-bg.svg'
 import bossAiCog from './assets/boss-ai-cog.svg'
-import campaignBriefVector from './assets/campaign-brief-vector-brief.svg'
+import brief1StarIcon from './assets/brief1-star.svg'
+import brief4JoinInnerIcon from './assets/brief4-join_inner.svg'
+import brief5PreviewIcon from './assets/brief5-preview.svg'
+import brief6TimerIcon from './assets/brief6-timer.svg'
+import brief12VideoLibraryIcon from './assets/brief12video_library.svg'
+import brief13BoltIcon from './assets/brief13-bolt.svg'
 import { DesignSprintsWordmark } from './DesignSprintsWordmark.jsx'
 import { HumanDesignBanner } from './HumanDesignBanner.jsx'
 import squareFishDefault from './assets/Piranha_default.png'
@@ -163,6 +168,15 @@ const projectCards = [
 
 const beyondLines = [
   'I have an identical twin brother.',
+]
+
+const campaignBriefHoverIcons = [
+  brief1StarIcon,
+  brief4JoinInnerIcon,
+  brief5PreviewIcon,
+  brief6TimerIcon,
+  brief12VideoLibraryIcon,
+  brief13BoltIcon,
 ]
 
 const GMAIL_COMPOSE_URL =
@@ -3510,11 +3524,16 @@ function App() {
           ) : project.key === 'campaign-brief' ? (
             <>
               <div className="case-thumb__campaign-brief-vector" aria-hidden="true">
-                <img
-                  src={campaignBriefVector}
-                  alt=""
-                  className="case-thumb__campaign-brief-vector-img"
-                />
+                {campaignBriefHoverIcons.map((iconSrc, index) => (
+                  <span key={iconSrc} className="case-thumb__campaign-brief-vector-item">
+                    <img
+                      src={iconSrc}
+                      alt=""
+                      className="case-thumb__campaign-brief-vector-img"
+                      style={{ transitionDelay: `${index * 55}ms` }}
+                    />
+                  </span>
+                ))}
               </div>
               <div className="case-thumb__campaign-brief-mark">
                 <div className="case-thumb__campaign-brief-ring">
