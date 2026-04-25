@@ -217,6 +217,7 @@ const CASE_STUDY_PATHS = {
   graptap: '/case-studies/graptap',
   'campaign-brief': '/case-studies/briefs',
   'design-sprints': '/case-studies/design-sprints',
+  squarefish: '/case-studies/squarefish',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -2607,6 +2608,230 @@ function SponsorshipStatsRow() {
   )
 }
 
+function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
+      } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
+  return (
+    <main
+      className="min-h-screen bg-[#0093FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#0093FF' }}
+    >
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <div
+          className={`case-study-floater case-study-floater--squarefish ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">SquareFish</span>
+          </button>
+        </div>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="flex min-w-0 flex-col gap-4">
+              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">SquareFish</p>
+              <p className="text-[16px] leading-[1.4] font-medium text-black/40">RED, 2017</p>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                <strong className="font-bold text-black/70">SquareFish</strong>
+                {' began as an experimental pilot in '}
+                <button type="button" className="intro__red-action" onClick={onOpenRed}>
+                  RED
+                </button>
+                {
+                  ". Targeted at a younger audience and powered by an ad-based revenue model, it didn't achieve the commercial lift we hoped for - but it was a great lesson."
+                }
+              </p>
+              <p>
+                Developing <strong className="font-bold text-black/70">SquareFish</strong> sharpened my skills
+                in crafting simple, engaging UI. It also challenged me to bridge the gap between a creative
+                concept and a viable, revenue driven product.
+              </p>
+              <p>
+                Beyond the strategy, I took great joy in modeling and animating the 3D characters to bring this
+                world to life.
+              </p>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
+                  {['Fun', 'Engaging', 'Simple', '3D'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#CCE9FF] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Game engine</p>
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
+                  <span className="rounded-[50px] bg-[#CCE9FF] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70">
+                    Buildbox / No-code
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="mt-8 mb-4">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
+  )
+}
+
 function SponsorshipCampaignCardSection() {
   const [hovered, setHovered] = useState(false)
   const [isMobile, setIsMobile] = useState(
@@ -3400,6 +3625,8 @@ function App() {
           ? '#1F00CC'
           : activeCaseStudy === 'graptap'
             ? '#000000'
+            : activeCaseStudy === 'squarefish'
+              ? '#0093FF'
             : '#ffffff'
 
   useEffect(() => {
@@ -3610,6 +3837,7 @@ function App() {
     'graptap',
     'campaign-brief',
     'design-sprints',
+    'squarefish',
   ])
 
   const renderCaseStudyCard = (project, index) => (
@@ -3657,6 +3885,8 @@ function App() {
                 ? 'Open Campaign briefs case study page'
                 : project.key === 'design-sprints'
                   ? 'Open Design Sprints case study page'
+                  : project.key === 'squarefish'
+                    ? 'Open SquareFish case study page'
             : undefined
       }
     >
@@ -3882,6 +4112,22 @@ function App() {
     return (
       <>
         <DesignSprintsCaseStudyPage
+          onBack={goHome}
+          onOpenRed={() => setIsRedModalOpen(true)}
+        />
+        <RedPopupModal
+          open={isRedModalOpen}
+          onClose={() => setIsRedModalOpen(false)}
+          onOpenDesignSprints={openDesignSprintsFromRed}
+        />
+      </>
+    )
+  }
+
+  if (activeCaseStudy === 'squarefish') {
+    return (
+      <>
+        <SquareFishCaseStudyPage
           onBack={goHome}
           onOpenRed={() => setIsRedModalOpen(true)}
         />

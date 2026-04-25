@@ -215,6 +215,10 @@ body {
   background: #ff83a0;
 }
 
+.case-study-floater--squarefish .case-study-floater__button {
+  background: #0093ff;
+}
+
 .case-study-floater__button:focus-visible {
   background: #4cbba5;
   border-color: rgb(255 255 255 / 70%);
@@ -235,6 +239,10 @@ body {
 
 .case-study-floater--briefs .case-study-floater__button:focus-visible {
   background: #ff83a0;
+}
+
+.case-study-floater--squarefish .case-study-floater__button:focus-visible {
+  background: #0093ff;
 }
 
 .case-study-floater__icon-chip {
@@ -320,6 +328,11 @@ body {
   .case-study-floater--briefs .case-study-floater__button:hover,
   .case-study-floater--briefs.case-study-floater:hover .case-study-floater__button {
     background: #ff83a0;
+  }
+
+  .case-study-floater--squarefish .case-study-floater__button:hover,
+  .case-study-floater--squarefish.case-study-floater:hover .case-study-floater__button {
+    background: #0093ff;
   }
 
   .case-study-floater__button:hover .case-study-floater__icon-chip,
@@ -1197,7 +1210,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--sponsorships {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: #2b00ff;
   box-shadow: 0 0 0 4px rgb(43 0 255 / 20%);
 }
@@ -1639,7 +1652,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--stream {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1660,7 +1673,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--graptap {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1671,7 +1684,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1682,7 +1695,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1695,7 +1708,7 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red {
   z-index: 4;
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
@@ -1719,7 +1732,7 @@ body {
 
 
 :is(.group:hover, .case-study-item--active) .case-thumb--squarefish {
-  transform: translateY(-16px);
+  transform: translateY(-8px);
   border-color: var(--case-hover-border);
   box-shadow: 0 0 0 4px var(--case-hover-halo);
 }
