@@ -165,7 +165,7 @@ body {
 
 .boss-back-cta:hover,
 .boss-back-cta:focus-visible {
-  border-color: #ff83a0;
+  border-color: var(--case-cta-hover-border, #2ea58d);
   box-shadow: 0 0 0 4px rgb(255 255 255 / 20%);
 }
 
@@ -205,6 +205,10 @@ body {
   background: #000000;
 }
 
+.case-study-floater--design-sprints .case-study-floater__button {
+  background: #036edc;
+}
+
 .case-study-floater--briefs .case-study-floater__button {
   background: #ff83a0;
 }
@@ -221,6 +225,10 @@ body {
 
 .case-study-floater--graptap .case-study-floater__button:focus-visible {
   background: #000000;
+}
+
+.case-study-floater--design-sprints .case-study-floater__button:focus-visible {
+  background: #036edc;
 }
 
 .case-study-floater--briefs .case-study-floater__button:focus-visible {
@@ -282,6 +290,11 @@ body {
   .case-study-floater--graptap .case-study-floater__button:hover,
   .case-study-floater--graptap.case-study-floater:hover .case-study-floater__button {
     background: #000000;
+  }
+
+  .case-study-floater--design-sprints .case-study-floater__button:hover,
+  .case-study-floater--design-sprints.case-study-floater:hover .case-study-floater__button {
+    background: #036edc;
   }
 
   .case-study-floater--briefs .case-study-floater__button:hover,

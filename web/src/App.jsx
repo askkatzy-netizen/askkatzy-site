@@ -583,7 +583,10 @@ function BossAiCaseStudyPage({ onBack }) {
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#4CBBA5' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -790,7 +793,10 @@ function BriefsCaseStudyPage({ onBack }) {
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#FF83A0] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#FF83A0] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#FF83A0' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -960,6 +966,11 @@ function BriefsCaseStudyPage({ onBack }) {
 }
 
 function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const [activeDsTab, setActiveDsTab] = useState('bizzabo')
   const dsTabsetRef = useRef(null)
   const dsTabOrder = ['bizzabo', 'mce', 'hub-security']
@@ -1006,19 +1017,100 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
     dsTabsetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const isScrollingUp = currentScrollY < lastScrollYRef.current
+      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingUp) {
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
   return (
-    <main className="min-h-screen bg-[#036EDC] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#036EDC] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#036EDC' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
+            ref={topHomeButtonRef}
             type="button"
             onClick={onBack}
-            className="header-cta--case-studies inline-flex bg-white/90"
+            className="boss-back-cta header-cta--case-studies inline-flex"
           >
             <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
             <span>Home</span>
           </button>
         </header>
+
+        <div
+          className={`case-study-floater case-study-floater--design-sprints ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">Design Sprints Prototyping</span>
+          </button>
+        </div>
 
         <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[24px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
           <div className="grid grid-cols-1 items-start gap-8 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[980px]:gap-10">
@@ -1178,6 +1270,10 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
               loading="lazy"
             />
           </div>
+
+          <div className="mt-8 mb-4">
+            <CaseStudyFooter variant="case-study" />
+          </div>
         </section>
       </div>
     </main>
@@ -1293,7 +1389,10 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#1F00CC] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#1F00CC] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#1F00CC' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -1742,7 +1841,10 @@ function GrabTapCaseStudyPage({ onBack }) {
   }, [])
 
   return (
-    <main className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#000000' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
