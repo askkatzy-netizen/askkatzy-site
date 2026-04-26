@@ -4,13 +4,59 @@ import graptapLogoDefault from './assets/graptap-logo-default.svg'
 import graptapLogoHover from './assets/graptap-logo-hover.svg'
 import graptapBg from './assets/graptap-bg.svg'
 import bossAiCog from './assets/boss-ai-cog.svg'
-import campaignBriefVector from './assets/campaign-brief-vector-brief.svg'
+import brief1StarIcon from './assets/brief1-star.svg'
+import brief4JoinInnerIcon from './assets/brief4-join_inner.svg'
+import brief5PreviewIcon from './assets/brief5-preview.svg'
+import brief6TimerIcon from './assets/brief6-timer.svg'
+import brief12VideoLibraryIcon from './assets/brief12video_library.svg'
+import brief13BoltIcon from './assets/brief13-bolt.svg'
 import { DesignSprintsWordmark } from './DesignSprintsWordmark.jsx'
 import { HumanDesignBanner } from './HumanDesignBanner.jsx'
 import squareFishDefault from './assets/Piranha_default.png'
 import squareFishHover from './assets/Piranha_hover.png'
+import squareFishLogo from './assets/SF_Logo.png'
+import sfRocksImage from './assets/SF-rocks.png'
+import sfPiranhaDefault from './assets/_SF-Piranha_default.png'
+import sfPiranhaJump from './assets/_SF-Piranha_jumppng.png'
+import sfOctopusDefault from './assets/_SF-octopus_default.gif'
+import sfOctopusJump from './assets/_SF-octopus_jump.gif'
+import sfDuckyDefault from './assets/_SF-ducky_default.gif'
+import sfDuckyJump from './assets/_SF-ducky_jump.gif'
+import sfSharkiDefault from './assets/_SF-sharki_default.gif'
+import sfSharkiJump from './assets/_SF-sharki_jump.gif'
+import sfRoundiDefault from './assets/_SF-roundi_default.gif'
+import sfRoundiJump from './assets/_SF-roundi_jump.gif'
+import sfDolphinDefault from './assets/_SF-dolphin_default.gif'
+import sfDolphinJump from './assets/_SF-dolphin_jump.gif'
+import sfTurtleDefault from './assets/_SF-turtle_default.gif'
+import sfTurtleJump from './assets/_SF-turtle_jump.gif'
+import sfSpanishDancerDefault from './assets/_SF-spanishDancer_default.gif'
+import sfSpanishDancerJump from './assets/_SF-spanishDancer_jump.gif'
+import sfUnicornDefault from './assets/_SF-unicorn_default.gif'
+import sfUnicornJump from './assets/_SF-unicorn_jump.gif'
+import sfWalrusDefault from './assets/_SF-walrus_default.gif'
+import sfWalrusJump from './assets/_SF-walrus_jump.gif'
+import sfShrimpDefault from './assets/_SF-shrimp_default.gif'
+import sfShrimpJump from './assets/_SF-shrimp_jump.gif'
+import sfBonusGif from './assets/_SF-bonus.gif'
+import sfTeethDefault from './assets/_SF-teeth_default.gif'
+import sfTeethJump from './assets/_SF-teeth_jump.gif'
+import sfCropMarks from './assets/_SF-CropMarks.svg'
+import sfCrab from './assets/_SF-crab.gif'
+import sfJellyFish from './assets/_SF-JellyFish.gif'
+import sfBombGif from './assets/_SF-bomb.gif'
+import sfWorldsImage from './assets/_SF-worlds.png'
+import sfNafhaDefaultGif from './assets/_SF-Nafha-default.gif'
+import sfNafhaBlownGif from './assets/_SF-Nafha-blown.gif'
+import sfGameOverImage from './assets/_SF-GameOver-2.png'
+import sfCarousel01Image from './assets/_SF-carousel-01_berral.png'
+import sfCarousel02Image from './assets/_SF-carousel-02_flower world.png'
+import sfCarousel03Image from './assets/_SF-carousel-03_pink_diamond.png'
+import sfCarousel04Image from './assets/_SF-carousel-04_guns.png'
+import sfCarousel05Image from './assets/_SF-carousel-05_blowfish.png'
+import sfCarousel06Image from './assets/_SF-carousel-06_last.png'
 import tooltipHorse from './assets/type_horse.png'
-import tooltipAskkatzy from './assets/type_Askkatzy.png'
+import tooltipAskkatzy from './assets/type-askkatzy-3.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
 import tooltipPacman from './assets/type_pac-man.png'
 import tooltipNela from './assets/type_Nela.png'
@@ -19,6 +65,7 @@ import linkedInIcon from './assets/arrow-right.svg'
 import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
+import downloadIcon from './assets/download.svg'
 import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
@@ -29,6 +76,7 @@ import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
 import chevronDownIcon from './assets/chevron-down.svg'
 import chevronUpIcon from './assets/chevron-up.svg'
+import bioAvatarImage from './assets/bio-avatr.png'
 import arrowLeftIcon from './assets/arrow-left.svg'
 import boss01Image from './assets/boss-01.png'
 import boss02Image from './assets/boss-02.png'
@@ -49,26 +97,53 @@ import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-
 import sponsOfferMainContentImage from './assets/spons-offer-main-content.png'
 import sponsPricingCardImage from './assets/spons-pricing-card.png'
 import sponsTrackingOverviewImage from './assets/overview.png'
-import sponsCarousel1Image from './assets/Spons-carousel-1.png'
-import sponsCarousel2Image from './assets/Spons-carousel-2.png'
-import sponsCarousel3Image from './assets/spons_carousel-3b.png'
+import sponsCarousel1Image from './assets/spons-carousel-1b.png'
+import sponsCarousel2Image from './assets/spons-carousel-2b.png'
+import sponsCarousel3Image from './assets/spons-carousel-3b.png'
 import gt1Image from './assets/GT-1.png'
+import gt1MobileImage from './assets/GT1-mobile.png'
 import gt2Image from './assets/GT-2b.png'
 import gt3Image from './assets/GT-3.png'
 import gt4Image from './assets/GT-4b.png'
 import gt5Image from './assets/GT-5.png'
 import gtCharacterImage from './assets/GT-character.png'
 import gtLogoImage from './assets/GT-logo.png'
+import gtCardsImage from './assets/cards.png'
 import graptapLinkIcon from './assets/graptap-link.svg'
 import briefsCheckIcon from './assets/briefs-check.png'
-import briefMappingImage from './assets/brief-mapping.png'
+import briefMappingImage from './assets/brief-mapping2.png'
 import briefCmsImage from './assets/Brief-CMS.png'
+import bzLogo from './assets/BZ-logo.svg'
+import mceLogo from './assets/MCE-logo.svg'
+import husLogo from './assets/HuS-logo.svg'
+import bz1Image from './assets/BZ-1.png'
+import bz2Image from './assets/BZ-2.png'
+import bz3Image from './assets/BZ-3.png'
+import bz4Image from './assets/BZ-4.png'
+import bz5Image from './assets/BZ-5.png'
+import dsBookImage from './assets/DS-book.png'
+import mce1Image from './assets/MCE-01.png'
+import mce2Image from './assets/MCE-02.png'
+import mce3Image from './assets/MCE-03.png'
+import mce4Image from './assets/MCE-04.png'
+import hus1Image from './assets/HuS-01.png'
+import hus2Image from './assets/HuS-02.png'
+import hus3Image from './assets/HuS-03.png'
+import hus4Image from './assets/HuS-04.png'
 import twitchIcon from './assets/twitch.svg'
 import youtubeIcon from './assets/youtube.svg'
 import tiktokIcon from './assets/tiktok.svg'
 import figmaIcon from './assets/figma.svg'
 import link2Icon from './assets/link-2.svg'
 import startCampaignImage from './assets/_start campaign.gif'
+
+const SQUARE_FISH_BONUS_ROWS = [
+  [0, 1, 2],
+  [3, 4],
+  [5],
+]
+
+const SQUARE_FISH_BONUS_TINT_PALETTE = ['#FFE100', '#FFD200', '#FFC400', '#FFB800', '#FFEC33', '#FFD84D']
 
 const bossCaseSections = [
   {
@@ -146,6 +221,15 @@ const beyondLines = [
   'I have an identical twin brother.',
 ]
 
+const campaignBriefHoverIcons = [
+  brief1StarIcon,
+  brief4JoinInnerIcon,
+  brief5PreviewIcon,
+  brief6TimerIcon,
+  brief12VideoLibraryIcon,
+  brief13BoltIcon,
+]
+
 const GMAIL_COMPOSE_URL =
   'https://mail.google.com/mail/?view=cm&fs=1&to=askkatzy@gmail.com&su=Let%27s%20chat'
 
@@ -178,11 +262,59 @@ const sponsorshipStats = [
   { value: '- 95%', label: 'UX related support tickets' },
 ]
 
+const squareFishCharacters = [
+  { key: 'piranha', defaultSrc: sfPiranhaDefault, jumpSrc: sfPiranhaJump, alt: 'Piranha character' },
+  { key: 'octopus', defaultSrc: sfOctopusDefault, jumpSrc: sfOctopusJump, alt: 'Octopus character' },
+  { key: 'ducky', defaultSrc: sfDuckyDefault, jumpSrc: sfDuckyJump, alt: 'Ducky character' },
+  { key: 'sharki', defaultSrc: sfSharkiDefault, jumpSrc: sfSharkiJump, alt: 'Sharki character' },
+  { key: 'roundi', defaultSrc: sfRoundiDefault, jumpSrc: sfRoundiJump, alt: 'Roundi character' },
+  { key: 'dolphin', defaultSrc: sfDolphinDefault, jumpSrc: sfDolphinJump, alt: 'Dolphin character' },
+  { key: 'turtle', defaultSrc: sfTurtleDefault, jumpSrc: sfTurtleJump, alt: 'Turtle character' },
+  { key: 'spanish-dancer', defaultSrc: sfSpanishDancerDefault, jumpSrc: sfSpanishDancerJump, alt: 'Spanish dancer character' },
+  { key: 'unicorn', defaultSrc: sfUnicornDefault, jumpSrc: sfUnicornJump, alt: 'Unicorn character' },
+  { key: 'walrus', defaultSrc: sfWalrusDefault, jumpSrc: sfWalrusJump, alt: 'Walrus character' },
+  { key: 'shrimp', defaultSrc: sfShrimpDefault, jumpSrc: sfShrimpJump, alt: 'Shrimp character' },
+  { key: 'teeth', defaultSrc: sfTeethDefault, jumpSrc: sfTeethJump, alt: 'Teeth character' },
+]
+
+const squareFishCarouselSlides = [
+  { key: '01-berral', image: sfCarousel01Image, alt: 'SquareFish app store screen 1' },
+  { key: '02-flower-world', image: sfCarousel02Image, alt: 'SquareFish app store screen 2' },
+  { key: '03-pink-diamond', image: sfCarousel03Image, alt: 'SquareFish app store screen 3' },
+  { key: '04-guns', image: sfCarousel04Image, alt: 'SquareFish app store screen 4' },
+  { key: '05-blowfish', image: sfCarousel05Image, alt: 'SquareFish app store screen 5' },
+  { key: '06-last', image: sfCarousel06Image, alt: 'SquareFish app store screen 6' },
+]
+
+const getSquareFishCharacterScale = (characterKey) => {
+  if (characterKey === 'piranha') return 1.5
+  if (characterKey === 'ducky') return 0.8
+  if (characterKey === 'teeth') return 0.9
+  if (characterKey === 'turtle' || characterKey === 'walrus') return 1.25
+  return 1
+}
+
+const getSquareFishCharacterOffsetX = (characterKey) => {
+  if (characterKey === 'walrus') return -5
+  if (characterKey === 'piranha') return -10
+  return 0
+}
+
+const hiddenSquareFishCharacterKeysAtTwoPerRow = new Set([
+  'spanish-dancer',
+  'shrimp',
+  'turtle',
+  'teeth',
+])
+
 const CASE_STUDY_PATHS = {
   'boss-ai': '/case-studies/boss-ai',
   'creators-spons': '/case-studies/sponsorships',
   graptap: '/case-studies/graptap',
   'campaign-brief': '/case-studies/briefs',
+  'design-sprints': '/case-studies/design-sprints',
+  squarefish: '/case-studies/squarefish',
+  bio: '/bio',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -285,7 +417,7 @@ const sponsorshipBeneathSurfaceSlides = [
   {
     key: 'my-campaign-states',
     label: 'Variants / Campaign assets: 1x1',
-    image: `${sponsCarousel3Image}?v=3b-20260424-2`,
+    image: sponsCarousel3Image,
     alt: 'My campaigns state variants',
   },
 ]
@@ -299,7 +431,13 @@ const grabTapCaseScreens = [
   { key: 'gt-5', title: 'Core flow / Screen 5', image: gt5Image },
 ]
 
-function CaseStudyImageCarousel({ slides, className = '' }) {
+function CaseStudyImageCarousel({
+  slides,
+  className = '',
+  showSlideLabel = true,
+  slideFrameClassName = '',
+  imageClassName = '',
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredArrow, setHoveredArrow] = useState(null)
   const touchStartXRef = useRef(null)
@@ -363,9 +501,16 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
 
   if (!Array.isArray(slides) || totalSlides === 0) return null
 
+  const resolvedSlideFrameClassName =
+    slideFrameClassName ||
+    'flex h-[504px] w-full items-center justify-center rounded-[16px] px-8 py-[40px] max-[900px]:h-[432px] max-[700px]:h-[336px] max-[700px]:p-4'
+  const resolvedImageClassName =
+    imageClassName ||
+    'block h-[461px] w-auto max-w-full object-contain max-[900px]:h-[403px] max-[700px]:h-[317px]'
+
   return (
     <section
-      className={`relative flex w-full flex-col gap-4 rounded-[16px] border border-dashed border-[#2B00FF] p-4 max-[700px]:p-3 ${className}`}
+      className={`relative flex w-full flex-col gap-4 rounded-[16px] p-4 max-[700px]:p-3 ${className}`}
       onKeyDown={(event) => {
         if (event.key === 'ArrowLeft') goToPrev()
         if (event.key === 'ArrowRight') goToNext()
@@ -375,37 +520,91 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
     >
       <div
         ref={viewportRef}
-        className="overflow-hidden rounded-[12px]"
+        className="relative overflow-visible rounded-[12px]"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          className="flex transition-transform duration-500 ease-out"
-          style={{
-            gap: `${slideGap}px`,
-            transform: `translateX(-${activeIndex * (slideWidth + slideGap)}px)`,
-          }}
-        >
-          {slides.map((slide) => (
-            <div
-              key={slide.key}
-              className="shrink-0"
-              style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
-            >
-              <p className="mb-3 text-[14px] leading-[1.4] font-medium text-black/90">
-                {slide.label}
-              </p>
-              <div className="flex h-[504px] w-full items-center justify-center rounded-[16px] bg-black/[0.05] px-8 py-[40px] max-[900px]:h-[432px] max-[700px]:h-[336px] max-[700px]:p-4">
-                <img
-                  src={slide.image}
-                  alt={slide.alt}
-                  className="block h-[461px] w-auto max-w-full object-contain max-[900px]:h-[403px] max-[700px]:h-[317px]"
-                  loading="lazy"
-                />
+        <div className="overflow-hidden rounded-[12px]">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{
+              gap: `${slideGap}px`,
+              transform: `translateX(-${activeIndex * (slideWidth + slideGap)}px)`,
+            }}
+          >
+            {slides.map((slide) => (
+              <div
+                key={slide.key}
+                className="shrink-0"
+                style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
+              >
+                {showSlideLabel && slide.label ? (
+                  <p className="mb-3 text-[14px] leading-[1.4] font-medium text-black/90">{slide.label}</p>
+                ) : null}
+                <div className={resolvedSlideFrameClassName}>
+                  <img
+                    src={slide.image}
+                    alt={slide.alt}
+                    className={resolvedImageClassName}
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-0 z-10 block">
+          <button
+            type="button"
+            onClick={goToPrev}
+            onMouseEnter={() => setHoveredArrow('prev')}
+            onMouseLeave={() => setHoveredArrow(null)}
+            className="pointer-events-auto absolute left-0 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center max-[700px]:left-2 max-[700px]:translate-x-0"
+            aria-label="Previous slide"
+          >
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full border bg-white transition-all duration-200 ${
+                hoveredArrow === 'prev'
+                  ? 'scale-[1.3333] border-[#2B00FF] shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+                  : 'border-black'
+              }`}
+            >
+            <img
+              src={arrowLeftIcon}
+              alt=""
+              aria-hidden="true"
+              className={`opacity-90 transition-all duration-200 ${
+                hoveredArrow === 'prev' ? 'h-7 w-7' : 'h-5 w-5'
+              }`}
+            />
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={goToNext}
+            onMouseEnter={() => setHoveredArrow('next')}
+            onMouseLeave={() => setHoveredArrow(null)}
+            className="pointer-events-auto absolute right-0 top-1/2 flex h-16 w-16 translate-x-1/2 -translate-y-1/2 items-center justify-center max-[700px]:right-2 max-[700px]:translate-x-0"
+            aria-label="Next slide"
+          >
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full border bg-white transition-all duration-200 ${
+                hoveredArrow === 'next'
+                  ? 'scale-[1.3333] border-[#2B00FF] shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+                  : 'border-black'
+              }`}
+            >
+            <img
+              src={arrowRightIcon}
+              alt=""
+              aria-hidden="true"
+              className={`opacity-100 transition-all duration-200 ${
+                hoveredArrow === 'next' ? 'h-7 w-7' : 'h-5 w-5'
+              }`}
+            />
+            </span>
+          </button>
         </div>
       </div>
 
@@ -424,59 +623,20 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-0 z-10 block">
-        <button
-          type="button"
-          onClick={goToPrev}
-          onMouseEnter={() => setHoveredArrow('prev')}
-          onMouseLeave={() => setHoveredArrow(null)}
-          className={`pointer-events-auto absolute left-0 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
-            hoveredArrow === 'prev'
-              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
-              : 'h-12 w-12 border-black bg-white'
-          }`}
-          aria-label="Previous slide"
-        >
-          <img
-            src={arrowLeftIcon}
-            alt=""
-            aria-hidden="true"
-            className={`opacity-90 transition-all duration-200 ${
-              hoveredArrow === 'prev' ? 'h-7 w-7' : 'h-5 w-5'
-            }`}
-          />
-        </button>
-        <button
-          type="button"
-          onClick={goToNext}
-          onMouseEnter={() => setHoveredArrow('next')}
-          onMouseLeave={() => setHoveredArrow(null)}
-          className={`pointer-events-auto absolute right-0 top-1/2 flex translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
-            hoveredArrow === 'next'
-              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
-              : 'h-12 w-12 border-black bg-white'
-          }`}
-          aria-label="Next slide"
-        >
-          <img
-            src={arrowRightIcon}
-            alt=""
-            aria-hidden="true"
-            className={`opacity-100 transition-all duration-200 ${
-              hoveredArrow === 'next' ? 'h-7 w-7' : 'h-5 w-5'
-            }`}
-          />
-        </button>
-      </div>
     </section>
   )
 }
 
 function CaseStudyFooter({ variant = 'home' }) {
   const isCaseStudy = variant === 'case-study'
+  const isBio = variant === 'bio'
 
   return (
-    <footer className="footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d]">
+    <footer
+      className={`footer-contact-row flex items-center justify-center gap-4 px-2 py-4 text-[9.6px] tracking-[0.01em] text-[#6d6d6d] ${
+        isCaseStudy ? 'pb-8' : ''
+      }`}
+    >
       <p className={`text-[14px] font-semibold italic ${isCaseStudy ? 'text-white/90' : 'text-black/70'}`}>
         🌻 Let’s do nice things together...
       </p>
@@ -487,7 +647,7 @@ function CaseStudyFooter({ variant = 'home' }) {
         className={
           isCaseStudy
             ? 'boss-back-cta header-cta--case-studies'
-            : 'header-cta--case-studies header-cta--ghost'
+            : `header-cta--case-studies header-cta--ghost ${isBio ? 'bio-footer-email-cta' : ''}`
         }
       >
         <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
@@ -497,10 +657,243 @@ function CaseStudyFooter({ variant = 'home' }) {
   )
 }
 
+function BioPage({ onBack }) {
+  const bioSkills = [
+    'Product Strategy',
+    'Product Design',
+    'UX / UI',
+    'Design Systems',
+    'Rapid Prototyping',
+    'Animation',
+    'Motion and Interaction Design',
+    'Figma',
+    'Cursor',
+    'Design Leadership',
+    'Design Operations',
+    'Team Mentorship',
+  ]
+
+  return (
+    <main className="min-h-screen bg-[#E9E9E9] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button type="button" onClick={onBack} className="bio-home-cta boss-back-cta header-cta--case-studies inline-flex">
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <section className="relative rounded-[40px] border-2 border-black bg-white px-20 py-20 max-[980px]:rounded-[24px] max-[980px]:px-8 max-[980px]:py-10 max-[700px]:px-4 max-[700px]:py-6 max-[480px]:pt-16">
+          <div className="mb-10 flex items-center gap-4 max-[700px]:flex-wrap">
+            <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-[999px] border border-black">
+              <img src={bioAvatarImage} alt="Eyal Katz avatar" className="block h-auto w-[54.07px] object-contain" />
+            </div>
+            <h1 className="flex-1 font-roboto-slab text-[48px] leading-[1.2] font-semibold text-black/90 max-[700px]:text-[36px]">
+              Eyal katz
+            </h1>
+            <a
+              href="#"
+              className="bio-download-cta group inline-flex h-16 w-16 items-center justify-center rounded-full max-[480px]:absolute max-[480px]:top-2 max-[480px]:right-2"
+              aria-label="Download bio PDF (work in progress)"
+            >
+              <span
+                className="bio-download-cta__core flex h-12 w-12 items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:scale-[1.3333] group-hover:border-[#2B00FF] group-hover:bg-white group-hover:shadow-[0_0_0_4px_rgba(43,0,255,0.2)] group-focus-visible:scale-[1.3333] group-focus-visible:border-[#2B00FF] group-focus-visible:bg-white group-focus-visible:shadow-[0_0_0_4px_rgba(43,0,255,0.2)]"
+                aria-hidden="true"
+              >
+                <img
+                  src={downloadIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:h-7 group-hover:w-7 group-hover:opacity-100 group-focus-visible:h-7 group-focus-visible:w-7 group-focus-visible:opacity-100"
+                />
+              </span>
+            </a>
+          </div>
+
+          <div className="mb-10 max-w-[920px] text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+            <p className="mb-3">
+              I&apos;m a Product Designer focused on making complex products feel simple. With a background as a
+              studio founder and animator, I think beyond visuals - shaping how products feel, move, and come
+              together. I bring clarity under pressure, keep things moving, and add just enough humor to keep
+              everyone sane.
+            </p>
+            <p>I genuinely enjoy what I do.</p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Professional Experience</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Product Design Lead, </span>
+                <span className="text-[24px]">StreamElements</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2022 - now</p>
+            </div>
+            <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              <li>
+                Built monetization products from scratch, including creator-brand collaboration tools and community
+                features that power large-scale ecosystems.
+              </li>
+              <li>
+                Brought Design System thinking into the daily flow, making consistency the default and significantly
+                shortening the distance between idea and production.
+              </li>
+              <li>
+                Used high-fidelity motion and interaction prototypes to show exactly how the product should feel,
+                getting product, engineering, and leadership on the same page before a single line of code was
+                written.
+              </li>
+              <li>
+                Transformed design files into a source of truth, creating a structured environment that made
+                cross-functional handoffs feel low-friction and reliable.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Head of Design / Co-founder, </span>
+                <span className="text-[24px]">Red interactive</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2006 - 2022</p>
+            </div>
+            <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              <li>
+                Co-founded and led the studio with a people-first philosophy - &quot;Grow with a smile&quot;,
+                emphasizing strong process, collaboration, and long-term value over short-term delivery.
+              </li>
+              <li>
+                Led UX/UI strategy and execution across hundreds of projects in education, e-commerce, and
+                cybersecurity, working directly with founders, executives, and product teams.
+              </li>
+              <li>
+                Translated workshop insights and abstract concepts into rapid, testable prototypes, enabling early
+                validation and informed decision-making.
+              </li>
+              <li>
+                Built, mentored, and scaled design teams, establishing standards for clean design, efficient
+                workflows, and clear communication with development teams.
+              </li>
+              <li>
+                Balanced high-level design vision with real-world constraints, including tight deadlines, evolving
+                budgets, and shifting business priorities.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Teacher - 3D Max, </span>
+                <span className="text-[24px]">Bezalel Academy of Arts and Design</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Jerusalem | 2004 - 2007</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              Taught 3D fundamentals in the Industrial Design department (BA and MA programs) through hands-on work
+              in 3ds Max, focusing on modeling and animation.
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                Early Career
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">1997 - 2006</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              I spent my early years at digital studios and software companies, growing from a Lead 3D Artist into
+              creative leadership roles. These years gave me a deep foundation in motion and structural thinking, and
+              taught me how to translate complex technical systems into clear, intuitive experiences.
+            </p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Education</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Graduate Studies in Industrial Design </span>
+                <span className="text-[24px]">/ M.A. program</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Jerusalem | 2006 - 2008</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              Bezalel Academy of Arts and Design
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>B.F.A. </span>
+                <span className="text-[24px]">/ </span>
+                <span className="text-[24px]">Specialized in 3D Art &amp; Animation</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1994 - 1996</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              New York Institute of Technology
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Design Studies </span>
+                <span className="text-[24px]">/ B.A. program</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1992 - 1994</p>
+            </div>
+            <p className="mb-3 text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              Fashion Institute of Technology
+            </p>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              Foundations in Design and Broad Creative Skills
+            </p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Skills</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {bioSkills.map((skill) => (
+              <span key={skill} className="rounded-[48px] bg-[#F2F2F2] px-5 py-2.5 text-[14px] leading-[1.4] text-black">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <CaseStudyFooter variant="bio" />
+      </div>
+    </main>
+  )
+}
+
 function BossAiCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterUntilRef = useRef(0)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -523,29 +916,60 @@ function BossAiCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
     }
 
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
+    }
+
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
-        setShowFloatingHome(false)
-        clearIdleHideTimer()
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
       } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -554,17 +978,30 @@ function BossAiCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#4CBBA5] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#4CBBA5' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -578,10 +1015,35 @@ function BossAiCaseStudyPage({ onBack }) {
           </button>
         </header>
 
-        <div className={`case-study-floater ${showFloatingHome ? 'case-study-floater--visible' : ''}`}>
+        <div
+          className={`case-study-floater ${showFloatingHome ? 'case-study-floater--visible' : ''}`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -707,7 +1169,11 @@ function BossAiCaseStudyPage({ onBack }) {
 function BriefsCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
 
@@ -730,29 +1196,60 @@ function BriefsCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
     }
 
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
+    }
+
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
-        setShowFloatingHome(false)
-        clearIdleHideTimer()
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
       } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -761,17 +1258,30 @@ function BriefsCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#FF83A0] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#FF83A0] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#FF83A0' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -789,10 +1299,33 @@ function BriefsCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--briefs ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -877,23 +1410,21 @@ function BriefsCaseStudyPage({ onBack }) {
           <section className="flex w-full flex-col items-center gap-6 rounded-[16px] bg-[#131315] p-10 text-white max-[700px]:rounded-[12px] max-[700px]:p-4">
             <div className="flex w-full flex-col gap-4 p-4 max-[700px]:p-0">
               <h2 className="font-roboto-slab text-[36px] leading-[1.2] font-semibold text-white/90">
-                Mapping the brief
+                3-step solution
               </h2>
-              <p className="text-[16px] leading-[1.4] text-white/70">
-                After auditing the information creators needed, we mapped our content to distinguish between
-                automated data and manual input.
-              </p>
-              <p className="text-[16px] leading-[1.4] text-white/70">
-                We built a dedicated CMS section for custom content, allowing CMs to input unique campaign
-                details. To ensure accuracy, we added a preview mode so CMs could verify the creator&apos;s view
-                before going live.
-              </p>
+              <ol className="list-decimal space-y-2 pl-5 text-[16px] leading-[1.4] text-white/70">
+                <li>Design the brief exactly as we want creators to experience it.</li>
+                <li>
+                  Map the automated technical data against the manual fields needed for custom context.
+                </li>
+                <li>Add the missing custom fields needed for the brief to the CMS.</li>
+              </ol>
             </div>
 
             <div className="h-px w-full bg-white/15" />
 
-            <p className="text-center text-[14px] leading-[1.4] text-white/70">
-              Sample - YouTube short brief / content mapping👇
+            <p className="mb-4 text-center text-[14px] leading-[1.4] font-medium text-white/70">
+              Sample content mapping👇
             </p>
 
             <img
@@ -903,12 +1434,11 @@ function BriefsCaseStudyPage({ onBack }) {
               loading="lazy"
             />
 
-            <div className="w-full">
-              <div className="inline-flex items-center gap-1.5">
-                <span className="inline-block h-[11px] w-[11px] rounded-full border-[3.2px] border-[#040404] bg-[#AEFF91] shadow-[4.8px_4px_0_rgba(0,0,0,0.7)]" />
-                <p className="font-nunito-sans text-[12px] leading-[1.3] tracking-[-0.08px] text-white/70">
-                  Fields inserted in brief
-                </p>
+            <div className="mt-10 flex w-full justify-center max-[700px]:mt-8 max-[700px]:mb-4">
+              <div className="inline-flex items-center">
+                <span className="inline-flex items-center rounded-[999px] bg-[#AEFF91] px-3 py-1 font-nunito-sans text-[12px] leading-[1.3] font-semibold tracking-[-0.08px] text-black/80">
+                  Brief custom fields
+                </span>
               </div>
             </div>
           </section>
@@ -940,10 +1470,436 @@ function BriefsCaseStudyPage({ onBack }) {
   )
 }
 
+function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
+  const suppressFloaterUntilRef = useRef(0)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+  const [activeDsTab, setActiveDsTab] = useState('bizzabo')
+  const dsTabsetRef = useRef(null)
+  const dsTabOrder = ['bizzabo', 'mce', 'hub-security']
+  const dsTabs = [
+    { key: 'bizzabo', label: 'Bizzabo', logo: bzLogo, logoClassName: 'h-[32px] w-auto' },
+    { key: 'mce', label: 'MCE', logo: mceLogo, logoClassName: 'h-[20px] w-auto' },
+    { key: 'hub-security', label: 'HUB Security', logo: husLogo, logoClassName: 'h-[32px] w-auto' },
+  ]
+  const dsCaseStudies = {
+    bizzabo: {
+      title: 'Bizzabo',
+      year: '2020',
+      description:
+        'Challenged by the 2020 pandemic, Bizzabo needed to move fast. We ran a Design Sprint to validate a shift from physical to hybrid events. We transformed their most pressing business questions into a functional prototype, giving them the clarity needed to maintain their market leadership and adapt for the future.',
+      image: bz1Image,
+      images: [bz1Image, bz2Image, bz3Image, bz4Image, bz5Image],
+      imageAlt: 'Bizzabo design sprint prototype sample',
+    },
+    mce: {
+      title: 'MCE',
+      year: '2022',
+      description:
+        'MCE needed to adapt their mobile diagnostic technology for self-service kiosks in major retail stores. We ran a Design Sprint to bridge the gap between their complex testing backend and a simplified user experience. This allowed them to validate the product requirements needed for customers to confidently trade in devices and receive instant refunds.',
+      image: mce1Image,
+      images: [mce1Image, mce2Image, mce3Image, mce4Image],
+      imageAlt: 'MCE design sprint prototype sample',
+    },
+    'hub-security': {
+      title: 'HUB Security',
+      year: '2022',
+      description:
+        'Operating in the high-stakes cybersecurity sector, HUB Security needed to define its product vision from the ground up. We led a Design Sprint to transform complex security concepts into a polished, branded UI. This functional prototype served as a powerful tool for the sales team and provided the project team with a validated roadmap before development began.',
+      image: hus1Image,
+      images: [hus1Image, hus2Image, hus3Image, hus4Image],
+      imageAlt: 'HUB Security design sprint prototype sample',
+    },
+  }
+  const activeDsCaseStudy = dsCaseStudies[activeDsTab]
+  const activeDsTabIndex = dsTabOrder.indexOf(activeDsTab)
+  const nextDsTabKey = dsTabOrder[(activeDsTabIndex + 1) % dsTabOrder.length]
+  const nextDsTab = dsTabs.find((tab) => tab.key === nextDsTabKey)
+  const goToNextDsTab = () => {
+    suppressFloaterUntilRef.current = Date.now() + 900
+    setShowFloatingHome(false)
+    setActiveDsTab((currentTab) => {
+      const currentIndex = dsTabOrder.indexOf(currentTab)
+      const safeIndex = currentIndex >= 0 ? currentIndex : 0
+      return dsTabOrder[(safeIndex + 1) % dsTabOrder.length]
+    })
+    requestAnimationFrame(() => {
+      dsTabsetRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      if (Date.now() < suppressFloaterUntilRef.current) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
+        setShowFloatingHome(false)
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
+      } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
+  return (
+    <main
+      className="min-h-screen bg-[#036EDC] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#036EDC' }}
+    >
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <div
+          className={`case-study-floater case-study-floater--design-sprints ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">Design Sprints Prototyping</span>
+          </button>
+        </div>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[24px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-8 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] min-[980px]:gap-10">
+            <div className="flex min-w-0 flex-col gap-10">
+              <div className="flex flex-col gap-4 leading-[1.4]">
+                <h1 className="font-roboto-slab text-[48px] font-semibold text-black/90">
+                  Design Sprints Prototyping
+                </h1>
+                <p className="text-[16px] font-medium text-black/40">RED</p>
+              </div>
+
+              <div className="flex w-full flex-wrap items-center gap-x-4 gap-y-4 min-[700px]:flex-nowrap">
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="4" />
+                  </p>
+                  <p className="text-[12px]">Years of practice</p>
+                </div>
+                <span aria-hidden="true" className="h-[66px] w-px bg-black/15" />
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="~100" delay={120} />
+                  </p>
+                  <p className="text-[12px]">Design Sprints</p>
+                </div>
+                <span aria-hidden="true" className="h-[66px] w-px bg-black/15" />
+                <div className="flex flex-col items-center text-center leading-[1.4] text-black">
+                  <p className="font-roboto-slab text-[32px] font-semibold">
+                    <AnimatedStatValue value="~75" delay={240} />
+                  </p>
+                  <p className="text-[12px]">Iteration sprints</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                In 2018, we shifted{' '}
+                <button type="button" className="intro__red-action" onClick={onOpenRed}>
+                  RED
+                </button>{' '}
+                towards Design Sprints - a methodology designed to test big ideas while creating immediate
+                clarity and alignment for stakeholders.
+              </p>
+              <p>
+                I led the process of transforming complex business questions into high-fidelity, functional
+                prototypes <span className="font-bold text-[#FF5100B3]">in just a single day</span>.
+              </p>
+              <p>
+                This allowed our clients to validate market fit and solve user pain points before writing a
+                single line of code.
+              </p>
+
+              <a
+                href="https://www.red-id.com"
+                target="_blank"
+                rel="noreferrer"
+                className="header-cta--case-studies header-cta--ghost mt-3 inline-flex h-12 w-fit !bg-black/5 !px-[22px] !py-[14px] !text-[14px] !text-black/70 hover:!bg-white"
+              >
+                <img src={rocketSvg} alt="" aria-hidden="true" className="header-cta__icon" />
+                www.red-id.com
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="overflow-hidden rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-10 max-[700px]:rounded-t-none max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-6">
+          <section ref={dsTabsetRef} className="mt-4 flex w-full flex-col items-center gap-6">
+            <p className="text-center text-[14px] leading-[1.4] font-medium text-black/70">
+              Selected case studies
+            </p>
+            <div className="grid w-full max-w-[390px] grid-cols-3 gap-0.5 rounded-[80px]">
+              {dsTabs.map((tab) => {
+                const isCurrent = activeDsTab === tab.key
+                return (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => setActiveDsTab(tab.key)}
+                    className={`group relative flex h-20 flex-col items-center justify-center overflow-hidden rounded-[4px] px-2 py-1 transition-colors duration-200 ${
+                      isCurrent ? 'cursor-default bg-[#036EDC]' : 'cursor-pointer bg-black/5'
+                    }`}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div
+                        className={`flex flex-col items-center transition-all duration-200 ${
+                          isCurrent ? 'gap-[6px] translate-y-0' : 'gap-0 translate-y-0 group-hover:gap-[6px] group-hover:translate-y-0'
+                        }`}
+                      >
+                        <div className="flex h-8 items-center justify-center">
+                          <img
+                            src={tab.logo}
+                            alt={tab.label}
+                            className={`${tab.logoClassName} ${isCurrent ? 'brightness-0 invert' : ''}`}
+                          />
+                        </div>
+                        <span
+                          className={`overflow-hidden text-[14px] leading-none font-medium transition-all duration-200 ${
+                            isCurrent
+                              ? 'max-h-[14px] translate-y-0 opacity-100 text-white/90'
+                              : 'max-h-0 translate-y-2 opacity-0 text-black/70 group-hover:max-h-[14px] group-hover:translate-y-0 group-hover:opacity-100'
+                          }`}
+                        >
+                          {tab.label}
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+
+          <section className="mt-7 overflow-hidden rounded-[16px] border border-black/20 max-[700px]:rounded-[12px]">
+            <div className="grid grid-cols-1 min-[980px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+              <div className="p-6 min-[980px]:p-8">
+                <h2 className="font-roboto-slab text-[36px] leading-[1.1] font-semibold text-black/90">
+                  {activeDsCaseStudy.title}
+                </h2>
+                <p className="mt-2 text-[14px] leading-[1.4] text-black/70">{activeDsCaseStudy.year}</p>
+              </div>
+              <div className="border-t border-black/20 p-6 pt-0 text-[16px] leading-[1.4] text-black/70 max-[979px]:border-t-0 min-[980px]:border-t-0 min-[980px]:border-l min-[980px]:p-8">
+                <p>{activeDsCaseStudy.description}</p>
+              </div>
+            </div>
+            <div className="border-t border-black/20 bg-black/5 p-6 min-[980px]:p-8">
+              {activeDsTab === 'bizzabo' ? (
+                <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
+                  <img
+                    src={activeDsCaseStudy.images?.[0] ?? activeDsCaseStudy.image}
+                    alt={`${activeDsCaseStudy.imageAlt} 1`}
+                    className="mx-auto block h-auto w-full rounded-[8px] object-cover"
+                    loading="lazy"
+                  />
+                  <div className="grid w-full grid-cols-1 gap-6 min-[700px]:grid-cols-2 min-[980px]:gap-8">
+                    {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).slice(1).map((imageSrc, index) => (
+                      <img
+                        key={`${activeDsCaseStudy.title}-${index + 2}`}
+                        src={imageSrc}
+                        alt={`${activeDsCaseStudy.imageAlt} ${index + 2}`}
+                        className="mx-auto block h-auto w-full rounded-[8px] object-cover min-[700px]:h-[260px]"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-6 min-[980px]:gap-8">
+                  {(activeDsCaseStudy.images ?? [activeDsCaseStudy.image]).map((imageSrc, index) => (
+                    <img
+                      key={`${activeDsCaseStudy.title}-${index + 1}`}
+                      src={imageSrc}
+                      alt={`${activeDsCaseStudy.imageAlt} ${index + 1}`}
+                      className="mx-auto block h-auto w-full rounded-[8px] object-cover"
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+
+          <div className="mt-8 flex w-full justify-center">
+            <button
+              type="button"
+              onClick={goToNextDsTab}
+              className="ds-next-cta header-cta--case-studies header-top-cta inline-flex"
+            >
+              <img src={arrowRightIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+              {nextDsTab?.label ?? ''}
+            </button>
+          </div>
+
+          <div className="mt-10 flex w-full justify-center">
+            <img
+              src={dsBookImage}
+              alt="Sprint book visual"
+              className="block h-auto w-full max-w-[336px]"
+              loading="lazy"
+            />
+          </div>
+
+        </section>
+
+        <div className="mt-8 mb-4">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
+  )
+}
+
 function SponsorshipsCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const copyFeedbackTimerRef = useRef(null)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
@@ -1008,29 +1964,60 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
     }
 
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
+    }
+
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
-        setShowFloatingHome(false)
-        clearIdleHideTimer()
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
       } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -1039,17 +2026,30 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
   }, [isTopHomeInView])
 
   return (
-    <main className="min-h-screen bg-[#1F00CC] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-[#1F00CC] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#1F00CC' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -1067,10 +2067,33 @@ function SponsorshipsCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--sponsorships ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -1145,7 +2168,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
           </div>
         </section>
 
-        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+        <section className="rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 !pb-0 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:!pb-0">
           <div className="overflow-hidden rounded-[20px] bg-[#111319] p-6 text-white max-[700px]:rounded-[16px] max-[700px]:p-4">
             <div className="hidden grid-cols-1 gap-6 min-[1080px]:grid min-[1080px]:grid-cols-3">
               <div className="flex flex-col gap-4 rounded-[16px] bg-[#111319] p-2 max-[700px]:p-0">
@@ -1372,7 +2395,7 @@ function SponsorshipsCaseStudyPage({ onBack }) {
             />
           </section>
 
-          <div className="mt-8 flex w-full justify-center">
+          <div className="mt-8 mb-0 flex w-full justify-center">
             <img
               src={startCampaignImage}
               alt="Start campaign visual"
@@ -1393,7 +2416,12 @@ function SponsorshipsCaseStudyPage({ onBack }) {
               </p>
             </div>
 
-            <CaseStudyImageCarousel slides={sponsorshipBeneathSurfaceSlides} />
+            <CaseStudyImageCarousel
+              slides={sponsorshipBeneathSurfaceSlides}
+              className="mb-10 bg-[#F2F2F2] p-10 max-[700px]:mb-4 max-[700px]:!bg-transparent max-[700px]:!p-0"
+              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
+              imageClassName="block h-auto w-full object-cover"
+            />
           </section>
         </section>
 
@@ -1408,7 +2436,11 @@ function SponsorshipsCaseStudyPage({ onBack }) {
 function GrabTapCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
   const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
   const kpiRowRef = useRef(null)
   const kpiItemRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
@@ -1434,29 +2466,60 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
 
     const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
       clearIdleHideTimer()
       idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
         setShowFloatingHome(false)
       }, 5000)
     }
 
+    const scheduleHoverLeaveHide = () => {
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 800)
+    }
+
     const onScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset || 0
-      const isScrollingUp = currentScrollY < lastScrollYRef.current
-      const isScrollingDown = currentScrollY > lastScrollYRef.current
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
       const isAtTop = currentScrollY <= 2
       const hasScrolledPastThreshold = currentScrollY >= 640
 
       if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
         setShowFloatingHome(false)
         clearIdleHideTimer()
       } else if (isScrollingDown) {
-        setShowFloatingHome(false)
-        clearIdleHideTimer()
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
       } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
-          return hasScrolledPastThreshold && !isTopHomeInView
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
         })
         scheduleIdleHide()
       }
@@ -1465,10 +2528,20 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
 
     lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
     window.addEventListener('scroll', onScroll, { passive: true })
 
     return () => {
       observer.disconnect()
+      window.removeEventListener('resize', onResize)
       window.removeEventListener('scroll', onScroll)
       clearIdleHideTimer()
     }
@@ -1498,7 +2571,10 @@ function GrabTapCaseStudyPage({ onBack }) {
   }, [])
 
   return (
-    <main className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+    <main
+      className="min-h-screen bg-black px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#000000' }}
+    >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
           <button
@@ -1516,10 +2592,33 @@ function GrabTapCaseStudyPage({ onBack }) {
           className={`case-study-floater case-study-floater--graptap ${
             showFloatingHome ? 'case-study-floater--visible' : ''
           }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
         >
           <button
             type="button"
             onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
             className="case-study-floater__button"
             aria-label="Back to home"
           >
@@ -1633,17 +2732,29 @@ function GrabTapCaseStudyPage({ onBack }) {
           />
         </section>
 
-        <section className="rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6">
+        <section className="rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-0 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-0">
           <div className="flex flex-col gap-8 max-[700px]:gap-6">
             {grabTapCaseScreens.map((screen) => (
               screen.key === 'gt-logo' || screen.key === 'gt-1' ? (
                 <section key={screen.key} className="flex flex-col items-center">
-                  <img
-                    src={screen.image}
-                    alt={`GrabTap ${screen.title}`}
-                    className={`block h-auto w-full ${screen.key === 'gt-logo' ? 'max-w-[240px]' : ''}`}
-                    loading="lazy"
-                  />
+                  {screen.key === 'gt-1' ? (
+                    <picture className="block w-full">
+                      <source media="(max-width: 699px)" srcSet={gt1MobileImage} />
+                      <img
+                        src={screen.image}
+                        alt={`GrabTap ${screen.title}`}
+                        className="block h-auto w-full"
+                        loading="lazy"
+                      />
+                    </picture>
+                  ) : (
+                    <img
+                      src={screen.image}
+                      alt={`GrabTap ${screen.title}`}
+                      className="block h-auto w-full max-w-[240px]"
+                      loading="lazy"
+                    />
+                  )}
                   {screen.key === 'gt-1' ? (
                     <p className="mt-[56px] mb-0 text-[14px] leading-[1.4] font-medium text-black/70">
                       Selected screens
@@ -1809,6 +2920,14 @@ function GrabTapCaseStudyPage({ onBack }) {
               )
             ))}
           </div>
+          <div className="mt-10 mb-0 flex w-full justify-center">
+            <img
+              src={gtCardsImage}
+              alt="GrabTap cards visual"
+              className="mb-0 block h-auto w-full max-w-[505px] translate-y-px align-bottom"
+              loading="lazy"
+            />
+          </div>
         </section>
 
         <div className="mt-8">
@@ -1840,6 +2959,712 @@ function SponsorshipStatsRow() {
         <p className="mt-1 text-[12px] leading-[1.4] text-black/90">{secondStat.label}</p>
       </div>
     </div>
+  )
+}
+
+function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
+  const gangSectionRef = useRef(null)
+  const squareFishContentRef = useRef(null)
+  const squareFishCharacterRefs = useRef([])
+  const worldsSectionRef = useRef(null)
+  const nafhaBoxRef = useRef(null)
+  const bonusGridRef = useRef(null)
+  const bonusScrollSequenceTriggeredRef = useRef(false)
+  const bonusScrollSequenceTimersRef = useRef([])
+  const bonusScrollSequenceRunningRef = useRef(false)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
+  const [isSquareFishMobile, setIsSquareFishMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 700px)').matches,
+  )
+  const [isSquareFishTwoPerRow, setIsSquareFishTwoPerRow] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 500px)').matches,
+  )
+  const bonusRows = SQUARE_FISH_BONUS_ROWS
+  const totalBonuses = bonusRows.reduce((count, row) => count + row.length, 0)
+  const [activeSquareFishCharacterIndex, setActiveSquareFishCharacterIndex] = useState(-1)
+  const [crabOffsetX, setCrabOffsetX] = useState(0)
+  const [jellyOffsetX, setJellyOffsetX] = useState(0)
+  const [nafhaRotationDeg, setNafhaRotationDeg] = useState(0)
+  const [isNafhaFlipped, setIsNafhaFlipped] = useState(false)
+  const [isNafhaHovered, setIsNafhaHovered] = useState(false)
+  const [bonusBurstStates, setBonusBurstStates] = useState(() =>
+    Array.from({ length: totalBonuses }, () => ({ active: false, particles: [] })),
+  )
+  const bonusBurstResetTimerRefs = useRef(Array.from({ length: totalBonuses }, () => null))
+
+  useEffect(() => {
+    setBonusBurstStates((previousBursts) => {
+      if (previousBursts.length === totalBonuses) return previousBursts
+      return Array.from({ length: totalBonuses }, (_, index) => {
+        return previousBursts[index] ?? { active: false, particles: [] }
+      })
+    })
+
+    if (bonusBurstResetTimerRefs.current.length >= totalBonuses) return
+    bonusBurstResetTimerRefs.current = Array.from({ length: totalBonuses }, (_, index) => {
+      return bonusBurstResetTimerRefs.current[index] ?? null
+    })
+  }, [totalBonuses])
+
+  const triggerBonusBurst = useCallback((bonusIndex) => {
+    const particles = Array.from({ length: 44 }, (_, index) => {
+      const isVariant = Math.random() < 0.24
+      const angle = (Math.random() - 0.5) * Math.PI * 1.6
+      const burstBaseSpeed = 82
+      const speedVarianceFactor = 0.7 + Math.random() * 0.6
+      const speedBase = burstBaseSpeed * speedVarianceFactor
+      const spreadMultiplier = isVariant ? 1.12 : 1
+      const travelX = Math.sin(angle) * speedBase * spreadMultiplier
+      const travelY = -(Math.cos(angle) * speedBase * spreadMultiplier + (20 + Math.random() * 34))
+      const gravity = 24 + Math.random() * 24
+      const delay = 0
+      const isPureYellowParticle = Math.random() < 0.2
+      const color = isPureYellowParticle
+        ? '#FFFF00'
+        : SQUARE_FISH_BONUS_TINT_PALETTE[Math.floor(Math.random() * SQUARE_FISH_BONUS_TINT_PALETTE.length)]
+
+      return {
+        id: `${Date.now()}-${index}`,
+        color,
+        size: isVariant ? 11 + Math.floor(Math.random() * 3) : 5 + Math.floor(Math.random() * 6),
+        duration: 1500 + Math.random() * 700,
+        delay,
+        rotation: `${Math.random() * 420 - 210}deg`,
+        rotationEnd: `${Math.random() * 1280 - 640}deg`,
+        x: `${travelX.toFixed(2)}px`,
+        y: `${travelY.toFixed(2)}px`,
+        gravity: `${gravity.toFixed(2)}px`,
+      }
+    })
+
+    setBonusBurstStates((previousBursts) =>
+      previousBursts.map((burst, index) => (index === bonusIndex ? { active: true, particles } : burst)),
+    )
+
+    if (bonusBurstResetTimerRefs.current[bonusIndex]) {
+      window.clearTimeout(bonusBurstResetTimerRefs.current[bonusIndex])
+    }
+    bonusBurstResetTimerRefs.current[bonusIndex] = window.setTimeout(() => {
+      setBonusBurstStates((previousBursts) =>
+        previousBursts.map((burst, index) =>
+          index === bonusIndex ? { active: false, particles: [] } : burst,
+        ),
+      )
+      bonusBurstResetTimerRefs.current[bonusIndex] = null
+    }, 3000)
+  }, [])
+
+  useEffect(() => {
+    const clearBonusScrollSequenceTimers = () => {
+      bonusScrollSequenceTimersRef.current.forEach((timerId) => {
+        if (!timerId) return
+        window.clearTimeout(timerId)
+      })
+      bonusScrollSequenceTimersRef.current = []
+    }
+
+    const triggerScrollSequence = () => {
+      if (!isSquareFishMobile) return
+      if (bonusScrollSequenceTriggeredRef.current) return
+      if (bonusScrollSequenceRunningRef.current) return
+      bonusScrollSequenceTriggeredRef.current = true
+      bonusScrollSequenceRunningRef.current = true
+      const orderedBonusIndexes = bonusRows.flat()
+      orderedBonusIndexes.forEach((bonusIndex, sequenceIndex) => {
+        const timerId = window.setTimeout(() => {
+          triggerBonusBurst(bonusIndex)
+          if (sequenceIndex === orderedBonusIndexes.length - 1) {
+            bonusScrollSequenceRunningRef.current = false
+          }
+        }, sequenceIndex * 140)
+        bonusScrollSequenceTimersRef.current.push(timerId)
+      })
+    }
+
+    const bonusGridElement = bonusGridRef.current
+    if (!bonusGridElement) return undefined
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry) return
+        if (!entry.isIntersecting) {
+          if (!bonusScrollSequenceRunningRef.current) {
+            bonusScrollSequenceTriggeredRef.current = false
+          }
+          return
+        }
+        triggerScrollSequence()
+      },
+      { root: null, threshold: 0.28 },
+    )
+    observer.observe(bonusGridElement)
+
+    return () => {
+      observer.disconnect()
+      clearBonusScrollSequenceTimers()
+    }
+  }, [bonusRows, isSquareFishMobile, triggerBonusBurst])
+
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 ||
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
+      } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 ||
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 700px)')
+    const syncMobile = () => setIsSquareFishMobile(mediaQuery.matches)
+    syncMobile()
+    mediaQuery.addEventListener('change', syncMobile)
+    return () => mediaQuery.removeEventListener('change', syncMobile)
+  }, [])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 500px)')
+    const syncTwoPerRow = () => setIsSquareFishTwoPerRow(mediaQuery.matches)
+    syncTwoPerRow()
+    mediaQuery.addEventListener('change', syncTwoPerRow)
+    return () => mediaQuery.removeEventListener('change', syncTwoPerRow)
+  }, [])
+
+  useEffect(() => {
+    if (activeSquareFishCharacterIndex < 0) return
+    const activeCharacter = squareFishCharacters[activeSquareFishCharacterIndex]
+    if (!activeCharacter) return
+    if (isSquareFishTwoPerRow && hiddenSquareFishCharacterKeysAtTwoPerRow.has(activeCharacter.key)) {
+      setActiveSquareFishCharacterIndex(-1)
+    }
+  }, [activeSquareFishCharacterIndex, isSquareFishTwoPerRow])
+
+  useEffect(() => {
+    if (!isSquareFishMobile) return
+    if (activeSquareFishCharacterIndex < 0) {
+      setCrabOffsetX(0)
+      return
+    }
+
+    const sectionRect = gangSectionRef.current?.getBoundingClientRect()
+    const characterRect = squareFishCharacterRefs.current[activeSquareFishCharacterIndex]?.getBoundingClientRect?.()
+    if (!sectionRect || !characterRect) return
+    const sectionCenterX = sectionRect.left + sectionRect.width / 2
+    const characterCenterX = characterRect.left + characterRect.width / 2
+    setCrabOffsetX(characterCenterX - sectionCenterX)
+  }, [activeSquareFishCharacterIndex, isSquareFishMobile])
+
+  useEffect(
+    () => () => {
+      bonusBurstResetTimerRefs.current.forEach((timerId, index) => {
+        if (!timerId) return
+        window.clearTimeout(timerId)
+        bonusBurstResetTimerRefs.current[index] = null
+      })
+    },
+    [],
+  )
+
+  return (
+    <main
+      className="min-h-screen bg-[#0093FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
+      style={{ '--case-cta-hover-border': '#0093FF' }}
+    >
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="boss-back-cta header-cta--case-studies inline-flex"
+          >
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <div
+          className={`case-study-floater case-study-floater--squarefish ${
+            showFloatingHome ? 'case-study-floater--visible' : ''
+          }`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
+            className="case-study-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon" />
+            </span>
+            <span className="case-study-floater__label">SquareFish</span>
+          </button>
+        </div>
+
+        <section className="overflow-hidden rounded-t-[40px] rounded-b-none bg-[#F2F2F2] p-10 max-[700px]:rounded-t-[32px] max-[700px]:rounded-b-none max-[700px]:px-4 max-[700px]:py-6">
+          <div className="grid grid-cols-1 items-start gap-[40px] min-[893px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="flex min-w-0 flex-col gap-4">
+              <p className="font-roboto-slab text-[48px] leading-[1.4] font-semibold text-black/90">SquareFish</p>
+              <p className="text-[16px] leading-[1.4] font-medium text-black/40">RED, 2017</p>
+            </div>
+
+            <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
+              <p>
+                <strong className="font-bold text-black/70">SquareFish</strong>
+                {' began as an experimental pilot in '}
+                <button type="button" className="intro__red-action" onClick={onOpenRed}>
+                  RED
+                </button>
+                {
+                  ". Targeted at a younger audience and powered by an ad-based revenue model, it didn't achieve the commercial lift we hoped for - but it was a great lesson."
+                }
+              </p>
+              <p>
+                Developing <strong className="font-bold text-black/70">SquareFish</strong> sharpened my skills
+                in crafting simple, engaging UI. It also challenged me to bridge the gap between a creative
+                concept and a viable, revenue driven product.
+              </p>
+              <p>
+                Beyond the strategy, I took great joy in modeling and animating the 3D characters to bring this
+                world to life.
+              </p>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
+                  {['Fun', 'Engaging', 'Simple'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-[50px] bg-[#CCE9FF] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-1 flex w-full flex-col gap-3">
+                <p className="text-[12px] leading-[1.4] text-black/70">Game engine</p>
+                <div className="flex max-w-[620px] flex-wrap justify-start gap-2 max-[700px]:max-w-none">
+                  <span className="rounded-[50px] bg-[#CCE9FF] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black/70">
+                    Buildbox / No-code
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          ref={squareFishContentRef}
+          className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-4"
+          onMouseMove={(event) => {
+            if (isSquareFishMobile) return
+            const sectionRect = squareFishContentRef.current?.getBoundingClientRect()
+            if (!sectionRect) return
+            const centerX = sectionRect.left + sectionRect.width / 2
+            const desiredOffset = event.clientX - centerX
+            const maxOffset = Math.max(0, sectionRect.width / 2 - 60)
+            const clampedOffset = Math.max(-maxOffset, Math.min(maxOffset, desiredOffset))
+            setJellyOffsetX(clampedOffset)
+          }}
+          onMouseLeave={() => {
+            if (isSquareFishMobile) return
+            setJellyOffsetX(0)
+          }}
+        >
+          <div className="flex w-full items-center justify-center py-6 max-[700px]:py-4">
+            <img
+              src={squareFishLogo}
+              alt="SquareFish logo"
+              className="block h-auto w-full max-w-[209px]"
+              loading="lazy"
+            />
+          </div>
+          <section
+            ref={worldsSectionRef}
+            className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0"
+            onMouseMove={(event) => {
+              const fishRect = nafhaBoxRef.current?.getBoundingClientRect()
+              if (!fishRect) return
+              const fishCenterX = fishRect.left + fishRect.width / 2
+              const fishCenterY = fishRect.top + fishRect.height / 2
+              const normalizedY = (event.clientY - fishCenterY) / (fishRect.height / 2)
+              const clampedNormalizedY = Math.max(-1, Math.min(1, normalizedY))
+              setNafhaRotationDeg(clampedNormalizedY * 25)
+              setIsNafhaFlipped(event.clientX < fishCenterX)
+            }}
+            onMouseLeave={() => {
+              setNafhaRotationDeg(0)
+              setIsNafhaFlipped(false)
+            }}
+          >
+            <div className="grid grid-cols-1 gap-10 min-[980px]:grid-cols-[minmax(0,40%)_minmax(0,60%)]">
+              <div className="flex flex-col gap-4 text-black/70">
+                <h2 className="font-roboto-slab text-[36px] leading-[1.4] font-semibold text-black/70">The story</h2>
+                <p className="text-[20px] leading-[1.4] font-semibold italic">Don&apos;t trust anyone!</p>
+                <div className="flex flex-col gap-3 text-[16px] leading-[1.4]">
+                  <p>{`The goal is simple: the crabs have the pearls, and you need them. But in this world, nothing is given - only taken.`}</p>
+                  <p>The crabs won&apos;t surrender their prize without a fight, and beneath the surface, everyone is a rival.</p>
+                  <p>In a place where alliances are non-existent, the only thing you can trust is your instincts.</p>
+                </div>
+                <div className="mt-2 flex w-full justify-center min-[980px]:mt-4">
+                  <div
+                    ref={nafhaBoxRef}
+                    className="relative z-[6] flex h-[70px] w-[90px] items-center justify-center overflow-visible"
+                    onMouseEnter={() => setIsNafhaHovered(true)}
+                    onMouseLeave={() => setIsNafhaHovered(false)}
+                  >
+                    <img
+                      src={isNafhaHovered ? sfNafhaBlownGif : sfNafhaDefaultGif}
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none block h-auto w-auto max-w-none transition-transform duration-150 ease-out"
+                      style={{
+                        transform: `scaleX(${isNafhaFlipped ? -1 : 1}) rotate(${nafhaRotationDeg.toFixed(2)}deg)`,
+                        transformOrigin: 'center center',
+                      }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+              <img
+                src={sfWorldsImage}
+                alt="SquareFish worlds storyboard"
+                className="block h-auto w-full"
+                loading="lazy"
+              />
+            </div>
+          </section>
+          <div className="mt-10 flex w-full items-center justify-center">
+            <img
+              src={sfBombGif}
+              alt="SquareFish bomb"
+              className="block h-[88px] w-[88px]"
+              loading="lazy"
+            />
+          </div>
+
+          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0">
+            <CaseStudyImageCarousel
+              slides={squareFishCarouselSlides}
+              showSlideLabel={false}
+              className="!px-0 !pt-0 pb-4 max-[700px]:!p-0"
+              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
+              imageClassName="block h-auto w-full object-cover"
+            />
+          </section>
+
+          <div ref={bonusGridRef} className="flex w-full flex-col items-center justify-center gap-0 py-[40px]">
+            {bonusRows.map((row, rowIndex) => (
+              <div key={`bonus-row-${rowIndex}`} className="flex items-center justify-center gap-[10px]">
+                {row.map((bonusIndex) => (
+                  <button
+                    key={`bonus-${bonusIndex}`}
+                    type="button"
+                    onMouseEnter={() => {
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    onFocus={() => {
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    onClick={() => {
+                      if (!isSquareFishMobile) return
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    className={`relative flex h-[60px] w-[60px] items-center justify-center overflow-visible border-0 bg-transparent p-0 ${
+                      bonusBurstStates[bonusIndex]?.active ? 'pointer-events-none' : ''
+                    }`}
+                    aria-label={`Square Fish bonus ${bonusIndex + 1}`}
+                  >
+                    {!bonusBurstStates[bonusIndex]?.active && (
+                      <img
+                        src={sfBonusGif}
+                        alt="Square Fish bonus"
+                        className="sf-bonus-icon-fade-in block h-[60px] w-[60px]"
+                        loading="lazy"
+                      />
+                    )}
+                    {bonusBurstStates[bonusIndex]?.active && (
+                      <span
+                        className="pointer-events-none absolute left-1/2 top-1/2 block h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2"
+                        aria-hidden="true"
+                      >
+                        {bonusBurstStates[bonusIndex].particles.map((particle) => (
+                          <span
+                            key={particle.id}
+                            className="sf-bonus-confetti-particle absolute left-1/2 top-1/2 block"
+                            style={{
+                              width: `${particle.size}px`,
+                              height: `${particle.size}px`,
+                              backgroundColor: particle.color,
+                              '--sf-confetti-x': particle.x,
+                              '--sf-confetti-y': particle.y,
+                              '--sf-confetti-gravity': particle.gravity,
+                              '--sf-confetti-rotation': particle.rotation,
+                              '--sf-confetti-rotation-end': particle.rotationEnd,
+                              '--sf-confetti-duration': `${particle.duration}ms`,
+                              '--sf-confetti-delay': `${particle.delay}ms`,
+                            }}
+                          />
+                        ))}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] px-10 py-[40px] max-[700px]:mb-4 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:pt-0 max-[700px]:pb-[40px]">
+            <div className="mx-auto w-full max-w-[763px] max-[700px]:max-w-none max-[700px]:p-0">
+              <img
+                src={sfGameOverImage}
+                alt="SquareFish game over screen"
+                className="block h-auto w-full max-[700px]:rounded-[16px]"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
+          <div className="relative mx-auto mt-10 mb-2 flex h-[140px] w-full items-center justify-center">
+            <img
+              src={sfJellyFish}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none block h-[140px] w-auto transition-transform duration-[10000ms] ease-out"
+              style={{ transform: `translateX(${jellyOffsetX}px)` }}
+              loading="lazy"
+            />
+          </div>
+
+          <section
+            ref={gangSectionRef}
+            className="relative mt-10 overflow-hidden rounded-[16px] bg-[#0093FF] px-6 pt-10 pb-[210px] text-white max-[700px]:mt-10 max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-[178px]"
+            onMouseMove={(event) => {
+              if (isSquareFishMobile) return
+              const sectionRect = gangSectionRef.current?.getBoundingClientRect()
+              if (!sectionRect) return
+              const centerX = sectionRect.left + sectionRect.width / 2
+              const desiredOffset = event.clientX - centerX
+              const maxOffset = Math.max(0, sectionRect.width / 2 - 70)
+              const clampedOffset = Math.max(-maxOffset, Math.min(maxOffset, desiredOffset))
+              setCrabOffsetX(clampedOffset)
+            }}
+            onMouseLeave={() => {
+              if (isSquareFishMobile) return
+              setCrabOffsetX(0)
+            }}
+          >
+            <div className="relative z-[2] mb-4 flex w-full flex-col items-center gap-2">
+              <h2 className="text-center font-roboto-slab text-[36px] leading-[1.4] font-semibold text-white/90 max-[700px]:text-[32px]">
+                {isSquareFishMobile ? 'Meet the gang' : "Let's get it hover with..."}
+              </h2>
+              <p className="text-center text-[14px] leading-[1.4] font-medium text-white/70">
+                {isSquareFishMobile ? 'Tap to see them in action' : 'Hover the characters below to see them in action'}
+              </p>
+            </div>
+
+            <div className="relative z-[2] mx-auto mt-6 mb-10 grid w-full max-w-[1000px] grid-cols-4 justify-items-center gap-y-2 min-[1020px]:grid-cols-6 max-[700px]:grid-cols-3 max-[500px]:grid-cols-2">
+              {squareFishCharacters.map((character, index) => {
+                const isActiveOnMobile = isSquareFishMobile && activeSquareFishCharacterIndex === index
+                return (
+                <div
+                  key={character.key}
+                  ref={(el) => {
+                    squareFishCharacterRefs.current[index] = el
+                  }}
+                  className={`group relative h-[140px] w-[140px] ${
+                    hiddenSquareFishCharacterKeysAtTwoPerRow.has(character.key) ? 'max-[500px]:hidden' : ''
+                  }`}
+                  onClick={() => {
+                    if (!isSquareFishMobile) return
+                    setActiveSquareFishCharacterIndex((current) => (current === index ? -1 : index))
+                  }}
+                >
+                  <img
+                    src={sfCropMarks}
+                    alt=""
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 z-[1] block h-full w-full object-contain transition-all duration-100 ${
+                      isActiveOnMobile
+                        ? 'opacity-100 scale-100'
+                        : 'opacity-0 scale-[0.92] group-hover:opacity-100 group-hover:scale-100'
+                    }`}
+                    loading="lazy"
+                  />
+                  <img
+                    src={character.defaultSrc}
+                    alt={character.alt}
+                    className={`pointer-events-none absolute inset-[10px] z-[2] block h-[120px] w-[120px] object-contain transition-opacity duration-200 ${
+                      isActiveOnMobile ? 'opacity-0' : 'opacity-100 group-hover:opacity-0'
+                    }`}
+                    style={{
+                      transform: `translateX(${getSquareFishCharacterOffsetX(character.key)}px) scale(${getSquareFishCharacterScale(character.key)})`,
+                      transformOrigin: 'center center',
+                    }}
+                    loading="lazy"
+                  />
+                  <img
+                    src={character.jumpSrc}
+                    alt=""
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-[10px] z-[2] block h-[120px] w-[120px] object-contain transition-opacity duration-200 ${
+                      isActiveOnMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
+                    style={{
+                      transform: `translateX(${getSquareFishCharacterOffsetX(character.key)}px) scale(${getSquareFishCharacterScale(character.key)})`,
+                      transformOrigin: 'center center',
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+              )})}
+            </div>
+
+            <img
+              src={sfRocksImage}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-0 left-1/2 z-[1] block h-auto w-[1048px] max-w-none -translate-x-1/2"
+              loading="lazy"
+            />
+
+            <img
+              src={sfCrab}
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute bottom-[56px] left-1/2 z-[2] block h-auto w-[120px] transition-transform duration-[750ms] ease-out"
+              style={{ transform: `translateX(calc(-50% + ${crabOffsetX}px))` }}
+              loading="lazy"
+            />
+          </section>
+        </section>
+
+        <div className="mt-8 mb-4">
+          <CaseStudyFooter variant="case-study" />
+        </div>
+      </div>
+    </main>
   )
 }
 
@@ -1934,7 +3759,7 @@ function SponsorshipCampaignCardSection() {
               hovered
                 ? 'bg-[#232428] shadow-[4px_4px_16px_0_rgba(0,0,0,0.4)]'
                 : 'bg-[#131315] shadow-[0_0_0_1px_rgba(255,255,255,0.08)]'
-            } ${hovered ? '-translate-y-2' : 'translate-y-0'}`}
+            } ${hovered ? '-translate-y-4' : 'translate-y-0'}`}
             onPointerEnter={handleCardPointerEnter}
             onPointerLeave={handleCardPointerLeave}
           >
@@ -2149,8 +3974,10 @@ function RedStatsRow() {
 const RED_POPUP_TRANSITION_MS = 240
 const RED_POPUP_DESKTOP_CLOSE_TOP = 72
 const RED_POPUP_CLOSE_DELAY_MS = 80
+const MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX = 44
+const MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX = 88
 
-function RedPopupModal({ open, onClose }) {
+function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
   const [entered, setEntered] = useState(false)
   const [closeEntered, setCloseEntered] = useState(false)
@@ -2335,7 +4162,15 @@ function RedPopupModal({ open, onClose }) {
                 In 2018, we pivoted RED toward Design Sprints and partnered with{' '}
                 <strong className="text-black/90">Google Israel</strong> as their local chapter. Beyond
                 running sprints, we launched an education program to train new facilitators. I
-                mentored them on the <span className="text-[#2b00ff]">prototyping phase</span> - sharing
+                mentored them on the{' '}
+                <button
+                  type="button"
+                  className="intro__red-action"
+                  onClick={onOpenDesignSprints}
+                >
+                  prototyping phase
+                </button>{' '}
+                - sharing
                 our experience on how to turn abstract ideas into functional experiences in a matter
                 of hours.
               </p>
@@ -2614,6 +4449,22 @@ function App() {
   const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const caseItemRefs = useRef([])
+  const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
+  const suppressCaseClickUntilRef = useRef(0)
+  const pageThemeColor = activeCaseStudy === 'boss-ai'
+    ? '#4CBBA5'
+    : activeCaseStudy === 'campaign-brief'
+      ? '#FF83A0'
+      : activeCaseStudy === 'design-sprints'
+        ? '#036EDC'
+        : activeCaseStudy === 'creators-spons'
+          ? '#1F00CC'
+          : activeCaseStudy === 'graptap'
+            ? '#000000'
+            : activeCaseStudy === 'squarefish'
+              ? '#0093FF'
+            : '#ffffff'
+  const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -2706,6 +4557,23 @@ function App() {
   }, [supportsHover])
 
   useEffect(() => {
+    if (typeof document === 'undefined') return undefined
+
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]')
+    if (!themeColorMeta) {
+      themeColorMeta = document.createElement('meta')
+      themeColorMeta.setAttribute('name', 'theme-color')
+      document.head.appendChild(themeColorMeta)
+    }
+
+    themeColorMeta.setAttribute('content', effectiveThemeColor)
+    document.documentElement.style.backgroundColor = pageThemeColor
+    document.body.style.backgroundColor = pageThemeColor
+
+    return undefined
+  }, [effectiveThemeColor, pageThemeColor])
+
+  useEffect(() => {
     if (!isIntroTopLayout) return undefined
 
     const updateIntroMoreHeight = () => {
@@ -2755,8 +4623,89 @@ function App() {
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const openBioPage = () => {
+    const targetPath = CASE_STUDY_PATHS.bio
+    if (typeof window !== 'undefined' && normalizePathname(window.location.pathname) !== targetPath) {
+      window.history.pushState({}, '', targetPath)
+    }
+    setActiveCaseStudy('bio')
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+  const renderSeeFullBioCta = (className) => (
+    <button
+      type="button"
+      onClick={openBioPage}
+      className={`intro-see-full-bio-cta header-cta--case-studies header-cta--ghost ${className}`}
+    >
+      <svg
+        className="header-cta__icon"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span>See full Bio</span>
+    </button>
+  )
+  const handleCaseStudyTouchStart = (event) => {
+    if (supportsHover) return
+    const touch = event.touches?.[0]
+    if (!touch) return
+    caseTouchRef.current = { x: touch.clientX, y: touch.clientY, moved: false }
+  }
+  const handleCaseStudyTouchMove = (event) => {
+    if (supportsHover) return
+    const touch = event.touches?.[0]
+    if (!touch) return
+    const deltaX = Math.abs(touch.clientX - caseTouchRef.current.x)
+    const deltaY = Math.abs(touch.clientY - caseTouchRef.current.y)
+    if (deltaX > 8 || deltaY > 8) caseTouchRef.current.moved = true
+  }
+  const handleCaseStudyTouchEnd = (event, projectKey) => {
+    if (!interactiveCaseStudyKeys.has(projectKey) || supportsHover) return
+    suppressCaseClickUntilRef.current = Date.now() + 450
+    if (caseTouchRef.current.moved) return
+    event.preventDefault()
+    openCaseStudy(projectKey)
+  }
+  const handleCaseStudyClick = (event, projectKey) => {
+    if (!interactiveCaseStudyKeys.has(projectKey)) return
+    if (!supportsHover && Date.now() < suppressCaseClickUntilRef.current) {
+      event.preventDefault()
+      return
+    }
+    openCaseStudy(projectKey)
+  }
+  const openDesignSprintsFromRed = () => {
+    setIsRedModalOpen(false)
+    openCaseStudy('design-sprints')
+  }
 
-  const interactiveCaseStudyKeys = new Set(['boss-ai', 'creators-spons', 'graptap', 'campaign-brief'])
+  const interactiveCaseStudyKeys = new Set([
+    'boss-ai',
+    'creators-spons',
+    'graptap',
+    'campaign-brief',
+    'design-sprints',
+    'squarefish',
+  ])
 
   const renderCaseStudyCard = (project, index) => (
     <article
@@ -2768,7 +4717,18 @@ function App() {
         !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
       } ${interactiveCaseStudyKeys.has(project.key) ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
-      onClick={interactiveCaseStudyKeys.has(project.key) ? () => openCaseStudy(project.key) : undefined}
+      onClick={
+        interactiveCaseStudyKeys.has(project.key)
+          ? (event) => handleCaseStudyClick(event, project.key)
+          : undefined
+      }
+      onTouchStart={interactiveCaseStudyKeys.has(project.key) ? handleCaseStudyTouchStart : undefined}
+      onTouchMove={interactiveCaseStudyKeys.has(project.key) ? handleCaseStudyTouchMove : undefined}
+      onTouchEnd={
+        interactiveCaseStudyKeys.has(project.key)
+          ? (event) => handleCaseStudyTouchEnd(event, project.key)
+          : undefined
+      }
       onKeyDown={
         interactiveCaseStudyKeys.has(project.key)
           ? (event) => {
@@ -2790,6 +4750,10 @@ function App() {
               ? 'Open GrabTap case study page'
               : project.key === 'campaign-brief'
                 ? 'Open Campaign briefs case study page'
+                : project.key === 'design-sprints'
+                  ? 'Open Design Sprints case study page'
+                  : project.key === 'squarefish'
+                    ? 'Open SquareFish case study page'
             : undefined
       }
     >
@@ -2869,11 +4833,16 @@ function App() {
           ) : project.key === 'campaign-brief' ? (
             <>
               <div className="case-thumb__campaign-brief-vector" aria-hidden="true">
-                <img
-                  src={campaignBriefVector}
-                  alt=""
-                  className="case-thumb__campaign-brief-vector-img"
-                />
+                {campaignBriefHoverIcons.map((iconSrc, index) => (
+                  <span key={iconSrc} className="case-thumb__campaign-brief-vector-item">
+                    <img
+                      src={iconSrc}
+                      alt=""
+                      className="case-thumb__campaign-brief-vector-img"
+                      style={{ transitionDelay: `${index * 55}ms` }}
+                    />
+                  </span>
+                ))}
               </div>
               <div className="case-thumb__campaign-brief-mark">
                 <div className="case-thumb__campaign-brief-ring">
@@ -3006,6 +4975,42 @@ function App() {
     )
   }
 
+  if (activeCaseStudy === 'design-sprints') {
+    return (
+      <>
+        <DesignSprintsCaseStudyPage
+          onBack={goHome}
+          onOpenRed={() => setIsRedModalOpen(true)}
+        />
+        <RedPopupModal
+          open={isRedModalOpen}
+          onClose={() => setIsRedModalOpen(false)}
+          onOpenDesignSprints={openDesignSprintsFromRed}
+        />
+      </>
+    )
+  }
+
+  if (activeCaseStudy === 'squarefish') {
+    return (
+      <>
+        <SquareFishCaseStudyPage
+          onBack={goHome}
+          onOpenRed={() => setIsRedModalOpen(true)}
+        />
+        <RedPopupModal
+          open={isRedModalOpen}
+          onClose={() => setIsRedModalOpen(false)}
+          onOpenDesignSprints={openDesignSprintsFromRed}
+        />
+      </>
+    )
+  }
+
+  if (activeCaseStudy === 'bio') {
+    return <BioPage onBack={goHome} />
+  }
+
   return (
     <main className="min-h-screen bg-white px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px] fade-up">
@@ -3103,33 +5108,7 @@ function App() {
                 </p>
                 <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
 
-                <button className="header-cta--case-studies header-cta--ghost mt-8">
-                  <svg
-                    className="header-cta__icon"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span>See full Bio</span>
-                </button>
+                {renderSeeFullBioCta('mt-8')}
               </>
             ) : (
               <>
@@ -3179,37 +5158,7 @@ function App() {
 
                 {isIntroExpanded && (
                   <>
-                    <button
-                      className={`header-cta--case-studies header-cta--ghost intro-full-bio-cta ${
-                        isIntroTopLayout ? 'mt-7' : 'mt-4'
-                      }`}
-                    >
-                      <svg
-                        className="header-cta__icon"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <span>See full Bio</span>
-                    </button>
+                    {renderSeeFullBioCta(isIntroTopLayout ? 'mt-7' : 'mt-4')}
 
                     <div className="mt-7">
                       <button
@@ -3310,7 +5259,11 @@ function App() {
 
         <HumanDesignBanner />
       </div>
-      <RedPopupModal open={isRedModalOpen} onClose={() => setIsRedModalOpen(false)} />
+      <RedPopupModal
+        open={isRedModalOpen}
+        onClose={() => setIsRedModalOpen(false)}
+        onOpenDesignSprints={openDesignSprintsFromRed}
+      />
     </main>
   )
 }
