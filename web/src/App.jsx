@@ -38,11 +38,19 @@ import sfWalrusDefault from './assets/_SF-walrus_default.gif'
 import sfWalrusJump from './assets/_SF-walrus_jump.gif'
 import sfShrimpDefault from './assets/_SF-shrimp_default.gif'
 import sfShrimpJump from './assets/_SF-shrimp_jump.gif'
+import sfBonusGif from './assets/_SF-bonus.gif'
 import sfTeethDefault from './assets/_SF-teeth_default.gif'
 import sfTeethJump from './assets/_SF-teeth_jump.gif'
 import sfCropMarks from './assets/_SF-CropMarks.svg'
 import sfCrab from './assets/_SF-crab.gif'
 import sfJellyFish from './assets/_SF-JellyFish.gif'
+import sfGameOverImage from './assets/_SF-GameOver-2.png'
+import sfCarousel01Image from './assets/_SF-carousel-01_berral.png'
+import sfCarousel02Image from './assets/_SF-carousel-02_flower world.png'
+import sfCarousel03Image from './assets/_SF-carousel-03_pink_diamond.png'
+import sfCarousel04Image from './assets/_SF-carousel-04_guns.png'
+import sfCarousel05Image from './assets/_SF-carousel-05_blowfish.png'
+import sfCarousel06Image from './assets/_SF-carousel-06_last.png'
 import tooltipHorse from './assets/type_horse.png'
 import tooltipAskkatzy from './assets/type-askkatzy-3.png'
 import tooltipLoveStory from './assets/type_LoveStory.png'
@@ -83,9 +91,9 @@ import sponsCampaignCardRoyalMatchIdle from './assets/spons-campaign-card-royal-
 import sponsOfferMainContentImage from './assets/spons-offer-main-content.png'
 import sponsPricingCardImage from './assets/spons-pricing-card.png'
 import sponsTrackingOverviewImage from './assets/overview.png'
-import sponsCarousel1Image from './assets/Spons-carousel-1.png'
-import sponsCarousel2Image from './assets/Spons-carousel-2.png'
-import sponsCarousel3Image from './assets/spons_carousel-3b.png'
+import sponsCarousel1Image from './assets/spons-carousel-1b.png'
+import sponsCarousel2Image from './assets/spons-carousel-2b.png'
+import sponsCarousel3Image from './assets/spons-carousel-3b.png'
 import gt1Image from './assets/GT-1.png'
 import gt1MobileImage from './assets/GT1-mobile.png'
 import gt2Image from './assets/GT-2b.png'
@@ -122,6 +130,14 @@ import tiktokIcon from './assets/tiktok.svg'
 import figmaIcon from './assets/figma.svg'
 import link2Icon from './assets/link-2.svg'
 import startCampaignImage from './assets/_start campaign.gif'
+
+const SQUARE_FISH_BONUS_ROWS = [
+  [0, 1, 2],
+  [3, 4],
+  [5],
+]
+
+const SQUARE_FISH_BONUS_TINT_PALETTE = ['#FFE100', '#FFD200', '#FFC400', '#FFB800', '#FFEC33', '#FFD84D']
 
 const bossCaseSections = [
   {
@@ -255,6 +271,15 @@ const squareFishCharacters = [
   { key: 'teeth', defaultSrc: sfTeethDefault, jumpSrc: sfTeethJump, alt: 'Teeth character' },
 ]
 
+const squareFishCarouselSlides = [
+  { key: '01-berral', image: sfCarousel01Image, alt: 'SquareFish app store screen 1' },
+  { key: '02-flower-world', image: sfCarousel02Image, alt: 'SquareFish app store screen 2' },
+  { key: '03-pink-diamond', image: sfCarousel03Image, alt: 'SquareFish app store screen 3' },
+  { key: '04-guns', image: sfCarousel04Image, alt: 'SquareFish app store screen 4' },
+  { key: '05-blowfish', image: sfCarousel05Image, alt: 'SquareFish app store screen 5' },
+  { key: '06-last', image: sfCarousel06Image, alt: 'SquareFish app store screen 6' },
+]
+
 const getSquareFishCharacterScale = (characterKey) => {
   if (characterKey === 'piranha') return 1.5
   if (characterKey === 'ducky') return 0.8
@@ -385,7 +410,7 @@ const sponsorshipBeneathSurfaceSlides = [
   {
     key: 'my-campaign-states',
     label: 'Variants / Campaign assets: 1x1',
-    image: `${sponsCarousel3Image}?v=3b-20260424-2`,
+    image: sponsCarousel3Image,
     alt: 'My campaigns state variants',
   },
 ]
@@ -399,7 +424,13 @@ const grabTapCaseScreens = [
   { key: 'gt-5', title: 'Core flow / Screen 5', image: gt5Image },
 ]
 
-function CaseStudyImageCarousel({ slides, className = '' }) {
+function CaseStudyImageCarousel({
+  slides,
+  className = '',
+  showSlideLabel = true,
+  slideFrameClassName = '',
+  imageClassName = '',
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [hoveredArrow, setHoveredArrow] = useState(null)
   const touchStartXRef = useRef(null)
@@ -463,9 +494,16 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
 
   if (!Array.isArray(slides) || totalSlides === 0) return null
 
+  const resolvedSlideFrameClassName =
+    slideFrameClassName ||
+    'flex h-[504px] w-full items-center justify-center rounded-[16px] px-8 py-[40px] max-[900px]:h-[432px] max-[700px]:h-[336px] max-[700px]:p-4'
+  const resolvedImageClassName =
+    imageClassName ||
+    'block h-[461px] w-auto max-w-full object-contain max-[900px]:h-[403px] max-[700px]:h-[317px]'
+
   return (
     <section
-      className={`relative flex w-full flex-col gap-4 rounded-[16px] border border-dashed border-[#2B00FF] p-4 max-[700px]:p-3 ${className}`}
+      className={`relative flex w-full flex-col gap-4 rounded-[16px] p-4 max-[700px]:p-3 ${className}`}
       onKeyDown={(event) => {
         if (event.key === 'ArrowLeft') goToPrev()
         if (event.key === 'ArrowRight') goToNext()
@@ -475,37 +513,91 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
     >
       <div
         ref={viewportRef}
-        className="overflow-hidden rounded-[12px]"
+        className="relative overflow-visible rounded-[12px]"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div
-          className="flex transition-transform duration-500 ease-out"
-          style={{
-            gap: `${slideGap}px`,
-            transform: `translateX(-${activeIndex * (slideWidth + slideGap)}px)`,
-          }}
-        >
-          {slides.map((slide) => (
-            <div
-              key={slide.key}
-              className="shrink-0"
-              style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
-            >
-              <p className="mb-3 text-[14px] leading-[1.4] font-medium text-black/90">
-                {slide.label}
-              </p>
-              <div className="flex h-[504px] w-full items-center justify-center rounded-[16px] bg-black/[0.05] px-8 py-[40px] max-[900px]:h-[432px] max-[700px]:h-[336px] max-[700px]:p-4">
-                <img
-                  src={slide.image}
-                  alt={slide.alt}
-                  className="block h-[461px] w-auto max-w-full object-contain max-[900px]:h-[403px] max-[700px]:h-[317px]"
-                  loading="lazy"
-                />
+        <div className="overflow-hidden rounded-[12px]">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{
+              gap: `${slideGap}px`,
+              transform: `translateX(-${activeIndex * (slideWidth + slideGap)}px)`,
+            }}
+          >
+            {slides.map((slide) => (
+              <div
+                key={slide.key}
+                className="shrink-0"
+                style={{ width: slideWidth > 0 ? `${slideWidth}px` : '100%' }}
+              >
+                {showSlideLabel && slide.label ? (
+                  <p className="mb-3 text-[14px] leading-[1.4] font-medium text-black/90">{slide.label}</p>
+                ) : null}
+                <div className={resolvedSlideFrameClassName}>
+                  <img
+                    src={slide.image}
+                    alt={slide.alt}
+                    className={resolvedImageClassName}
+                    loading="lazy"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div className="pointer-events-none absolute inset-0 z-10 block">
+          <button
+            type="button"
+            onClick={goToPrev}
+            onMouseEnter={() => setHoveredArrow('prev')}
+            onMouseLeave={() => setHoveredArrow(null)}
+            className="pointer-events-auto absolute left-0 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center max-[700px]:left-2 max-[700px]:translate-x-0"
+            aria-label="Previous slide"
+          >
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full border bg-white transition-all duration-200 ${
+                hoveredArrow === 'prev'
+                  ? 'scale-[1.3333] border-[#2B00FF] shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+                  : 'border-black'
+              }`}
+            >
+            <img
+              src={arrowLeftIcon}
+              alt=""
+              aria-hidden="true"
+              className={`opacity-90 transition-all duration-200 ${
+                hoveredArrow === 'prev' ? 'h-7 w-7' : 'h-5 w-5'
+              }`}
+            />
+            </span>
+          </button>
+          <button
+            type="button"
+            onClick={goToNext}
+            onMouseEnter={() => setHoveredArrow('next')}
+            onMouseLeave={() => setHoveredArrow(null)}
+            className="pointer-events-auto absolute right-0 top-1/2 flex h-16 w-16 translate-x-1/2 -translate-y-1/2 items-center justify-center max-[700px]:right-2 max-[700px]:translate-x-0"
+            aria-label="Next slide"
+          >
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-full border bg-white transition-all duration-200 ${
+                hoveredArrow === 'next'
+                  ? 'scale-[1.3333] border-[#2B00FF] shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
+                  : 'border-black'
+              }`}
+            >
+            <img
+              src={arrowRightIcon}
+              alt=""
+              aria-hidden="true"
+              className={`opacity-100 transition-all duration-200 ${
+                hoveredArrow === 'next' ? 'h-7 w-7' : 'h-5 w-5'
+              }`}
+            />
+            </span>
+          </button>
         </div>
       </div>
 
@@ -524,50 +616,6 @@ function CaseStudyImageCarousel({ slides, className = '' }) {
         ))}
       </div>
 
-      <div className="pointer-events-none absolute inset-0 z-10 block">
-        <button
-          type="button"
-          onClick={goToPrev}
-          onMouseEnter={() => setHoveredArrow('prev')}
-          onMouseLeave={() => setHoveredArrow(null)}
-          className={`pointer-events-auto absolute left-0 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
-            hoveredArrow === 'prev'
-              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
-              : 'h-12 w-12 border-black bg-white'
-          }`}
-          aria-label="Previous slide"
-        >
-          <img
-            src={arrowLeftIcon}
-            alt=""
-            aria-hidden="true"
-            className={`opacity-90 transition-all duration-200 ${
-              hoveredArrow === 'prev' ? 'h-7 w-7' : 'h-5 w-5'
-            }`}
-          />
-        </button>
-        <button
-          type="button"
-          onClick={goToNext}
-          onMouseEnter={() => setHoveredArrow('next')}
-          onMouseLeave={() => setHoveredArrow(null)}
-          className={`pointer-events-auto absolute right-0 top-1/2 flex translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border transition-all duration-200 ${
-            hoveredArrow === 'next'
-              ? 'h-16 w-16 border-[#2B00FF] bg-white shadow-[0_0_0_4px_rgba(43,0,255,0.2)]'
-              : 'h-12 w-12 border-black bg-white'
-          }`}
-          aria-label="Next slide"
-        >
-          <img
-            src={arrowRightIcon}
-            alt=""
-            aria-hidden="true"
-            className={`opacity-100 transition-all duration-200 ${
-              hoveredArrow === 'next' ? 'h-7 w-7' : 'h-5 w-5'
-            }`}
-          />
-        </button>
-      </div>
     </section>
   )
 }
@@ -2132,7 +2180,12 @@ function SponsorshipsCaseStudyPage({ onBack }) {
               </p>
             </div>
 
-            <CaseStudyImageCarousel slides={sponsorshipBeneathSurfaceSlides} />
+            <CaseStudyImageCarousel
+              slides={sponsorshipBeneathSurfaceSlides}
+              className="mb-10 bg-[#F2F2F2] p-10 max-[700px]:mb-4 max-[700px]:!bg-transparent max-[700px]:!p-0"
+              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
+              imageClassName="block h-auto w-full object-cover"
+            />
           </section>
         </section>
 
@@ -2684,6 +2737,10 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const gangSectionRef = useRef(null)
   const squareFishContentRef = useRef(null)
   const squareFishCharacterRefs = useRef([])
+  const bonusGridRef = useRef(null)
+  const bonusScrollSequenceTriggeredRef = useRef(false)
+  const bonusScrollSequenceTimersRef = useRef([])
+  const bonusScrollSequenceRunningRef = useRef(false)
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const [isSquareFishMobile, setIsSquareFishMobile] = useState(
@@ -2692,9 +2749,129 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const [isSquareFishTwoPerRow, setIsSquareFishTwoPerRow] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 500px)').matches,
   )
+  const bonusRows = SQUARE_FISH_BONUS_ROWS
+  const totalBonuses = bonusRows.reduce((count, row) => count + row.length, 0)
   const [activeSquareFishCharacterIndex, setActiveSquareFishCharacterIndex] = useState(-1)
   const [crabOffsetX, setCrabOffsetX] = useState(0)
   const [jellyOffsetX, setJellyOffsetX] = useState(0)
+  const [bonusBurstStates, setBonusBurstStates] = useState(() =>
+    Array.from({ length: totalBonuses }, () => ({ active: false, particles: [] })),
+  )
+  const bonusBurstResetTimerRefs = useRef(Array.from({ length: totalBonuses }, () => null))
+
+  useEffect(() => {
+    setBonusBurstStates((previousBursts) => {
+      if (previousBursts.length === totalBonuses) return previousBursts
+      return Array.from({ length: totalBonuses }, (_, index) => {
+        return previousBursts[index] ?? { active: false, particles: [] }
+      })
+    })
+
+    if (bonusBurstResetTimerRefs.current.length >= totalBonuses) return
+    bonusBurstResetTimerRefs.current = Array.from({ length: totalBonuses }, (_, index) => {
+      return bonusBurstResetTimerRefs.current[index] ?? null
+    })
+  }, [totalBonuses])
+
+  const triggerBonusBurst = useCallback((bonusIndex) => {
+    const particles = Array.from({ length: 44 }, (_, index) => {
+      const isVariant = Math.random() < 0.24
+      const angle = (Math.random() - 0.5) * Math.PI * 1.6
+      const burstBaseSpeed = 82
+      const speedVarianceFactor = 0.7 + Math.random() * 0.6
+      const speedBase = burstBaseSpeed * speedVarianceFactor
+      const spreadMultiplier = isVariant ? 1.12 : 1
+      const travelX = Math.sin(angle) * speedBase * spreadMultiplier
+      const travelY = -(Math.cos(angle) * speedBase * spreadMultiplier + (20 + Math.random() * 34))
+      const gravity = 24 + Math.random() * 24
+      const delay = 0
+      const isPureYellowParticle = Math.random() < 0.2
+      const color = isPureYellowParticle
+        ? '#FFFF00'
+        : SQUARE_FISH_BONUS_TINT_PALETTE[Math.floor(Math.random() * SQUARE_FISH_BONUS_TINT_PALETTE.length)]
+
+      return {
+        id: `${Date.now()}-${index}`,
+        color,
+        size: isVariant ? 11 + Math.floor(Math.random() * 3) : 5 + Math.floor(Math.random() * 6),
+        duration: 1500 + Math.random() * 700,
+        delay,
+        rotation: `${Math.random() * 420 - 210}deg`,
+        rotationEnd: `${Math.random() * 1280 - 640}deg`,
+        x: `${travelX.toFixed(2)}px`,
+        y: `${travelY.toFixed(2)}px`,
+        gravity: `${gravity.toFixed(2)}px`,
+      }
+    })
+
+    setBonusBurstStates((previousBursts) =>
+      previousBursts.map((burst, index) => (index === bonusIndex ? { active: true, particles } : burst)),
+    )
+
+    if (bonusBurstResetTimerRefs.current[bonusIndex]) {
+      window.clearTimeout(bonusBurstResetTimerRefs.current[bonusIndex])
+    }
+    bonusBurstResetTimerRefs.current[bonusIndex] = window.setTimeout(() => {
+      setBonusBurstStates((previousBursts) =>
+        previousBursts.map((burst, index) =>
+          index === bonusIndex ? { active: false, particles: [] } : burst,
+        ),
+      )
+      bonusBurstResetTimerRefs.current[bonusIndex] = null
+    }, 3000)
+  }, [])
+
+  useEffect(() => {
+    const clearBonusScrollSequenceTimers = () => {
+      bonusScrollSequenceTimersRef.current.forEach((timerId) => {
+        if (!timerId) return
+        window.clearTimeout(timerId)
+      })
+      bonusScrollSequenceTimersRef.current = []
+    }
+
+    const triggerScrollSequence = () => {
+      if (!isSquareFishMobile) return
+      if (bonusScrollSequenceTriggeredRef.current) return
+      if (bonusScrollSequenceRunningRef.current) return
+      bonusScrollSequenceTriggeredRef.current = true
+      bonusScrollSequenceRunningRef.current = true
+      const orderedBonusIndexes = bonusRows.flat()
+      orderedBonusIndexes.forEach((bonusIndex, sequenceIndex) => {
+        const timerId = window.setTimeout(() => {
+          triggerBonusBurst(bonusIndex)
+          if (sequenceIndex === orderedBonusIndexes.length - 1) {
+            bonusScrollSequenceRunningRef.current = false
+          }
+        }, sequenceIndex * 140)
+        bonusScrollSequenceTimersRef.current.push(timerId)
+      })
+    }
+
+    const bonusGridElement = bonusGridRef.current
+    if (!bonusGridElement) return undefined
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]
+        if (!entry) return
+        if (!entry.isIntersecting) {
+          if (!bonusScrollSequenceRunningRef.current) {
+            bonusScrollSequenceTriggeredRef.current = false
+          }
+          return
+        }
+        triggerScrollSequence()
+      },
+      { root: null, threshold: 0.28 },
+    )
+    observer.observe(bonusGridElement)
+
+    return () => {
+      observer.disconnect()
+      clearBonusScrollSequenceTimers()
+    }
+  }, [bonusRows, isSquareFishMobile, triggerBonusBurst])
 
   useEffect(() => {
     const topButton = topHomeButtonRef.current
@@ -2828,6 +3005,17 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     setCrabOffsetX(characterCenterX - sectionCenterX)
   }, [activeSquareFishCharacterIndex, isSquareFishMobile])
 
+  useEffect(
+    () => () => {
+      bonusBurstResetTimerRefs.current.forEach((timerId, index) => {
+        if (!timerId) return
+        window.clearTimeout(timerId)
+        bonusBurstResetTimerRefs.current[index] = null
+      })
+    },
+    [],
+  )
+
   return (
     <main
       className="min-h-screen bg-[#0093FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
@@ -2943,7 +3131,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
 
         <section
           ref={squareFishContentRef}
-          className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white p-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:py-6"
+          className="mt-0 overflow-hidden rounded-t-none rounded-b-[40px] bg-white px-10 pt-10 pb-10 max-[700px]:rounded-b-[24px] max-[700px]:px-4 max-[700px]:pt-6 max-[700px]:pb-4"
           onMouseMove={(event) => {
             if (isSquareFishMobile) return
             const sectionRect = squareFishContentRef.current?.getBoundingClientRect()
@@ -2967,8 +3155,92 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
               loading="lazy"
             />
           </div>
+          <div ref={bonusGridRef} className="flex w-full flex-col items-center justify-center gap-0 py-[40px]">
+            {bonusRows.map((row, rowIndex) => (
+              <div key={`bonus-row-${rowIndex}`} className="flex items-center justify-center gap-[10px]">
+                {row.map((bonusIndex) => (
+                  <button
+                    key={`bonus-${bonusIndex}`}
+                    type="button"
+                    onMouseEnter={() => {
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    onFocus={() => {
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    onClick={() => {
+                      if (!isSquareFishMobile) return
+                      if (bonusBurstStates[bonusIndex]?.active) return
+                      triggerBonusBurst(bonusIndex)
+                    }}
+                    className={`relative flex h-[60px] w-[60px] items-center justify-center overflow-visible border-0 bg-transparent p-0 ${
+                      bonusBurstStates[bonusIndex]?.active ? 'pointer-events-none' : ''
+                    }`}
+                    aria-label={`Square Fish bonus ${bonusIndex + 1}`}
+                  >
+                    {!bonusBurstStates[bonusIndex]?.active && (
+                      <img
+                        src={sfBonusGif}
+                        alt="Square Fish bonus"
+                        className="sf-bonus-icon-fade-in block h-[60px] w-[60px]"
+                        loading="lazy"
+                      />
+                    )}
+                    {bonusBurstStates[bonusIndex]?.active && (
+                      <span
+                        className="pointer-events-none absolute left-1/2 top-1/2 block h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2"
+                        aria-hidden="true"
+                      >
+                        {bonusBurstStates[bonusIndex].particles.map((particle) => (
+                          <span
+                            key={particle.id}
+                            className="sf-bonus-confetti-particle absolute left-1/2 top-1/2 block"
+                            style={{
+                              width: `${particle.size}px`,
+                              height: `${particle.size}px`,
+                              backgroundColor: particle.color,
+                              '--sf-confetti-x': particle.x,
+                              '--sf-confetti-y': particle.y,
+                              '--sf-confetti-gravity': particle.gravity,
+                              '--sf-confetti-rotation': particle.rotation,
+                              '--sf-confetti-rotation-end': particle.rotationEnd,
+                              '--sf-confetti-duration': `${particle.duration}ms`,
+                              '--sf-confetti-delay': `${particle.delay}ms`,
+                            }}
+                          />
+                        ))}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
 
-          <div className="relative mx-auto mb-2 flex h-[140px] w-full items-center justify-center">
+          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] px-10 py-[40px] max-[700px]:mb-4 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:pt-0 max-[700px]:pb-[40px]">
+            <div className="mx-auto w-full max-w-[763px] max-[700px]:max-w-none max-[700px]:p-0">
+              <img
+                src={sfGameOverImage}
+                alt="SquareFish game over screen"
+                className="block h-auto w-full max-[700px]:rounded-[16px]"
+                loading="lazy"
+              />
+            </div>
+          </section>
+
+          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0">
+            <CaseStudyImageCarousel
+              slides={squareFishCarouselSlides}
+              showSlideLabel={false}
+              className="!px-0 !pt-0 pb-4 max-[700px]:!p-0"
+              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
+              imageClassName="block h-auto w-full object-cover"
+            />
+          </section>
+
+          <div className="relative mx-auto mt-10 mb-2 flex h-[140px] w-full items-center justify-center">
             <img
               src={sfJellyFish}
               alt=""
@@ -2981,7 +3253,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
 
           <section
             ref={gangSectionRef}
-            className="relative mt-8 overflow-hidden rounded-[16px] bg-[#0093FF] px-6 pt-10 pb-[210px] text-white max-[700px]:mt-6 max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-[178px]"
+            className="relative mt-10 overflow-hidden rounded-[16px] bg-[#0093FF] px-6 pt-10 pb-[210px] text-white max-[700px]:mt-10 max-[700px]:px-4 max-[700px]:pt-8 max-[700px]:pb-[178px]"
             onMouseMove={(event) => {
               if (isSquareFishMobile) return
               const sectionRect = gangSectionRef.current?.getBoundingClientRect()
