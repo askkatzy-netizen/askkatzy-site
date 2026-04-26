@@ -3993,8 +3993,8 @@ function App() {
     const previousThemeColor = themeColorMeta.getAttribute('content')
 
     themeColorMeta.setAttribute('content', effectiveThemeColor)
-    document.documentElement.style.backgroundColor = pageThemeColor
-    document.body.style.backgroundColor = pageThemeColor
+    document.documentElement.style.backgroundColor = effectiveThemeColor
+    document.body.style.backgroundColor = effectiveThemeColor
 
     return () => {
       if (themeColorMeta) {
