@@ -3887,6 +3887,7 @@ function App() {
               ? '#0093FF'
             : '#ffffff'
   const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
+  const effectivePageBackgroundColor = isRedModalOpen ? '#ffffff' : pageThemeColor
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -3989,11 +3990,11 @@ function App() {
     }
 
     themeColorMeta.setAttribute('content', effectiveThemeColor)
-    document.documentElement.style.backgroundColor = effectiveThemeColor
-    document.body.style.backgroundColor = effectiveThemeColor
+    document.documentElement.style.backgroundColor = effectivePageBackgroundColor
+    document.body.style.backgroundColor = effectivePageBackgroundColor
 
     return undefined
-  }, [effectiveThemeColor, pageThemeColor])
+  }, [effectiveThemeColor, effectivePageBackgroundColor, pageThemeColor])
 
   useEffect(() => {
     if (!isIntroTopLayout) return undefined
