@@ -326,7 +326,36 @@ const normalizePathname = (pathname) => {
   return normalized === '' ? '/' : normalized
 }
 
-const getCaseStudyFromPathname = (pathname) => CASE_STUDY_BY_PATH[normalizePathname(pathname)] ?? null
+const getRuntimeBasePath = (pathname) => {
+  const normalized = normalizePathname(pathname)
+  if (normalized === '/') return ''
+
+  const matchedCasePath = Object.values(CASE_STUDY_PATHS).find(
+    (casePath) => normalized === casePath || normalized.endsWith(casePath),
+  )
+
+  if (matchedCasePath) {
+    const basePrefix = normalized.slice(0, normalized.length - matchedCasePath.length)
+    return basePrefix === '/' ? '' : normalizePathname(basePrefix)
+  }
+
+  return normalized
+}
+
+const resolveAppPath = (targetPath, currentPathname) => {
+  const basePath = getRuntimeBasePath(currentPathname)
+  if (!basePath) return targetPath
+  return normalizePathname(`${basePath}${targetPath}`)
+}
+
+const getCaseStudyFromPathname = (pathname) => {
+  const normalized = normalizePathname(pathname)
+  const directMatch = CASE_STUDY_BY_PATH[normalized]
+  if (directMatch) return directMatch
+
+  const suffixMatch = Object.entries(CASE_STUDY_BY_PATH).find(([path]) => normalized.endsWith(path))
+  return suffixMatch?.[1] ?? null
+}
 
 function AnimatedStatValue({ value, duration = 560, delay = 0 }) {
   const firstDigitIndex = value.search(/\d/)
@@ -4608,32 +4637,45 @@ function App() {
   }, [])
 
   const goHome = () => {
-    if (typeof window !== 'undefined' && normalizePathname(window.location.pathname) !== '/') {
-      window.history.pushState({}, '', '/')
+    if (typeof window !== 'undefined') {
+      const targetPath = resolveAppPath('/', window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
     }
     setActiveCaseStudy(null)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
   const openCaseStudy = (projectKey) => {
-    const targetPath = CASE_STUDY_PATHS[projectKey]
-    if (typeof window !== 'undefined' && targetPath && normalizePathname(window.location.pathname) !== targetPath) {
-      window.history.pushState({}, '', targetPath)
+    const baseTargetPath = CASE_STUDY_PATHS[projectKey]
+    if (typeof window !== 'undefined' && baseTargetPath) {
+      const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
     }
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
   const openBioPage = () => {
-    const targetPath = CASE_STUDY_PATHS.bio
-    if (typeof window !== 'undefined' && normalizePathname(window.location.pathname) !== targetPath) {
-      window.history.pushState({}, '', targetPath)
+    const baseTargetPath = CASE_STUDY_PATHS.bio
+    if (typeof window !== 'undefined') {
+      const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
     }
     setActiveCaseStudy('bio')
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const bioCtaHref =
+    typeof window === 'undefined'
+      ? CASE_STUDY_PATHS.bio
+      : resolveAppPath(CASE_STUDY_PATHS.bio, window.location.pathname)
   const renderSeeFullBioCta = (className) => (
     <a
-      href={CASE_STUDY_PATHS.bio}
+      href={bioCtaHref}
       onClick={(event) => {
         event.preventDefault()
         openBioPage()
