@@ -3525,6 +3525,11 @@ function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
         aria-hidden="true"
       />
       <div
+        className="pointer-events-none fixed right-0 bottom-0 left-0 z-[121] bg-white"
+        style={{ height: 'env(safe-area-inset-bottom, 0px)' }}
+        aria-hidden="true"
+      />
+      <div
         className="red-popup__dialog pointer-events-none relative z-10 mx-auto flex min-h-full w-full max-w-[1200px] flex-col items-center justify-start pt-14 pb-14"
         role="dialog"
         aria-modal="true"
