@@ -3886,6 +3886,7 @@ function App() {
             : activeCaseStudy === 'squarefish'
               ? '#0093FF'
             : '#ffffff'
+  const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -3991,7 +3992,7 @@ function App() {
     const previousBodyBg = document.body.style.backgroundColor
     const previousThemeColor = themeColorMeta.getAttribute('content')
 
-    themeColorMeta.setAttribute('content', pageThemeColor)
+    themeColorMeta.setAttribute('content', effectiveThemeColor)
     document.documentElement.style.backgroundColor = pageThemeColor
     document.body.style.backgroundColor = pageThemeColor
 
@@ -4003,7 +4004,7 @@ function App() {
       document.documentElement.style.backgroundColor = previousHtmlBg
       document.body.style.backgroundColor = previousBodyBg
     }
-  }, [pageThemeColor])
+  }, [effectiveThemeColor, pageThemeColor])
 
   useEffect(() => {
     if (!isIntroTopLayout) return undefined
