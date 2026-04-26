@@ -3886,7 +3886,7 @@ function App() {
             : activeCaseStudy === 'squarefish'
               ? '#0093FF'
             : '#ffffff'
-  const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
+  const effectiveThemeColor = isRedModalOpen ? '#ffffff' : pageThemeColor
   const effectivePageBackgroundColor = isRedModalOpen ? '#ffffff' : pageThemeColor
 
   useEffect(() => {
