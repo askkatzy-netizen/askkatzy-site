@@ -2653,7 +2653,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                     {index > 0 ? (
                       <span
                         aria-hidden="true"
-                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'hidden' : ''}`}
+                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'invisible' : ''}`}
                       />
                     ) : null}
                     <div className="flex w-[120px] flex-col items-center text-center leading-[1.4] text-black">
@@ -4632,9 +4632,12 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
   const renderSeeFullBioCta = (className) => (
-    <button
-      type="button"
-      onClick={openBioPage}
+    <a
+      href={CASE_STUDY_PATHS.bio}
+      onClick={(event) => {
+        event.preventDefault()
+        openBioPage()
+      }}
       className={`intro-see-full-bio-cta header-cta--case-studies header-cta--ghost ${className}`}
     >
       <svg
@@ -4662,7 +4665,7 @@ function App() {
         />
       </svg>
       <span>See full Bio</span>
-    </button>
+    </a>
   )
   const handleCaseStudyTouchStart = (event) => {
     if (supportsHover) return
