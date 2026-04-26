@@ -44,6 +44,10 @@ import sfTeethJump from './assets/_SF-teeth_jump.gif'
 import sfCropMarks from './assets/_SF-CropMarks.svg'
 import sfCrab from './assets/_SF-crab.gif'
 import sfJellyFish from './assets/_SF-JellyFish.gif'
+import sfBombGif from './assets/_SF-bomb.gif'
+import sfWorldsImage from './assets/_SF-worlds.png'
+import sfNafhaDefaultGif from './assets/_SF-Nafha-default.gif'
+import sfNafhaBlownGif from './assets/_SF-Nafha-blown.gif'
 import sfGameOverImage from './assets/_SF-GameOver-2.png'
 import sfCarousel01Image from './assets/_SF-carousel-01_berral.png'
 import sfCarousel02Image from './assets/_SF-carousel-02_flower world.png'
@@ -2737,6 +2741,8 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const gangSectionRef = useRef(null)
   const squareFishContentRef = useRef(null)
   const squareFishCharacterRefs = useRef([])
+  const worldsSectionRef = useRef(null)
+  const nafhaBoxRef = useRef(null)
   const bonusGridRef = useRef(null)
   const bonusScrollSequenceTriggeredRef = useRef(false)
   const bonusScrollSequenceTimersRef = useRef([])
@@ -2754,6 +2760,9 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const [activeSquareFishCharacterIndex, setActiveSquareFishCharacterIndex] = useState(-1)
   const [crabOffsetX, setCrabOffsetX] = useState(0)
   const [jellyOffsetX, setJellyOffsetX] = useState(0)
+  const [nafhaRotationDeg, setNafhaRotationDeg] = useState(0)
+  const [isNafhaFlipped, setIsNafhaFlipped] = useState(false)
+  const [isNafhaHovered, setIsNafhaHovered] = useState(false)
   const [bonusBurstStates, setBonusBurstStates] = useState(() =>
     Array.from({ length: totalBonuses }, () => ({ active: false, particles: [] })),
   )
@@ -3155,6 +3164,81 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
               loading="lazy"
             />
           </div>
+          <section
+            ref={worldsSectionRef}
+            className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0"
+            onMouseMove={(event) => {
+              const fishRect = nafhaBoxRef.current?.getBoundingClientRect()
+              if (!fishRect) return
+              const fishCenterX = fishRect.left + fishRect.width / 2
+              const fishCenterY = fishRect.top + fishRect.height / 2
+              const normalizedY = (event.clientY - fishCenterY) / (fishRect.height / 2)
+              const clampedNormalizedY = Math.max(-1, Math.min(1, normalizedY))
+              setNafhaRotationDeg(clampedNormalizedY * 25)
+              setIsNafhaFlipped(event.clientX < fishCenterX)
+            }}
+            onMouseLeave={() => {
+              setNafhaRotationDeg(0)
+              setIsNafhaFlipped(false)
+            }}
+          >
+            <div className="grid grid-cols-1 gap-10 min-[980px]:grid-cols-[minmax(0,40%)_minmax(0,60%)]">
+              <div className="flex flex-col gap-4 text-black/70">
+                <h2 className="font-roboto-slab text-[36px] leading-[1.4] font-semibold text-black/70">The story</h2>
+                <p className="text-[20px] leading-[1.4] font-semibold italic">Don&apos;t trust anyone!</p>
+                <div className="flex flex-col gap-3 text-[16px] leading-[1.4]">
+                  <p>{`The goal is simple: the crabs have the pearls, and you need them. But in this world, nothing is given - only taken.`}</p>
+                  <p>The crabs won&apos;t surrender their prize without a fight, and beneath the surface, everyone is a rival.</p>
+                  <p>In a place where alliances are non-existent, the only thing you can trust is your instincts.</p>
+                </div>
+                <div className="mt-2 flex w-full justify-center min-[980px]:mt-4">
+                  <div
+                    ref={nafhaBoxRef}
+                    className="relative z-[6] flex h-[70px] w-[90px] items-center justify-center overflow-visible"
+                    onMouseEnter={() => setIsNafhaHovered(true)}
+                    onMouseLeave={() => setIsNafhaHovered(false)}
+                  >
+                    <img
+                      src={isNafhaHovered ? sfNafhaBlownGif : sfNafhaDefaultGif}
+                      alt=""
+                      aria-hidden="true"
+                      className="block h-auto w-auto max-w-none transition-transform duration-150 ease-out"
+                      style={{
+                        transform: `scaleX(${isNafhaFlipped ? -1 : 1}) rotate(${nafhaRotationDeg.toFixed(2)}deg)`,
+                        transformOrigin: 'center center',
+                      }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              </div>
+              <img
+                src={sfWorldsImage}
+                alt="SquareFish worlds storyboard"
+                className="block h-auto w-full rounded-[8px] max-[700px]:rounded-[16px]"
+                loading="lazy"
+              />
+            </div>
+          </section>
+          <div className="mt-10 flex w-full items-center justify-center">
+            <img
+              src={sfBombGif}
+              alt="SquareFish bomb"
+              className="block h-[88px] w-[88px]"
+              loading="lazy"
+            />
+          </div>
+
+          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0">
+            <CaseStudyImageCarousel
+              slides={squareFishCarouselSlides}
+              showSlideLabel={false}
+              className="!px-0 !pt-0 pb-4 max-[700px]:!p-0"
+              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
+              imageClassName="block h-auto w-full object-cover"
+            />
+          </section>
+
           <div ref={bonusGridRef} className="flex w-full flex-col items-center justify-center gap-0 py-[40px]">
             {bonusRows.map((row, rowIndex) => (
               <div key={`bonus-row-${rowIndex}`} className="flex items-center justify-center gap-[10px]">
@@ -3228,16 +3312,6 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
                 loading="lazy"
               />
             </div>
-          </section>
-
-          <section className="mx-auto mt-10 w-full max-w-[1048px] rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:rounded-none max-[700px]:bg-transparent max-[700px]:px-0 max-[700px]:py-0">
-            <CaseStudyImageCarousel
-              slides={squareFishCarouselSlides}
-              showSlideLabel={false}
-              className="!px-0 !pt-0 pb-4 max-[700px]:!p-0"
-              slideFrameClassName="flex w-full items-center justify-center overflow-hidden rounded-[8px] max-[700px]:rounded-[16px]"
-              imageClassName="block h-auto w-full object-cover"
-            />
           </section>
 
           <div className="relative mx-auto mt-10 mb-2 flex h-[140px] w-full items-center justify-center">
