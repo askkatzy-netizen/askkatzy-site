@@ -727,7 +727,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Product Design Lead, </span>
                 <span className="text-[24px]">StreamElements</span>
@@ -756,7 +756,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Head of Design / Co-founder, </span>
                 <span className="text-[24px]">Red interactive</span>
@@ -788,7 +788,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Teacher - 3D Max, </span>
                 <span className="text-[24px]">Bezalel Academy of Arts and Design</span>
@@ -802,7 +802,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 Early Career
               </h2>
@@ -822,7 +822,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Graduate Studies in Industrial Design </span>
                 <span className="text-[24px]">/ M.A. program</span>
@@ -835,7 +835,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>B.F.A. </span>
                 <span className="text-[24px]">/ </span>
@@ -849,7 +849,7 @@ function BioPage({ onBack }) {
           </div>
 
           <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-1">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Design Studies </span>
                 <span className="text-[24px]">/ B.A. program</span>
