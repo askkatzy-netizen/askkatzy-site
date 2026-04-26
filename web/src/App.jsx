@@ -687,6 +687,15 @@ function CaseStudyFooter({ variant = 'home' }) {
 }
 
 function BioPage({ onBack }) {
+  const topHomeButtonRef = useRef(null)
+  const lastScrollYRef = useRef(0)
+  const upScrollDistanceRef = useRef(0)
+  const downScrollDistanceRef = useRef(0)
+  const idleHideTimerRef = useRef(null)
+  const isFloaterHoveredRef = useRef(false)
+  const suppressFloaterOnResizeUntilRef = useRef(0)
+  const [showFloatingHome, setShowFloatingHome] = useState(false)
+  const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const bioSkills = [
     'Product Strategy',
     'Product Design',
@@ -702,11 +711,145 @@ function BioPage({ onBack }) {
     'Team Mentorship',
   ]
 
+  useEffect(() => {
+    const topButton = topHomeButtonRef.current
+    if (!topButton) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTopHomeInView(entry.isIntersecting)
+      },
+      { root: null, threshold: 0 },
+    )
+    observer.observe(topButton)
+
+    const clearIdleHideTimer = () => {
+      if (!idleHideTimerRef.current) return
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+
+    const scheduleIdleHide = () => {
+      if (isFloaterHoveredRef.current) return
+      clearIdleHideTimer()
+      idleHideTimerRef.current = window.setTimeout(() => {
+        if (isFloaterHoveredRef.current) return
+        setShowFloatingHome(false)
+      }, 5000)
+    }
+
+    const onScroll = () => {
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      if (Date.now() < suppressFloaterOnResizeUntilRef.current) {
+        lastScrollYRef.current = currentScrollY
+        return
+      }
+      const previousScrollY = lastScrollYRef.current
+      const isScrollingUp = currentScrollY < previousScrollY
+      const isScrollingDown = currentScrollY > previousScrollY
+      const upScrollDelta = isScrollingUp ? previousScrollY - currentScrollY : 0
+      const downScrollDelta = isScrollingDown ? currentScrollY - previousScrollY : 0
+      const isAtTop = currentScrollY <= 2
+      const hasScrolledPastThreshold = currentScrollY >= 640
+
+      if (isAtTop) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current = 0
+        setShowFloatingHome(false)
+        clearIdleHideTimer()
+      } else if (isScrollingDown) {
+        upScrollDistanceRef.current = 0
+        downScrollDistanceRef.current += downScrollDelta
+        const shouldHideFloater =
+          window.innerWidth > 700 || downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+        if (shouldHideFloater && !isFloaterHoveredRef.current) {
+          setShowFloatingHome(false)
+          clearIdleHideTimer()
+        }
+      } else if (isScrollingUp) {
+        downScrollDistanceRef.current = 0
+        upScrollDistanceRef.current += upScrollDelta
+        const hasEnoughUpScroll =
+          window.innerWidth > 700 || upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
+        setShowFloatingHome((prev) => {
+          if (prev) return true
+          return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
+        })
+        scheduleIdleHide()
+      }
+
+      lastScrollYRef.current = currentScrollY
+    }
+
+    onScroll()
+    lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    upScrollDistanceRef.current = 0
+    downScrollDistanceRef.current = 0
+    const onResize = () => {
+      suppressFloaterOnResizeUntilRef.current = Date.now() + 500
+      lastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+      upScrollDistanceRef.current = 0
+      downScrollDistanceRef.current = 0
+    }
+    window.addEventListener('resize', onResize)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', onResize)
+      window.removeEventListener('scroll', onScroll)
+      clearIdleHideTimer()
+    }
+  }, [isTopHomeInView])
+
   return (
     <main className="min-h-screen bg-[#E9E9E9] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px]">
+        <div
+          className={`case-study-floater case-study-floater--bio ${showFloatingHome ? 'case-study-floater--visible' : ''}`}
+          onMouseEnter={() => {
+            isFloaterHoveredRef.current = true
+            if (!showFloatingHome) return
+            if (!idleHideTimerRef.current) return
+            window.clearTimeout(idleHideTimerRef.current)
+            idleHideTimerRef.current = null
+          }}
+          onMouseLeave={() => {
+            isFloaterHoveredRef.current = false
+            if (!showFloatingHome) return
+            if (idleHideTimerRef.current) {
+              window.clearTimeout(idleHideTimerRef.current)
+            }
+            idleHideTimerRef.current = window.setTimeout(() => {
+              if (isFloaterHoveredRef.current) return
+              setShowFloatingHome(false)
+            }, 800)
+          }}
+        >
+          <button
+            type="button"
+            onClick={onBack}
+            onPointerDown={(event) => {
+              if (event.pointerType === 'mouse') return
+              event.preventDefault()
+              onBack()
+            }}
+            className="case-study-floater__button bio-floater__button"
+            aria-label="Back to home"
+          >
+            <span className="case-study-floater__icon-chip bio-floater__icon-chip">
+              <img src={arrowLeftIcon} alt="" aria-hidden="true" className="case-study-floater__icon bio-floater__icon" />
+            </span>
+            <span className="case-study-floater__label bio-floater__label">Eyal / Bio</span>
+          </button>
+        </div>
+
         <header className="mb-8 flex items-center justify-start">
-          <button type="button" onClick={onBack} className="bio-home-cta boss-back-cta header-cta--case-studies inline-flex">
+          <button
+            ref={topHomeButtonRef}
+            type="button"
+            onClick={onBack}
+            className="bio-home-cta boss-back-cta header-cta--case-studies inline-flex"
+          >
             <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
             <span>Home</span>
           </button>
@@ -909,6 +1052,10 @@ function BioPage({ onBack }) {
         </section>
 
         <CaseStudyFooter variant="bio" />
+        <div
+          aria-hidden="true"
+          className="mt-3 h-2 w-full rounded-[999px] bg-black/10 max-[700px]:mt-2"
+        />
       </div>
     </main>
   )
@@ -1906,7 +2053,7 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
             <img
               src={dsBookImage}
               alt="Sprint book visual"
-              className="block h-auto w-full max-w-[336px]"
+              className="block h-auto w-full max-w-[336px] max-[700px]:max-w-[168px]"
               loading="lazy"
             />
           </div>

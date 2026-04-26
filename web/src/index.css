@@ -266,6 +266,43 @@ body {
   background: #0093ff;
 }
 
+.case-study-floater--bio .bio-floater__button {
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-shadow: none;
+}
+
+.case-study-floater--bio .bio-floater__icon-chip {
+  background: transparent;
+  opacity: 1;
+}
+
+.case-study-floater--bio .bio-floater__icon {
+  filter: brightness(0) saturate(100%);
+}
+
+.case-study-floater--bio .bio-floater__label {
+  color: rgb(0 0 0 / 70%);
+}
+
+.case-study-floater--bio .bio-floater__button:focus-visible {
+  background: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 0 0 4px rgb(0 0 0 / 20%);
+}
+
+.case-study-floater--bio .bio-floater__button:focus-visible .bio-floater__icon-chip {
+  background: #000000;
+}
+
+.case-study-floater--bio .bio-floater__button:focus-visible .bio-floater__icon {
+  filter: brightness(0) invert(1);
+}
+
+.case-study-floater--bio .bio-floater__button:focus-visible .bio-floater__label {
+  color: rgb(0 0 0 / 70%);
+}
+
 .case-study-floater__icon-chip {
   display: inline-flex;
   align-items: center;
@@ -356,6 +393,13 @@ body {
     background: #0093ff;
   }
 
+  .case-study-floater--bio .bio-floater__button:hover,
+  .case-study-floater--bio.case-study-floater:hover .bio-floater__button {
+    background: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 0 0 4px rgb(0 0 0 / 20%);
+  }
+
   .case-study-floater__button:hover .case-study-floater__icon-chip,
   .case-study-floater:hover .case-study-floater__button .case-study-floater__icon-chip {
     background: #ffffff;
@@ -370,6 +414,21 @@ body {
   .case-study-floater__button:hover .case-study-floater__icon,
   .case-study-floater:hover .case-study-floater__button .case-study-floater__icon {
     filter: brightness(0) saturate(100%);
+  }
+
+  .case-study-floater--bio .bio-floater__button:hover .bio-floater__icon-chip,
+  .case-study-floater--bio.case-study-floater:hover .bio-floater__button .bio-floater__icon-chip {
+    background: #000000;
+  }
+
+  .case-study-floater--bio .bio-floater__button:hover .bio-floater__icon,
+  .case-study-floater--bio.case-study-floater:hover .bio-floater__button .bio-floater__icon {
+    filter: brightness(0) invert(1);
+  }
+
+  .case-study-floater--bio .bio-floater__button:hover .bio-floater__label,
+  .case-study-floater--bio.case-study-floater:hover .bio-floater__button .bio-floater__label {
+    color: rgb(0 0 0 / 70%);
   }
 }
 
