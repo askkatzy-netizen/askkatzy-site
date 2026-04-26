@@ -3525,11 +3525,6 @@ function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none fixed right-0 bottom-0 left-0 z-[121] bg-white"
-        style={{ height: 'env(safe-area-inset-bottom, 0px)' }}
-        aria-hidden="true"
-      />
-      <div
         className="red-popup__dialog pointer-events-none relative z-10 mx-auto flex min-h-full w-full max-w-[1200px] flex-col items-center justify-start pt-14 pb-14"
         role="dialog"
         aria-modal="true"
@@ -3891,8 +3886,7 @@ function App() {
             : activeCaseStudy === 'squarefish'
               ? '#0093FF'
             : '#ffffff'
-  const effectiveThemeColor = isRedModalOpen ? '#ffffff' : pageThemeColor
-  const effectivePageBackgroundColor = isRedModalOpen ? '#ffffff' : pageThemeColor
+  const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -3994,15 +3988,12 @@ function App() {
       document.head.appendChild(themeColorMeta)
     }
 
-    const appRoot = document.getElementById('root')
-
     themeColorMeta.setAttribute('content', effectiveThemeColor)
-    document.documentElement.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
-    document.body.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
-    if (appRoot) appRoot.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
+    document.documentElement.style.backgroundColor = pageThemeColor
+    document.body.style.backgroundColor = pageThemeColor
 
     return undefined
-  }, [effectiveThemeColor, effectivePageBackgroundColor, pageThemeColor])
+  }, [effectiveThemeColor, pageThemeColor])
 
   useEffect(() => {
     if (!isIntroTopLayout) return undefined
@@ -4025,22 +4016,6 @@ function App() {
       resizeObserver?.disconnect()
     }
   }, [isIntroTopLayout, isIntroExpanded])
-
-  useEffect(() => {
-    if (typeof document === 'undefined') return undefined
-    const activeMain = document.querySelector('main')
-    if (!activeMain) return undefined
-
-    if (isRedModalOpen) {
-      activeMain.style.backgroundColor = '#ffffff'
-      return () => {
-        activeMain.style.backgroundColor = ''
-      }
-    }
-
-    activeMain.style.backgroundColor = ''
-    return undefined
-  }, [isRedModalOpen, activeCaseStudy])
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
