@@ -4019,6 +4019,22 @@ function App() {
   }, [isIntroTopLayout, isIntroExpanded])
 
   useEffect(() => {
+    if (typeof document === 'undefined') return undefined
+    const activeMain = document.querySelector('main')
+    if (!activeMain) return undefined
+
+    if (isRedModalOpen) {
+      activeMain.style.backgroundColor = '#ffffff'
+      return () => {
+        activeMain.style.backgroundColor = ''
+      }
+    }
+
+    activeMain.style.backgroundColor = ''
+    return undefined
+  }, [isRedModalOpen, activeCaseStudy])
+
+  useEffect(() => {
     if (typeof window === 'undefined') return undefined
 
     const syncFromLocation = () => {
