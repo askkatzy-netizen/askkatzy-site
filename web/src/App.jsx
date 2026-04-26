@@ -3988,22 +3988,11 @@ function App() {
       document.head.appendChild(themeColorMeta)
     }
 
-    const previousHtmlBg = document.documentElement.style.backgroundColor
-    const previousBodyBg = document.body.style.backgroundColor
-    const previousThemeColor = themeColorMeta.getAttribute('content')
-
     themeColorMeta.setAttribute('content', effectiveThemeColor)
     document.documentElement.style.backgroundColor = effectiveThemeColor
     document.body.style.backgroundColor = effectiveThemeColor
 
-    return () => {
-      if (themeColorMeta) {
-        if (previousThemeColor) themeColorMeta.setAttribute('content', previousThemeColor)
-        else themeColorMeta.removeAttribute('content')
-      }
-      document.documentElement.style.backgroundColor = previousHtmlBg
-      document.body.style.backgroundColor = previousBodyBg
-    }
+    return undefined
   }, [effectiveThemeColor, pageThemeColor])
 
   useEffect(() => {
