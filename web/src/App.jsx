@@ -65,6 +65,7 @@ import linkedInIcon from './assets/arrow-right.svg'
 import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
+import downloadIcon from './assets/download.svg'
 import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
@@ -75,6 +76,7 @@ import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
 import chevronDownIcon from './assets/chevron-down.svg'
 import chevronUpIcon from './assets/chevron-up.svg'
+import bioAvatarImage from './assets/bio-avatr.png'
 import arrowLeftIcon from './assets/arrow-left.svg'
 import boss01Image from './assets/boss-01.png'
 import boss02Image from './assets/boss-02.png'
@@ -312,6 +314,7 @@ const CASE_STUDY_PATHS = {
   'campaign-brief': '/case-studies/briefs',
   'design-sprints': '/case-studies/design-sprints',
   squarefish: '/case-studies/squarefish',
+  bio: '/bio',
 }
 
 const CASE_STUDY_BY_PATH = Object.fromEntries(
@@ -323,7 +326,36 @@ const normalizePathname = (pathname) => {
   return normalized === '' ? '/' : normalized
 }
 
-const getCaseStudyFromPathname = (pathname) => CASE_STUDY_BY_PATH[normalizePathname(pathname)] ?? null
+const getRuntimeBasePath = (pathname) => {
+  const normalized = normalizePathname(pathname)
+  if (normalized === '/') return ''
+
+  const matchedCasePath = Object.values(CASE_STUDY_PATHS).find(
+    (casePath) => normalized === casePath || normalized.endsWith(casePath),
+  )
+
+  if (matchedCasePath) {
+    const basePrefix = normalized.slice(0, normalized.length - matchedCasePath.length)
+    return basePrefix === '/' ? '' : normalizePathname(basePrefix)
+  }
+
+  return normalized
+}
+
+const resolveAppPath = (targetPath, currentPathname) => {
+  const basePath = getRuntimeBasePath(currentPathname)
+  if (!basePath) return targetPath
+  return normalizePathname(`${basePath}${targetPath}`)
+}
+
+const getCaseStudyFromPathname = (pathname) => {
+  const normalized = normalizePathname(pathname)
+  const directMatch = CASE_STUDY_BY_PATH[normalized]
+  if (directMatch) return directMatch
+
+  const suffixMatch = Object.entries(CASE_STUDY_BY_PATH).find(([path]) => normalized.endsWith(path))
+  return suffixMatch?.[1] ?? null
+}
 
 function AnimatedStatValue({ value, duration = 560, delay = 0 }) {
   const firstDigitIndex = value.search(/\d/)
@@ -626,6 +658,7 @@ function CaseStudyImageCarousel({
 
 function CaseStudyFooter({ variant = 'home' }) {
   const isCaseStudy = variant === 'case-study'
+  const isBio = variant === 'bio'
 
   return (
     <footer
@@ -643,13 +676,241 @@ function CaseStudyFooter({ variant = 'home' }) {
         className={
           isCaseStudy
             ? 'boss-back-cta header-cta--case-studies'
-            : 'header-cta--case-studies header-cta--ghost'
+            : `header-cta--case-studies header-cta--ghost ${isBio ? 'bio-footer-email-cta' : ''}`
         }
       >
         <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
         <span>askkatzy@gmail.com</span>
       </a>
     </footer>
+  )
+}
+
+function BioPage({ onBack }) {
+  const bioSkills = [
+    'Product Strategy',
+    'Product Design',
+    'UX / UI',
+    'Design Systems',
+    'Rapid Prototyping',
+    'Animation',
+    'Motion and Interaction Design',
+    'Figma',
+    'Cursor',
+    'Design Leadership',
+    'Design Operations',
+    'Team Mentorship',
+  ]
+
+  return (
+    <main className="min-h-screen bg-[#E9E9E9] px-[56px] py-5 text-[#111111] max-[700px]:px-4">
+      <div className="mx-auto w-full max-w-[1128px]">
+        <header className="mb-8 flex items-center justify-start">
+          <button type="button" onClick={onBack} className="bio-home-cta boss-back-cta header-cta--case-studies inline-flex">
+            <img src={arrowLeftIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+            <span>Home</span>
+          </button>
+        </header>
+
+        <section className="relative rounded-[40px] border-2 border-black bg-white px-20 py-20 max-[980px]:rounded-[24px] max-[980px]:px-8 max-[980px]:py-10 max-[700px]:px-4 max-[700px]:py-6 max-[480px]:pt-16">
+          <div className="mb-10 flex items-center gap-4 max-[700px]:flex-wrap">
+            <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-[999px] border border-black">
+              <img src={bioAvatarImage} alt="Eyal Katz avatar" className="block h-auto w-[54.07px] object-contain" />
+            </div>
+            <h1 className="flex-1 font-roboto-slab text-[48px] leading-[1.2] font-semibold text-black/90 max-[700px]:text-[36px]">
+              Eyal katz
+            </h1>
+            <a
+              href="#"
+              className="bio-download-cta group inline-flex h-16 w-16 items-center justify-center rounded-full max-[480px]:absolute max-[480px]:top-2 max-[480px]:right-2"
+              aria-label="Download bio PDF (work in progress)"
+            >
+              <span
+                className="bio-download-cta__core flex h-12 w-12 items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:scale-[1.3333] group-hover:border-[#2B00FF] group-hover:bg-white group-hover:shadow-[0_0_0_4px_rgba(43,0,255,0.2)] group-focus-visible:scale-[1.3333] group-focus-visible:border-[#2B00FF] group-focus-visible:bg-white group-focus-visible:shadow-[0_0_0_4px_rgba(43,0,255,0.2)]"
+                aria-hidden="true"
+              >
+                <img
+                  src={downloadIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:h-7 group-hover:w-7 group-hover:opacity-100 group-focus-visible:h-7 group-focus-visible:w-7 group-focus-visible:opacity-100"
+                />
+              </span>
+            </a>
+          </div>
+
+          <div className="mb-10 max-w-[920px] text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+            <p className="mb-3">
+              I&apos;m a Product Designer focused on making complex products feel simple. With a background as a
+              studio founder and animator, I think beyond visuals - shaping how products feel, move, and come
+              together. I bring clarity under pressure, keep things moving, and add just enough humor to keep
+              everyone sane.
+            </p>
+            <p>I genuinely enjoy what I do.</p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Professional Experience</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Product Design Lead, </span>
+                <span className="text-[24px]">StreamElements</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2022 - now</p>
+            </div>
+            <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              <li>
+                Built monetization products from scratch, including creator-brand collaboration tools and community
+                features that power large-scale ecosystems.
+              </li>
+              <li>
+                Brought Design System thinking into the daily flow, making consistency the default and significantly
+                shortening the distance between idea and production.
+              </li>
+              <li>
+                Used high-fidelity motion and interaction prototypes to show exactly how the product should feel,
+                getting product, engineering, and leadership on the same page before a single line of code was
+                written.
+              </li>
+              <li>
+                Transformed design files into a source of truth, creating a structured environment that made
+                cross-functional handoffs feel low-friction and reliable.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Head of Design / Co-founder, </span>
+                <span className="text-[24px]">Red interactive</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2006 - 2022</p>
+            </div>
+            <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              <li>
+                Co-founded and led the studio with a people-first philosophy - &quot;Grow with a smile&quot;,
+                emphasizing strong process, collaboration, and long-term value over short-term delivery.
+              </li>
+              <li>
+                Led UX/UI strategy and execution across hundreds of projects in education, e-commerce, and
+                cybersecurity, working directly with founders, executives, and product teams.
+              </li>
+              <li>
+                Translated workshop insights and abstract concepts into rapid, testable prototypes, enabling early
+                validation and informed decision-making.
+              </li>
+              <li>
+                Built, mentored, and scaled design teams, establishing standards for clean design, efficient
+                workflows, and clear communication with development teams.
+              </li>
+              <li>
+                Balanced high-level design vision with real-world constraints, including tight deadlines, evolving
+                budgets, and shifting business priorities.
+              </li>
+            </ul>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Teacher - 3D Max, </span>
+                <span className="text-[24px]">Bezalel Academy of Arts and Design</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Jerusalem | 2004 - 2007</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              Taught 3D fundamentals in the Industrial Design department (BA and MA programs) through hands-on work
+              in 3ds Max, focusing on modeling and animation.
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                Early Career
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">1997 - 2006</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              I spent my early years at digital studios and software companies, growing from a Lead 3D Artist into
+              creative leadership roles. These years gave me a deep foundation in motion and structural thinking, and
+              taught me how to translate complex technical systems into clear, intuitive experiences.
+            </p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Education</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Graduate Studies in Industrial Design </span>
+                <span className="text-[24px]">/ M.A. program</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Jerusalem | 2006 - 2008</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              Bezalel Academy of Arts and Design
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>B.F.A. </span>
+                <span className="text-[24px]">/ </span>
+                <span className="text-[24px]">Specialized in 3D Art &amp; Animation</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1994 - 1996</p>
+            </div>
+            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              New York Institute of Technology
+            </p>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Design Studies </span>
+                <span className="text-[24px]">/ B.A. program</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1992 - 1994</p>
+            </div>
+            <p className="mb-3 text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+              Fashion Institute of Technology
+            </p>
+            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              Foundations in Design and Broad Creative Skills
+            </p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
+            <span className="h-px flex-1 bg-black/15" />
+            <p className="text-[16px] leading-[1.4] font-medium text-black/55 uppercase">Skills</p>
+            <span className="h-px flex-1 bg-black/15" />
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            {bioSkills.map((skill) => (
+              <span key={skill} className="rounded-[48px] bg-[#F2F2F2] px-5 py-2.5 text-[14px] leading-[1.4] text-black">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <CaseStudyFooter variant="bio" />
+      </div>
+    </main>
   )
 }
 
@@ -2421,7 +2682,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                     {index > 0 ? (
                       <span
                         aria-hidden="true"
-                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'hidden' : ''}`}
+                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'invisible' : ''}`}
                       />
                     ) : null}
                     <div className="flex w-[120px] flex-col items-center text-center leading-[1.4] text-black">
@@ -4376,21 +4637,78 @@ function App() {
   }, [])
 
   const goHome = () => {
-    if (typeof window !== 'undefined' && normalizePathname(window.location.pathname) !== '/') {
-      window.history.pushState({}, '', '/')
+    if (typeof window !== 'undefined') {
+      const targetPath = resolveAppPath('/', window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
     }
     setActiveCaseStudy(null)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
   const openCaseStudy = (projectKey) => {
-    const targetPath = CASE_STUDY_PATHS[projectKey]
-    if (typeof window !== 'undefined' && targetPath && normalizePathname(window.location.pathname) !== targetPath) {
-      window.history.pushState({}, '', targetPath)
+    const baseTargetPath = CASE_STUDY_PATHS[projectKey]
+    if (typeof window !== 'undefined' && baseTargetPath) {
+      const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
     }
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
+  const openBioPage = () => {
+    const baseTargetPath = CASE_STUDY_PATHS.bio
+    if (typeof window !== 'undefined') {
+      const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
+      if (normalizePathname(window.location.pathname) !== targetPath) {
+        window.history.pushState({}, '', targetPath)
+      }
+    }
+    setActiveCaseStudy('bio')
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
+  const bioCtaHref =
+    typeof window === 'undefined'
+      ? CASE_STUDY_PATHS.bio
+      : resolveAppPath(CASE_STUDY_PATHS.bio, window.location.pathname)
+  const renderSeeFullBioCta = (className) => (
+    <a
+      href={bioCtaHref}
+      onClick={(event) => {
+        event.preventDefault()
+        openBioPage()
+      }}
+      className={`intro-see-full-bio-cta header-cta--case-studies header-cta--ghost ${className}`}
+    >
+      <svg
+        className="header-cta__icon"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span>See full Bio</span>
+    </a>
+  )
   const handleCaseStudyTouchStart = (event) => {
     if (supportsHover) return
     const touch = event.touches?.[0]
@@ -4734,6 +5052,10 @@ function App() {
     )
   }
 
+  if (activeCaseStudy === 'bio') {
+    return <BioPage onBack={goHome} />
+  }
+
   return (
     <main className="min-h-screen bg-white px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px] fade-up">
@@ -4831,33 +5153,7 @@ function App() {
                 </p>
                 <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
 
-                <button className="header-cta--case-studies header-cta--ghost mt-8">
-                  <svg
-                    className="header-cta__icon"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span>See full Bio</span>
-                </button>
+                {renderSeeFullBioCta('mt-8')}
               </>
             ) : (
               <>
@@ -4907,37 +5203,7 @@ function App() {
 
                 {isIntroExpanded && (
                   <>
-                    <button
-                      className={`header-cta--case-studies header-cta--ghost intro-full-bio-cta ${
-                        isIntroTopLayout ? 'mt-7' : 'mt-4'
-                      }`}
-                    >
-                      <svg
-                        className="header-cta__icon"
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                          stroke="currentColor"
-                          strokeWidth="1.6"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <span>See full Bio</span>
-                    </button>
+                    {renderSeeFullBioCta(isIntroTopLayout ? 'mt-7' : 'mt-4')}
 
                     <div className="mt-7">
                       <button
