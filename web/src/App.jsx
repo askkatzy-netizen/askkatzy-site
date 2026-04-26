@@ -3989,9 +3989,12 @@ function App() {
       document.head.appendChild(themeColorMeta)
     }
 
+    const appRoot = document.getElementById('root')
+
     themeColorMeta.setAttribute('content', effectiveThemeColor)
-    document.documentElement.style.backgroundColor = effectivePageBackgroundColor
-    document.body.style.backgroundColor = effectivePageBackgroundColor
+    document.documentElement.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
+    document.body.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
+    if (appRoot) appRoot.style.setProperty('background-color', effectivePageBackgroundColor, 'important')
 
     return undefined
   }, [effectiveThemeColor, effectivePageBackgroundColor, pageThemeColor])
