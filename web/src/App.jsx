@@ -3202,7 +3202,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
                       src={isNafhaHovered ? sfNafhaBlownGif : sfNafhaDefaultGif}
                       alt=""
                       aria-hidden="true"
-                      className="block h-auto w-auto max-w-none transition-transform duration-150 ease-out"
+                      className="pointer-events-none block h-auto w-auto max-w-none transition-transform duration-150 ease-out"
                       style={{
                         transform: `scaleX(${isNafhaFlipped ? -1 : 1}) rotate(${nafhaRotationDeg.toFixed(2)}deg)`,
                         transformOrigin: 'center center',
@@ -3215,7 +3215,7 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
               <img
                 src={sfWorldsImage}
                 alt="SquareFish worlds storyboard"
-                className="block h-auto w-full rounded-[8px] max-[700px]:rounded-[16px]"
+                className="block h-auto w-full"
                 loading="lazy"
               />
             </div>
