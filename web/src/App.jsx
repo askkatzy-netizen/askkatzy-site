@@ -3558,18 +3558,17 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
             <div className="flex min-w-0 flex-col gap-4 text-[18px] leading-[1.4] text-black/70">
               <p>
                 <strong className="font-bold text-black/70">SquareFish</strong>
-                {' began as an experimental pilot in '}
+                {' started as an experimental pilot at '}
                 <button type="button" className="intro__red-action" onClick={onOpenRed}>
                   RED
                 </button>
                 {
-                  ". Targeted at a younger audience and powered by an ad-based revenue model, it didn't achieve the commercial lift we hoped for - but it was a great lesson."
+                  ', aimed at a younger audience and built on an ad-based revenue model. While it didn’t reach its commercial goals, it became a valuable learning ground.'
                 }
               </p>
               <p>
-                Developing <strong className="font-bold text-black/70">SquareFish</strong> sharpened my skills
-                in crafting simple, engaging UI. It also challenged me to bridge the gap between a creative
-                concept and a viable, revenue driven product.
+                The project sharpened my ability to craft simple, engaging UI and pushed me to bridge the gap
+                between a creative concept and a viable, revenue-driven product.
               </p>
               <p>
                 Beyond the strategy, I took great joy in modeling and animating the 3D characters to bring this
