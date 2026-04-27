@@ -66,6 +66,7 @@ import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
 import downloadIcon from './assets/download.svg'
+import bioPdfFile from './assets/Eyal_Katz-Product_Designer.pdf'
 import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
@@ -864,9 +865,10 @@ function BioPage({ onBack }) {
               Eyal katz
             </h1>
             <a
-              href="#"
+              href={bioPdfFile}
+              download="Eyal_Katz-Product_Designer.pdf"
               className="bio-download-cta group inline-flex h-16 w-16 items-center justify-center rounded-full max-[480px]:absolute max-[480px]:top-2 max-[480px]:right-2"
-              aria-label="Download bio PDF (work in progress)"
+              aria-label="Download bio PDF"
             >
               <span
                 className="bio-download-cta__core flex h-12 w-12 items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:bg-black group-focus-visible:bg-black"
