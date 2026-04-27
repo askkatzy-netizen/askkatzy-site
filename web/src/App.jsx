@@ -4030,8 +4030,11 @@ function SponsorshipCampaignCardSection() {
                           d="M16 2H8a2 2 0 00-2 2v16a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zm-4 18a1 1 0 111.001-2A1 1 0 0112 20zm4-4H8V6h8v10z"
                         />
                       </svg>
-                      <span className="text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)]">
+                      <span className="text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)] max-[700px]:hidden">
                         Mobile Only
+                      </span>
+                      <span className="hidden text-[12px] font-bold leading-[1.5] tracking-[0.5px] text-[rgba(255,255,255,0.87)] max-[700px]:inline">
+                        Mobile
                       </span>
                     </span>
                   </div>
