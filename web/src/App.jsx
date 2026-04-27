@@ -3151,6 +3151,8 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   const squareFishCharacterRefs = useRef([])
   const worldsSectionRef = useRef(null)
   const nafhaBoxRef = useRef(null)
+  const nafhaLastScrollYRef = useRef(0)
+  const nafhaScrollDirectionRef = useRef('down')
   const bonusGridRef = useRef(null)
   const bonusScrollSequenceTriggeredRef = useRef(false)
   const bonusScrollSequenceTimersRef = useRef([])
@@ -3421,6 +3423,64 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     const characterCenterX = characterRect.left + characterRect.width / 2
     setCrabOffsetX(characterCenterX - sectionCenterX)
   }, [activeSquareFishCharacterIndex, isSquareFishMobile])
+
+  useEffect(() => {
+    if (!isSquareFishMobile) {
+      setNafhaRotationDeg(0)
+      setIsNafhaFlipped(false)
+      return
+    }
+
+    const updateNafhaRotationFromScroll = () => {
+      const fishRect = nafhaBoxRef.current?.getBoundingClientRect()
+      if (!fishRect) return
+
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      const previousScrollY = nafhaLastScrollYRef.current
+      if (currentScrollY > previousScrollY) {
+        nafhaScrollDirectionRef.current = 'down'
+      } else if (currentScrollY < previousScrollY) {
+        nafhaScrollDirectionRef.current = 'up'
+      }
+      nafhaLastScrollYRef.current = currentScrollY
+
+      const viewportCenterY = window.innerHeight / 2
+      const fishCenterY = fishRect.top + fishRect.height / 2
+      const upperThresholdY = viewportCenterY - 40
+      const lowerThresholdY = viewportCenterY + 40
+      const interpolationRange = Math.max(1, lowerThresholdY - upperThresholdY)
+
+      let nextRotationDeg = 0
+      if (nafhaScrollDirectionRef.current === 'down') {
+        if (fishCenterY >= lowerThresholdY) {
+          nextRotationDeg = 25
+        } else if (fishCenterY > upperThresholdY) {
+          const progress = (fishCenterY - upperThresholdY) / interpolationRange
+          nextRotationDeg = 25 * progress
+        }
+      } else {
+        if (fishCenterY <= upperThresholdY) {
+          nextRotationDeg = -25
+        } else if (fishCenterY < lowerThresholdY) {
+          const progress = (fishCenterY - upperThresholdY) / interpolationRange
+          nextRotationDeg = -25 * (1 - progress)
+        }
+      }
+
+      setNafhaRotationDeg(nextRotationDeg)
+      setIsNafhaFlipped(false)
+    }
+
+    nafhaLastScrollYRef.current = window.scrollY || window.pageYOffset || 0
+    updateNafhaRotationFromScroll()
+    window.addEventListener('scroll', updateNafhaRotationFromScroll, { passive: true })
+    window.addEventListener('resize', updateNafhaRotationFromScroll)
+
+    return () => {
+      window.removeEventListener('scroll', updateNafhaRotationFromScroll)
+      window.removeEventListener('resize', updateNafhaRotationFromScroll)
+    }
+  }, [isSquareFishMobile])
 
   useEffect(
     () => () => {

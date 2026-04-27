@@ -1772,6 +1772,9 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb .case-thumb__tag {
+  font-size: 14px;
+  padding-left: 18px;
+  padding-right: 18px;
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
