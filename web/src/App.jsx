@@ -1052,10 +1052,6 @@ function BioPage({ onBack }) {
         </section>
 
         <CaseStudyFooter variant="bio" />
-        <div
-          aria-hidden="true"
-          className="mt-3 h-2 w-full rounded-[999px] bg-black/10 max-[700px]:mt-2"
-        />
       </div>
     </main>
   )
