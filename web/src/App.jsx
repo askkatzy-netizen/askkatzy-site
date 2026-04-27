@@ -99,7 +99,7 @@ import sponsPricingCardImage from './assets/spons-pricing-card.png'
 import sponsTrackingOverviewImage from './assets/overview.png'
 import sponsCarousel1Image from './assets/spons-carousel-1b.png'
 import sponsCarousel2Image from './assets/spons-carousel-2b.png'
-import sponsCarousel3Image from './assets/spons-carousel-3b.png'
+import sponsCarousel3Image from './assets/spons-carousel-3b.webp'
 import gt1Image from './assets/GT-1.png'
 import gt1MobileImage from './assets/GT1-mobile.png'
 import gt2Image from './assets/GT-2b.png'
@@ -869,14 +869,14 @@ function BioPage({ onBack }) {
               aria-label="Download bio PDF (work in progress)"
             >
               <span
-                className="bio-download-cta__core flex h-12 w-12 items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:scale-[1.3333] group-hover:border-[#2B00FF] group-hover:bg-white group-hover:shadow-[0_0_0_4px_rgba(43,0,255,0.2)] group-focus-visible:scale-[1.3333] group-focus-visible:border-[#2B00FF] group-focus-visible:bg-white group-focus-visible:shadow-[0_0_0_4px_rgba(43,0,255,0.2)]"
+                className="bio-download-cta__core flex h-12 w-12 items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:bg-black group-focus-visible:bg-black"
                 aria-hidden="true"
               >
                 <img
                   src={downloadIcon}
                   alt=""
                   aria-hidden="true"
-                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:h-7 group-hover:w-7 group-hover:opacity-100 group-focus-visible:h-7 group-focus-visible:w-7 group-focus-visible:opacity-100"
+                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:scale-[1.4] group-hover:opacity-100 group-hover:invert group-focus-visible:scale-[1.4] group-focus-visible:opacity-100 group-focus-visible:invert"
                 />
               </span>
             </a>
@@ -5350,7 +5350,7 @@ function App() {
 
                 {isIntroExpanded && (
                   <>
-                    {renderSeeFullBioCta(isIntroTopLayout ? 'mt-7' : 'mt-4')}
+                    {renderSeeFullBioCta(`intro-see-full-bio-cta--expanded ${isIntroTopLayout ? 'mt-7' : 'mt-4'}`)}
 
                     <div className="mt-7">
                       <button

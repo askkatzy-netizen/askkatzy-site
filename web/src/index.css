@@ -88,6 +88,11 @@ body {
   padding: 12px 16px;
 }
 
+.header-cta--case-studies.header-top-cta:hover,
+.header-cta--case-studies.header-top-cta:focus-visible {
+  box-shadow: 0 0 0 4px rgb(43 0 255 / 20%);
+}
+
 .header-cta--case-studies:hover .header-cta__icon {
   width: 26px;
   height: 26px;
@@ -109,6 +114,15 @@ body {
 .bio-footer-email-cta:focus-visible {
   border-color: #2b00ff !important;
   box-shadow: 0 0 0 4px rgb(43 0 255 / 20%) !important;
+}
+
+.intro-see-full-bio-cta--expanded {
+  background: #f2f2f2 !important;
+}
+
+.intro-see-full-bio-cta--expanded:hover,
+.intro-see-full-bio-cta--expanded:focus-visible {
+  background: #ffffff !important;
 }
 
 .header-top-cta {
@@ -150,6 +164,21 @@ body {
 }
 
 @media (max-width: 700px) {
+  .intro-see-full-bio-cta--expanded {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #2b00ff !important;
+    box-shadow: 0 0 0 4px rgb(43 0 255 / 20%) !important;
+    padding: 12px 16px !important;
+  }
+
+  .intro-see-full-bio-cta--expanded .header-cta__icon {
+    width: 26px !important;
+    height: 26px !important;
+    opacity: 1 !important;
+    filter: brightness(0) saturate(100%) !important;
+  }
+
   .spons-prototype-copy-cta:hover,
   .spons-prototype-copy-cta:focus-visible {
     background: transparent !important;
