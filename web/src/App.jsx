@@ -697,18 +697,18 @@ function BioPage({ onBack }) {
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
   const bioSkills = [
+    'Design Operations',
+    'Team Mentorship',
+    'Design Leadership',
     'Product Strategy',
     'Product Design',
     'UX / UI',
-    'Design Systems',
+    'Motion and Interaction Design',
     'Rapid Prototyping',
     'Animation',
-    'Motion and Interaction Design',
+    'Design Systems',
     'Figma',
     'Cursor',
-    'Design Leadership',
-    'Design Operations',
-    'Team Mentorship',
   ]
 
   useEffect(() => {
