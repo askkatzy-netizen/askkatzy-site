@@ -166,7 +166,7 @@ const bossCaseSections = [
   },
   {
     key: 'boss-04',
-    title: 'Automated creator groups, curated for outreach',
+    title: 'Auto-curated groups for outreach',
     images: [boss05Image],
     mobileImages: [boss05MobileImage],
   },
