@@ -751,7 +751,7 @@ body {
 
 .case-thumb__design-sprints-stickers {
   position: absolute;
-  inset: 0;
+  inset: -5px;
   pointer-events: none;
   z-index: 2;
 }
