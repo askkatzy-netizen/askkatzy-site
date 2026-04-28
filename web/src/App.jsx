@@ -4708,6 +4708,7 @@ function App() {
   const caseItemRefs = useRef([])
   const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
   const suppressCaseClickUntilRef = useRef(0)
+  const homeScrollYBeforeCaseRef = useRef(0)
   const pageThemeColor = activeCaseStudy === 'boss-ai'
     ? '#4CBBA5'
     : activeCaseStudy === 'campaign-brief'
@@ -4865,6 +4866,8 @@ function App() {
   }, [])
 
   const goHome = () => {
+    const shouldRestoreMobileScroll =
+      typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches
     if (typeof window !== 'undefined') {
       const targetPath = resolveAppPath('/', window.location.pathname)
       if (normalizePathname(window.location.pathname) !== targetPath) {
@@ -4872,10 +4875,17 @@ function App() {
       }
     }
     setActiveCaseStudy(null)
+    if (shouldRestoreMobileScroll) {
+      window.scrollTo({ top: homeScrollYBeforeCaseRef.current, behavior: 'auto' })
+      return
+    }
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
 
   const openCaseStudy = (projectKey) => {
+    if (typeof window !== 'undefined' && activeCaseStudy === null) {
+      homeScrollYBeforeCaseRef.current = window.scrollY || window.pageYOffset || 0
+    }
     const baseTargetPath = CASE_STUDY_PATHS[projectKey]
     if (typeof window !== 'undefined' && baseTargetPath) {
       const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
@@ -4887,6 +4897,9 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
   const openBioPage = () => {
+    if (typeof window !== 'undefined' && activeCaseStudy === null) {
+      homeScrollYBeforeCaseRef.current = window.scrollY || window.pageYOffset || 0
+    }
     const baseTargetPath = CASE_STUDY_PATHS.bio
     if (typeof window !== 'undefined') {
       const targetPath = resolveAppPath(baseTargetPath, window.location.pathname)
