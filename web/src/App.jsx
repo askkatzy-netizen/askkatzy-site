@@ -78,6 +78,9 @@ import luluAvatar from './assets/lulu-avatar.png'
 import chevronDownIcon from './assets/chevron-down.svg'
 import chevronUpIcon from './assets/chevron-up.svg'
 import bioAvatarImage from './assets/bio-avatr.png'
+import logoBezalel from './assets/Logo-Bezalel.png'
+import logoNyit from './assets/Logo-NYIT.png'
+import logoFit from './assets/Logo-FIT.png'
 import arrowLeftIcon from './assets/arrow-left.svg'
 import boss01Image from './assets/boss-01.png'
 import boss02Image from './assets/boss-02.png'
@@ -995,47 +998,65 @@ function BioPage({ onBack }) {
             <span className="h-px flex-1 bg-black/15" />
           </div>
 
-          <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
-              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
-                <span>Graduate Studies in Industrial Design </span>
-                <span className="text-[24px]">/ M.A. program</span>
-              </h2>
-              <p className="text-[18px] leading-[1.4] text-black/70">Jerusalem | 2006 - 2008</p>
+          <div className="mb-11 flex items-start gap-5 max-[480px]:flex-col">
+            <div className="flex h-[84px] w-[84px] shrink-0 items-center justify-center overflow-hidden rounded-full max-[480px]:mt-[8px] max-[480px]:mb-[-4px]">
+              <img src={logoBezalel} alt="" className="h-full w-full object-cover" />
             </div>
-            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
-              Bezalel Academy of Arts and Design
-            </p>
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 flex items-baseline gap-10 max-[700px]:flex-col max-[700px]:gap-2">
+                <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                  <span>Graduate Studies in Industrial Design </span>
+                  <span className="text-[24px]">/ M.A. program</span>
+                </h2>
+                <p className="text-[18px] leading-[1.4] text-black/70 max-[900px]:hidden">Jerusalem | 2006-2008</p>
+              </div>
+              <p className="mb-3 hidden text-[18px] leading-[1.4] text-black/70 max-[900px]:block">Jerusalem | 2006-2008</p>
+              <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+                Bezalel Academy of Arts and Design
+              </p>
+            </div>
           </div>
 
-          <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
-              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
-                <span>B.F.A. </span>
-                <span className="text-[24px]">/ </span>
-                <span className="text-[24px]">Specialized in 3D Art &amp; Animation</span>
-              </h2>
-              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1994 - 1996</p>
+          <div className="mb-11 flex items-start gap-5 max-[480px]:flex-col">
+            <div className="flex h-[84px] w-[84px] shrink-0 items-center justify-center overflow-hidden rounded-full max-[480px]:mt-[8px] max-[480px]:mb-[-4px]">
+              <img src={logoNyit} alt="" className="h-full w-full object-cover" />
             </div>
-            <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
-              New York Institute of Technology
-            </p>
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 flex items-baseline gap-10 max-[700px]:flex-col max-[700px]:gap-2">
+                <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                  <span>B.F.A. </span>
+                  <span className="text-[24px]">/ </span>
+                  <span className="text-[24px]">Specialized in 3D Art &amp; Animation</span>
+                </h2>
+                <p className="text-[18px] leading-[1.4] text-black/70 max-[900px]:hidden">New York | 1994-1996</p>
+              </div>
+              <p className="mb-3 hidden text-[18px] leading-[1.4] text-black/70 max-[900px]:block">New York | 1994-1996</p>
+              <p className="text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+                New York Institute of Technology
+              </p>
+            </div>
           </div>
 
-          <div className="mb-11">
-            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
-              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
-                <span>Design Studies </span>
-                <span className="text-[24px]">/ B.A. program</span>
-              </h2>
-              <p className="text-[18px] leading-[1.4] text-black/70">New York | 1992 - 1994</p>
+          <div className="mb-11 flex items-start gap-5 max-[480px]:flex-col">
+            <div className="flex h-[84px] w-[84px] shrink-0 items-center justify-center overflow-hidden rounded-full max-[480px]:mt-[8px] max-[480px]:mb-[-4px]">
+              <img src={logoFit} alt="" className="h-full w-full object-cover" />
             </div>
-            <p className="mb-3 text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
-              Fashion Institute of Technology
-            </p>
-            <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
-              Foundations in Design and Broad Creative Skills
-            </p>
+            <div className="min-w-0 flex-1">
+              <div className="mb-3 flex items-baseline gap-10 max-[700px]:flex-col max-[700px]:gap-2">
+                <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                  <span>Design Studies </span>
+                  <span className="text-[24px]">/ B.A. program</span>
+                </h2>
+                <p className="text-[18px] leading-[1.4] text-black/70 max-[900px]:hidden">New York | 1992-1994</p>
+              </div>
+              <p className="mb-3 hidden text-[18px] leading-[1.4] text-black/70 max-[900px]:block">New York | 1992-1994</p>
+              <p className="mb-3 text-[18px] leading-[1.4] font-semibold text-black/70 max-[700px]:text-[16px]">
+                Fashion Institute of Technology
+              </p>
+              <p className="text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+                Foundations in Design and Broad Creative Skills
+              </p>
+            </div>
           </div>
 
           <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
@@ -4455,7 +4476,7 @@ function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
                   href="http://www.red-id.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="header-cta--case-studies header-cta--ghost mt-3 inline-flex"
+                  className="red-popup-link-cta header-cta--case-studies header-cta--ghost mt-3 inline-flex"
                 >
                   <img src={rocketSvg} alt="" aria-hidden="true" className="header-cta__icon" />
                   <span>www.red-id.com</span>
