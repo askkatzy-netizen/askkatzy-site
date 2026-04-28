@@ -2860,7 +2860,7 @@ function GrabTapCaseStudyPage({ onBack }) {
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black">Design guidelines</p>
                 <div className="flex flex-wrap gap-2">
-                  {['Mobile first', 'Community-Centric', 'Reliable'].map((tag) => (
+                  {['Mobile first', 'Community-Centric', 'Transparent'].map((tag) => (
                     <span
                       key={tag}
                       className="rounded-[50px] border border-[#686868] px-4 py-[6px] text-[16px] leading-[1.4] font-medium text-black"
