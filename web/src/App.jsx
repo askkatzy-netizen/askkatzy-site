@@ -859,7 +859,7 @@ function BioPage({ onBack }) {
           </button>
         </header>
 
-        <section className="relative rounded-[40px] border-2 border-black bg-white px-20 py-20 max-[980px]:rounded-[24px] max-[980px]:px-8 max-[980px]:py-10 max-[700px]:px-4 max-[700px]:py-6 max-[480px]:pt-16">
+        <section className="relative mb-4 rounded-[40px] border-2 border-black bg-white px-20 py-20 max-[980px]:rounded-[24px] max-[980px]:px-8 max-[980px]:py-10 max-[700px]:px-4 max-[700px]:py-6 max-[480px]:pt-16">
           <div className="mb-10 flex items-center gap-4 max-[700px]:flex-wrap">
             <div className="flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-[999px] border border-black">
               <img src={bioAvatarImage} alt="Eyal Katz avatar" className="block h-auto w-[54.07px] object-contain" />

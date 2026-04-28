@@ -1644,6 +1644,11 @@ body {
   animation: red-popup-shape-slide-in 760ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.red-popup-link-cta:hover,
+.red-popup-link-cta:focus-visible {
+  box-shadow: 0 0 0 4px rgb(43 0 255 / 20%);
+}
+
 .red-partner__thumb {
   position: relative;
   display: inline-flex;
