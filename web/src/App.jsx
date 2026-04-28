@@ -66,7 +66,7 @@ import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
 import downloadIcon from './assets/download.svg'
-import bioPdfFile from './assets/Eyal_Katz-Product_Designer.pdf'
+import bioPdfFile from './assets/EyalKatz-ProductDesigner.pdf'
 import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
@@ -866,7 +866,7 @@ function BioPage({ onBack }) {
             </h1>
             <a
               href={bioPdfFile}
-              download="Eyal_Katz-Product_Designer.pdf"
+              download="EyalKatz-ProductDesigner.pdf"
               className="bio-download-cta group inline-flex h-16 w-16 items-center justify-center rounded-full max-[480px]:absolute max-[480px]:top-2 max-[480px]:right-2"
               aria-label="Download bio PDF"
             >
