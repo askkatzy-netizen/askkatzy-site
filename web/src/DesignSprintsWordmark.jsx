@@ -19,7 +19,7 @@ function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-export function DesignSprintsWordmark() {
+export function DesignSprintsWordmark({ isActive = false }) {
   const [stickers, setStickers] = useState([])
   const rootRef = useRef(null)
   const isHoveringRef = useRef(false)
@@ -88,6 +88,15 @@ export function DesignSprintsWordmark() {
       clearLoop()
     }
   }, [])
+
+  useEffect(() => {
+    if (isActive) {
+      startLoop()
+      return
+    }
+
+    stopLoop()
+  }, [isActive])
 
   return (
     <div

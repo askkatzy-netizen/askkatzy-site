@@ -4993,14 +4993,16 @@ function App() {
     'squarefish',
   ])
 
-  const renderCaseStudyCard = (project, index) => (
+  const renderCaseStudyCard = (project, index) => {
+    const isTouchActiveCard = !supportsHover && activeCaseIndexes.includes(index)
+    return (
     <article
       key={project.key}
       ref={(el) => {
         caseItemRefs.current[index] = el
       }}
       className={`case-study-item fade-up group ${
-        !supportsHover && activeCaseIndexes.includes(index) ? 'case-study-item--active' : ''
+        isTouchActiveCard ? 'case-study-item--active' : ''
       } ${interactiveCaseStudyKeys.has(project.key) ? 'case-study-item--clickable' : ''}`}
       style={{ animationDelay: `${120 + index * 70}ms` }}
       onClick={
@@ -5228,7 +5230,7 @@ function App() {
               />
             </>
           ) : project.key === 'design-sprints' ? (
-            <DesignSprintsWordmark />
+            <DesignSprintsWordmark isActive={isTouchActiveCard} />
           ) : (
             <img src={streamElementsLogo} alt="StreamElements logo" className="case-thumb__logo" />
           )}
@@ -5237,13 +5239,14 @@ function App() {
       </div>
       <p
         className={`mt-2 ml-[40px] text-black/40 transition-colors duration-[160ms] ease-out group-hover:text-black/90 ${
-          !supportsHover && activeCaseIndexes.includes(index) ? 'text-black/90' : ''
+          isTouchActiveCard ? 'text-black/90' : ''
         }`}
       >
         <span className="font-roboto-slab text-[16px] font-semibold leading-none">{project.title}</span>
       </p>
     </article>
-  )
+    )
+  }
 
   if (activeCaseStudy === 'boss-ai') {
     return (
