@@ -764,6 +764,10 @@ body {
   animation: design-sprints-sticker-enter 260ms ease-out forwards;
 }
 
+.case-thumb__design-sprints-sticker--oldest-exit {
+  animation: design-sprints-sticker-fade-out 1200ms linear forwards;
+}
+
 @keyframes design-sprints-sticker-enter {
   0% {
     opacity: 0;
@@ -775,6 +779,19 @@ body {
   }
   100% {
     opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--sticker-rotate, 0deg))
+      scale(var(--sticker-scale, 1));
+  }
+}
+
+@keyframes design-sprints-sticker-fade-out {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--sticker-rotate, 0deg))
+      scale(var(--sticker-scale, 1));
+  }
+  100% {
+    opacity: 0;
     transform: translate(-50%, -50%) rotate(var(--sticker-rotate, 0deg))
       scale(var(--sticker-scale, 1));
   }

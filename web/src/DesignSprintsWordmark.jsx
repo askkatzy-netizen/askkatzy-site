@@ -14,6 +14,7 @@ const STICKER_DOTS = [
   { key: '05', src: stickerDot05 },
   { key: '06', src: stickerDot06 },
 ]
+const STICKER_EXIT_MS = 1200
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -23,18 +24,25 @@ export function DesignSprintsWordmark({ isActive = false }) {
   const [stickers, setStickers] = useState([])
   const rootRef = useRef(null)
   const isHoveringRef = useRef(false)
-  const timeoutRef = useRef(null)
+  const spawnTimeoutRef = useRef(null)
+  const removalTimeoutsRef = useRef([])
   const countRef = useRef(0)
 
-  const clearLoop = () => {
+  const clearTimeoutRef = (timeoutRef) => {
     if (!timeoutRef.current) return
     window.clearTimeout(timeoutRef.current)
     timeoutRef.current = null
   }
 
+  const clearAllTimers = () => {
+    clearTimeoutRef(spawnTimeoutRef)
+    removalTimeoutsRef.current.forEach((timeoutId) => window.clearTimeout(timeoutId))
+    removalTimeoutsRef.current = []
+  }
+
   const scheduleNext = (delayMs) => {
-    clearLoop()
-    timeoutRef.current = window.setTimeout(() => {
+    clearTimeoutRef(spawnTimeoutRef)
+    spawnTimeoutRef.current = window.setTimeout(() => {
       if (!isHoveringRef.current) return
 
       const randomDot = STICKER_DOTS[randomInt(0, STICKER_DOTS.length - 1)]
@@ -52,15 +60,33 @@ export function DesignSprintsWordmark({ isActive = false }) {
         fromY: `${randomInt(-10, 10)}px`,
       }
 
-      setStickers((prev) => [...prev, nextSticker])
+      setStickers((prev) => {
+        const next = [...prev, nextSticker]
+
+        if (next.length > 100) {
+          const oldestIndex = next.findIndex((sticker) => !sticker.isExiting)
+          if (oldestIndex !== -1) {
+            const oldestId = next[oldestIndex].id
+            next[oldestIndex] = { ...next[oldestIndex], isExiting: true }
+
+            const removalTimeout = window.setTimeout(() => {
+              setStickers((current) => current.filter((sticker) => sticker.id !== oldestId))
+            }, STICKER_EXIT_MS)
+            removalTimeoutsRef.current.push(removalTimeout)
+          }
+        }
+
+        return next
+      })
       countRef.current += 1
-      const nextDelay = countRef.current < 5 ? 200 : randomInt(800, 2400)
+      const nextDelay = countRef.current < 5 ? 200 : randomInt(200, 700)
       scheduleNext(nextDelay)
     }, delayMs)
   }
 
   const startLoop = () => {
     isHoveringRef.current = true
+    clearAllTimers()
     setStickers([])
     countRef.current = 0
     scheduleNext(0)
@@ -68,7 +94,7 @@ export function DesignSprintsWordmark({ isActive = false }) {
 
   const stopLoop = () => {
     isHoveringRef.current = false
-    clearLoop()
+    clearAllTimers()
     setStickers([])
     countRef.current = 0
   }
@@ -77,7 +103,7 @@ export function DesignSprintsWordmark({ isActive = false }) {
     const root = rootRef.current
     const hoverTarget = root?.closest('.group') || root?.closest('.case-study-item')
 
-    if (!hoverTarget) return () => clearLoop()
+    if (!hoverTarget) return () => clearAllTimers()
 
     hoverTarget.addEventListener('mouseenter', startLoop)
     hoverTarget.addEventListener('mouseleave', stopLoop)
@@ -85,7 +111,7 @@ export function DesignSprintsWordmark({ isActive = false }) {
     return () => {
       hoverTarget.removeEventListener('mouseenter', startLoop)
       hoverTarget.removeEventListener('mouseleave', stopLoop)
-      clearLoop()
+      clearAllTimers()
     }
   }, [])
 
@@ -110,7 +136,9 @@ export function DesignSprintsWordmark({ isActive = false }) {
             key={sticker.id}
             src={sticker.src}
             alt=""
-            className={`case-thumb__design-sprints-sticker sticker-dot-${sticker.variant}`}
+            className={`case-thumb__design-sprints-sticker sticker-dot-${sticker.variant} ${
+              sticker.isExiting ? 'case-thumb__design-sprints-sticker--oldest-exit' : ''
+            }`}
             style={{
               left: `${sticker.left}%`,
               top: `${sticker.top}%`,
