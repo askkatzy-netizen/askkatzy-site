@@ -2925,7 +2925,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                     <img
                       src={screen.image}
                       alt={`GrabTap ${screen.title}`}
-                      className="block h-auto w-full max-w-[240px]"
+                      className="my-4 block h-auto w-full max-w-[240px]"
                       loading="lazy"
                     />
                   )}
@@ -2940,7 +2940,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                   key={screen.key}
                   className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
                 >
-                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-2">
                     <div className="flex flex-col gap-4 leading-[1.4] text-black">
                       <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Games page</p>
                       <div className="flex flex-col gap-2 text-[16px] text-black/70">
@@ -2955,7 +2955,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                       </div>
                     </div>
 
-                    <div className="mx-auto w-full max-w-[375px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                    <div className="mx-auto w-full max-w-[375px]">
                       <img
                         src={screen.image}
                         alt="GrabTap games page mobile screen"
@@ -2970,7 +2970,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                   key={screen.key}
                   className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
                 >
-                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-2">
                     <div className="flex flex-col gap-4 leading-[1.4] text-black">
                       <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Offer page</p>
                       <div className="flex flex-col gap-4 text-[16px] text-black/70">
@@ -2999,7 +2999,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                       </div>
                     </div>
 
-                    <div className="mx-auto w-full max-w-[553px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                    <div className="mx-auto w-full max-w-[553px]">
                       <img
                         src={screen.image}
                         alt="GrabTap offer page mobile screen"
@@ -3014,7 +3014,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                   key={screen.key}
                   className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
                 >
-                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-2">
                     <div className="flex flex-col gap-4 leading-[1.4] text-black">
                       <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Community page</p>
                       <div className="flex flex-col gap-2 text-[16px] text-black/70">
@@ -3029,7 +3029,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                       </div>
                     </div>
 
-                    <div className="mx-auto w-full max-w-[375px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                    <div className="mx-auto w-full max-w-[431px]">
                       <img
                         src={screen.image}
                         alt="GrabTap community page mobile screen"
@@ -3044,9 +3044,9 @@ function GrabTapCaseStudyPage({ onBack }) {
                   key={screen.key}
                   className="rounded-[16px] bg-[#F2F2F2] p-10 max-[700px]:p-4"
                 >
-                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-[375px_minmax(0,1fr)]">
+                  <div className="grid grid-cols-1 items-start gap-10 min-[980px]:grid-cols-2">
                     <div className="flex flex-col gap-3 leading-[1.4] text-black">
-                      <p className="font-roboto-slab text-[56px] font-semibold leading-[1.1] text-black/90">Missions</p>
+                      <p className="font-roboto-slab text-[36px] font-semibold text-black/90">Missions</p>
                       <p className="text-[16px] text-black/70">
                         Missions are the core of every offer. We designed various mission types to drive retention,
                         motivating players to progress and maximize their earnings.
@@ -3067,7 +3067,7 @@ function GrabTapCaseStudyPage({ onBack }) {
                       </ul>
                     </div>
 
-                    <div className="mx-auto w-full max-w-[595px] min-[980px]:mr-0 min-[980px]:ml-auto">
+                    <div className="mx-auto w-full max-w-[420px]">
                       <img
                         src={screen.image}
                         alt="GrabTap missions screen list"
@@ -3098,7 +3098,7 @@ function GrabTapCaseStudyPage({ onBack }) {
             <img
               src={gtCardsImage}
               alt="GrabTap cards visual"
-              className="mb-0 block h-auto w-full max-w-[505px] translate-y-px align-bottom"
+              className="mb-0 block h-auto w-full max-w-[379px] translate-y-px align-bottom"
               loading="lazy"
             />
           </div>
