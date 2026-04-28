@@ -1,11 +1,120 @@
-import circlesDecor from './assets/circles.svg'
+import { useEffect, useRef, useState } from 'react'
+import stickerDot01 from './assets/sticker-dot-01.svg'
+import stickerDot02 from './assets/sticker-dot-02.svg'
+import stickerDot03 from './assets/sticker-dot-03.svg'
+import stickerDot04 from './assets/sticker-dot-04.svg'
+import stickerDot05 from './assets/sticker-dot-05.svg'
+import stickerDot06 from './assets/sticker-dot-06.svg'
+
+const STICKER_DOTS = [
+  { key: '01', src: stickerDot01 },
+  { key: '02', src: stickerDot02 },
+  { key: '03', src: stickerDot03 },
+  { key: '04', src: stickerDot04 },
+  { key: '05', src: stickerDot05 },
+  { key: '06', src: stickerDot06 },
+]
+
+function randomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 export function DesignSprintsWordmark() {
+  const [stickers, setStickers] = useState([])
+  const rootRef = useRef(null)
+  const isHoveringRef = useRef(false)
+  const timeoutRef = useRef(null)
+  const countRef = useRef(0)
+
+  const clearLoop = () => {
+    if (!timeoutRef.current) return
+    window.clearTimeout(timeoutRef.current)
+    timeoutRef.current = null
+  }
+
+  const scheduleNext = (delayMs) => {
+    clearLoop()
+    timeoutRef.current = window.setTimeout(() => {
+      if (!isHoveringRef.current) return
+
+      const randomDot = STICKER_DOTS[randomInt(0, STICKER_DOTS.length - 1)]
+      const dotId = `${Date.now()}-${countRef.current}`
+      const enterFromLeft = Math.random() < 0.5
+      const nextSticker = {
+        id: dotId,
+        variant: randomDot.key,
+        src: randomDot.src,
+        left: randomInt(8, 92),
+        top: randomInt(10, 90),
+        rotate: randomInt(-24, 24),
+        scale: randomInt(80, 120) / 100,
+        fromX: `${(enterFromLeft ? -1 : 1) * randomInt(14, 34)}px`,
+        fromY: `${randomInt(-10, 10)}px`,
+      }
+
+      setStickers((prev) => [...prev, nextSticker])
+      countRef.current += 1
+      const nextDelay = countRef.current < 5 ? 200 : randomInt(800, 2400)
+      scheduleNext(nextDelay)
+    }, delayMs)
+  }
+
+  const startLoop = () => {
+    isHoveringRef.current = true
+    setStickers([])
+    countRef.current = 0
+    scheduleNext(0)
+  }
+
+  const stopLoop = () => {
+    isHoveringRef.current = false
+    clearLoop()
+    setStickers([])
+    countRef.current = 0
+  }
+
+  useEffect(() => {
+    const root = rootRef.current
+    const hoverTarget = root?.closest('.group') || root?.closest('.case-study-item')
+
+    if (!hoverTarget) return () => clearLoop()
+
+    hoverTarget.addEventListener('mouseenter', startLoop)
+    hoverTarget.addEventListener('mouseleave', stopLoop)
+
+    return () => {
+      hoverTarget.removeEventListener('mouseenter', startLoop)
+      hoverTarget.removeEventListener('mouseleave', stopLoop)
+      clearLoop()
+    }
+  }, [])
+
   return (
-    <div className="case-thumb__design-sprints" aria-hidden="true">
+    <div
+      ref={rootRef}
+      className="case-thumb__design-sprints"
+      aria-hidden="true"
+    >
+      <div className="case-thumb__design-sprints-stickers">
+        {stickers.map((sticker) => (
+          <img
+            key={sticker.id}
+            src={sticker.src}
+            alt=""
+            className={`case-thumb__design-sprints-sticker sticker-dot-${sticker.variant}`}
+            style={{
+              left: `${sticker.left}%`,
+              top: `${sticker.top}%`,
+              '--from-x': sticker.fromX,
+              '--from-y': sticker.fromY,
+              '--sticker-rotate': `${sticker.rotate}deg`,
+              '--sticker-scale': sticker.scale,
+            }}
+          />
+        ))}
+      </div>
       <div className="case-thumb__design-sprints-stack">
         <div className="case-thumb__design-sprints-cluster">
-          <img src={circlesDecor} alt="" className="case-thumb__design-sprints-circles" />
           <div className="case-thumb__design-sprints-mark">
             <svg
               className="case-thumb__design-sprints-svg"

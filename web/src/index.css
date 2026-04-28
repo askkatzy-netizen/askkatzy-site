@@ -739,13 +739,45 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
+  top: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
+  pointer-events: auto;
+  transform: none;
+}
+
+.case-thumb__design-sprints-stickers {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
-  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.case-thumb__design-sprints-sticker {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  animation: design-sprints-sticker-enter 260ms ease-out forwards;
+}
+
+@keyframes design-sprints-sticker-enter {
+  0% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--from-x, 0px)),
+        calc(-50% + var(--from-y, 0px))
+      )
+      rotate(var(--sticker-rotate, 0deg)) scale(var(--sticker-scale, 1));
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--sticker-rotate, 0deg))
+      scale(var(--sticker-scale, 1));
+  }
 }
 
 .case-thumb__design-sprints-stack {
@@ -840,17 +872,17 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red .case-thumb__design-sprints .sprint-fill-r2 {
   fill: #fbff00;
-  opacity: 0.6;
+  opacity: 0.66;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red .case-thumb__design-sprints .sprint-fill-r3 {
   fill: #fbff00;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red .case-thumb__design-sprints .sprint-fill-r4 {
   fill: #fbff00;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--red .case-thumb__design-sprints .sprint-fill-accent-soft,
@@ -1889,6 +1921,9 @@ body {
   opacity: 1;
 }
 
+:is(.group:hover, .case-study-item--active) .case-thumb--red .case-thumb__design-sprints-sticker {
+  opacity: 1;
+}
 
 :is(.group:hover, .case-study-item--active) .case-thumb--squarefish {
   transform: translateY(-8px);
