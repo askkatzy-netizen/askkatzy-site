@@ -1250,14 +1250,52 @@ body {
   left: 50%;
   top: 50%;
   color: #000000;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   transition: color 160ms ease-out, transform 160ms ease-out;
 }
 
-.case-thumb__campaign-brief-icon-svg {
+.case-thumb__campaign-brief-icon-viewport {
+  position: relative;
   display: block;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+}
+
+.case-thumb__campaign-brief-icon-svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 34px;
   height: 34px;
+  transform: translate(-50%, -50%);
+}
+
+.case-thumb__campaign-brief-icon-svg--incoming {
+  transform: translate(-50%, calc(-50% - 44px));
+}
+
+@keyframes campaign-brief-icon-slide-out {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  42.857%,
+  100% {
+    transform: translate(-50%, calc(-50% + 44px));
+  }
+}
+
+@keyframes campaign-brief-icon-slide-in {
+  0% {
+    transform: translate(-50%, calc(-50% - 44px));
+  }
+  36% {
+    transform: translate(-50%, calc(-50% + 2px));
+  }
+  42.857%,
+  100% {
+    transform: translate(-50%, -50%);
+  }
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-ring {
@@ -1267,6 +1305,14 @@ body {
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-icon {
   color: var(--campaign-brief);
   transform: translate(-50%, -50%) scale(1.2);
+}
+
+:is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-icon-svg--outgoing {
+  animation: campaign-brief-icon-slide-out 1400ms ease-in-out 400ms infinite;
+}
+
+:is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__campaign-brief-icon-svg--incoming {
+  animation: campaign-brief-icon-slide-in 1400ms ease-in-out 400ms infinite;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--campaign-brief .case-thumb__tag {

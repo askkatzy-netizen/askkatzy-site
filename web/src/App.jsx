@@ -5115,20 +5115,36 @@ function App() {
                   </svg>
                 </div>
                 <div className="case-thumb__campaign-brief-icon" aria-hidden="true">
-                  <svg
-                    className="case-thumb__campaign-brief-icon-svg"
-                    viewBox="0 0 54 54"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M47.25 11.25H6.75M33.75 27H6.75M38.25 42.75H6.75"
-                    />
-                  </svg>
+                  <span className="case-thumb__campaign-brief-icon-viewport">
+                    <svg
+                      className="case-thumb__campaign-brief-icon-svg case-thumb__campaign-brief-icon-svg--outgoing"
+                      viewBox="0 0 54 54"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M47.25 11.25H6.75M33.75 27H6.75M38.25 42.75H6.75"
+                      />
+                    </svg>
+                    <svg
+                      className="case-thumb__campaign-brief-icon-svg case-thumb__campaign-brief-icon-svg--incoming"
+                      viewBox="0 0 54 54"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M47.25 11.25H6.75M33.75 27H6.75M38.25 42.75H6.75"
+                      />
+                    </svg>
+                  </span>
                 </div>
               </div>
             </>
