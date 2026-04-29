@@ -1074,12 +1074,12 @@ body {
   left: 50%;
   top: 50%;
   z-index: 0;
-  width: 137px;
-  height: 137px;
-  transform: translate3d(calc(-50% + 0.25px), calc(-50% + 0.25px), 0);
+  width: 156px;
+  height: 156px;
+  transform: translate(-50%, -50%) scale(calc(102 / 156));
   opacity: 0;
   pointer-events: none;
-  transition: opacity 160ms ease-out;
+  transition: opacity 160ms ease-out, transform 160ms ease-out;
 }
 
 .case-thumb__boss-cog-img {
@@ -1093,6 +1093,7 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-cog {
   opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-cog-img {
@@ -1152,7 +1153,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-ring-path {
-  fill: #000000;
+  fill: transparent;
   stroke-width: 0;
 }
 
@@ -1169,6 +1170,7 @@ body {
   display: block;
   width: 34px;
   height: 34px;
+  transform-origin: 50% 50%;
 }
 
 .case-thumb__boss-sparkle-path {
@@ -1177,7 +1179,7 @@ body {
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-sparkle-path {
-  fill: var(--case-study-hover);
+  fill: #000000;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-ring {
@@ -1186,6 +1188,10 @@ body {
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-sparkle {
   transform: translate3d(-50%, -50%, 0) scale(1.2);
+}
+
+:is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-sparkle-svg {
+  animation: boss-ai-cog-spin 28s linear infinite;
 }
 
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__tag {
