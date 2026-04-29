@@ -1074,12 +1074,18 @@ body {
   left: 50%;
   top: 50%;
   z-index: 0;
-  width: 156px;
-  height: 156px;
-  transform: translate(-50%, -50%) scale(calc(102 / 156));
+  width: 138.01px;
+  height: 138.01px;
+  transform: translate(-50%, -50%) scale(calc(102 / 138.01));
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease-out, transform 160ms ease-out;
+}
+
+.case-thumb__boss-cog--secondary {
+  width: 45.01px;
+  height: 45.01px;
+  transform: translate(calc(-50% + 75px), calc(-50% - 44px)) scale(calc(102 / 156));
 }
 
 .case-thumb__boss-cog-img {
@@ -1096,8 +1102,26 @@ body {
   transform: translate(-50%, -50%) scale(1);
 }
 
+:is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-cog--secondary {
+  transform: translate(calc(-50% + 75px), calc(-50% - 44px)) scale(1);
+}
+
 :is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-cog-img {
   animation: boss-ai-cog-spin 28s linear infinite;
+}
+
+:is(.group:hover, .case-study-item--active) .case-thumb--boss .case-thumb__boss-cog-img--secondary {
+  animation: boss-ai-cog-spin-offset 8s linear infinite reverse;
+}
+
+@keyframes boss-ai-cog-spin-offset {
+  from {
+    transform: rotate(22.5deg);
+  }
+
+  to {
+    transform: rotate(382.5deg);
+  }
 }
 
 @keyframes boss-ai-cog-spin {

@@ -4,6 +4,7 @@ import graptapLogoDefault from './assets/graptap-logo-default.svg'
 import graptapLogoHover from './assets/graptap-logo-hover.svg'
 import graptapBg from './assets/graptap-bg.svg'
 import bossAiCog from './assets/CaseStudy-Boss-cog-1.svg'
+import bossAiCog2 from './assets/CaseStudy-Boss-cog-2.svg'
 import brief1StarIcon from './assets/brief1-star.svg'
 import brief4JoinInnerIcon from './assets/brief4-join_inner.svg'
 import brief5PreviewIcon from './assets/brief5-preview.svg'
@@ -5083,6 +5084,9 @@ function App() {
               <div className="case-thumb__boss-mark">
                 <div className="case-thumb__boss-cog" aria-hidden="true">
                   <img src={bossAiCog} alt="" className="case-thumb__boss-cog-img" />
+                </div>
+                <div className="case-thumb__boss-cog case-thumb__boss-cog--secondary" aria-hidden="true">
+                  <img src={bossAiCog2} alt="" className="case-thumb__boss-cog-img case-thumb__boss-cog-img--secondary" />
                 </div>
                 <div className="case-thumb__boss-ring">
                   <svg
