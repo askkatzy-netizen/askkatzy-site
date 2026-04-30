@@ -5388,29 +5388,27 @@ function App() {
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
             <p className="mb-4 text-[20px] italic leading-[1.4] text-black/90">
-              {'👋 I’m a designer and former co-founder of '}
-              <button
-                type="button"
-                className="intro__red-action"
-                aria-haspopup="dialog"
-                aria-expanded={isRedModalOpen}
-                onClick={() => setIsRedModalOpen(true)}
-              >
-                RED
-              </button>
-              {', combining pixel-perfect design with team leadership experience.'}
+              {'👋 I’m a product design leader focused on thoughtful product experiences and the people I work with.'}
             </p>
             {!isIntroTopLayout ? (
               <>
                 <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                  {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
+                  {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
                 </p>
                 <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
                   {'I led design and operations at '}
-                  <strong className="font-semibold text-black/70">RED</strong>
+                  <button
+                    type="button"
+                    className="intro__red-action"
+                    aria-haspopup="dialog"
+                    aria-expanded={isRedModalOpen}
+                    onClick={() => setIsRedModalOpen(true)}
+                  >
+                    RED
+                  </button>
                   {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
                   <strong className="font-semibold text-black/70">StreamElements</strong>
-                  {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
+                  {' acquisition, I stayed close to the craft - working hands-on across core products.'}
                 </p>
                 <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
                   {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
@@ -5430,14 +5428,22 @@ function App() {
                 >
                   <div ref={introMoreContentRef} className="intro-more-panel__content">
                     <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                      {'With a background in 3D and animation, I still have a soft spot for thoughtful motion - and a good feel for how things should look and move.'}
+                      {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
                     </p>
                     <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
                       {'I led design and operations at '}
-                      <strong className="font-semibold text-black/70">RED</strong>
+                      <button
+                        type="button"
+                        className="intro__red-action"
+                        aria-haspopup="dialog"
+                        aria-expanded={isRedModalOpen}
+                        onClick={() => setIsRedModalOpen(true)}
+                      >
+                        RED
+                      </button>
                       {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
                       <strong className="font-semibold text-black/70">StreamElements</strong>
-                      {' acquisition, I stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'}
+                      {' acquisition, I stayed close to the craft - working hands-on across core products.'}
                     </p>
                     <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
                       {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
