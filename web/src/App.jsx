@@ -5396,7 +5396,7 @@ function App() {
                   {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
                 </p>
                 <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                  {'I led design and operations at '}
+                  {'I co-founded '}
                   <button
                     type="button"
                     className="intro__red-action"
@@ -5406,12 +5406,16 @@ function App() {
                   >
                     RED
                   </button>
-                  {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
-                  <strong className="font-semibold text-black/70">StreamElements</strong>
-                  {' acquisition, I stayed close to the craft - working hands-on across core products.'}
+                  {' and helped deliver '}
+                  <strong className="font-semibold italic text-black/70">“Damn Good Products”</strong>
+                  {
+                    ' across hundreds of projects. Since then, I’ve stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'
+                  }
                 </p>
                 <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                  {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
+                  {
+                    'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
+                  }
                 </p>
                 <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
 
@@ -5431,7 +5435,7 @@ function App() {
                       {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
                     </p>
                     <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                      {'I led design and operations at '}
+                      {'I co-founded '}
                       <button
                         type="button"
                         className="intro__red-action"
@@ -5441,12 +5445,16 @@ function App() {
                       >
                         RED
                       </button>
-                      {', helping deliver “Damn Good Products” across hundreds of projects. After the '}
-                      <strong className="font-semibold text-black/70">StreamElements</strong>
-                      {' acquisition, I stayed close to the craft - working hands-on across core products.'}
+                      {' and helped deliver '}
+                      <strong className="font-semibold italic text-black/70">“Damn Good Products”</strong>
+                      {
+                        ' across hundreds of projects. Since then, I’ve stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'
+                      }
                     </p>
                     <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                      {'My experience helps me when things get stressful; I keep things moving with clarity, focus - and just enough humor to keep everyone sane.'}
+                      {
+                        'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
+                      }
                     </p>
                     <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
                   </div>
