@@ -575,6 +575,34 @@ body {
   padding: 24px;
 }
 
+.case-studies-intro__lead {
+  margin: 0 0 1rem;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: rgb(0 0 0 / 90%);
+}
+
+.case-studies-intro__body {
+  margin: 0 0 1rem;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgb(0 0 0 / 70%);
+}
+
+.case-studies-intro__closing {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: rgb(0 0 0 / 70%);
+}
+
 .intro-more-panel {
   overflow: hidden;
   opacity: 0;

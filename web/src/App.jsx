@@ -5387,15 +5387,17 @@ function App() {
 
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
-            <p className="mb-4 text-[20px] italic leading-[1.4] text-black/90">
-              {'👋 I’m a product design leader focused on thoughtful product experiences and the people I work with.'}
+            <p className="case-studies-intro__lead">
+              {'👋 I’m a product design leader focused on thoughtful product experiences.'}
             </p>
             {!isIntroTopLayout ? (
               <>
-                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                  {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
+                <p className="case-studies-intro__body">
+                  {
+                    'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'
+                  }
                 </p>
-                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                <p className="case-studies-intro__body">
                   {'I co-founded '}
                   <button
                     type="button"
@@ -5412,12 +5414,12 @@ function App() {
                     ' across hundreds of projects. Since then, I’ve stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'
                   }
                 </p>
-                <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                <p className="case-studies-intro__body">
                   {
                     'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
                   }
                 </p>
-                <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
+                <p className="case-studies-intro__closing">I genuinely enjoy what I do.</p>
 
                 {renderSeeFullBioCta('mt-8')}
               </>
@@ -5431,10 +5433,12 @@ function App() {
                   aria-hidden={!isIntroExpanded}
                 >
                   <div ref={introMoreContentRef} className="intro-more-panel__content">
-                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
-                      {'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'}
+                    <p className="case-studies-intro__body">
+                      {
+                        'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'
+                      }
                     </p>
-                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                    <p className="case-studies-intro__body">
                       {'I co-founded '}
                       <button
                         type="button"
@@ -5451,12 +5455,12 @@ function App() {
                         ' across hundreds of projects. Since then, I’ve stayed close to the craft - working hands-on across core products used by millions, with a focus on meaningful impact.'
                       }
                     </p>
-                    <p className="mb-4 text-[16px] leading-[1.4] text-black/70">
+                    <p className="case-studies-intro__body">
                       {
                         'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
                       }
                     </p>
-                    <p className="text-[16px] leading-[1.4] text-black/70">I genuinely enjoy what I do.</p>
+                    <p className="case-studies-intro__closing">I genuinely enjoy what I do.</p>
                   </div>
                 </div>
 
