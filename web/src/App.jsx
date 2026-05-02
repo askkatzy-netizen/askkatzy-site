@@ -5388,7 +5388,7 @@ function App() {
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
             <p className="case-studies-intro__lead">
-              {'👋 I’m a product design leader focused on thoughtful product experiences.'}
+              {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
             </p>
             {!isIntroTopLayout ? (
               <>
