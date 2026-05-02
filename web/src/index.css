@@ -621,6 +621,16 @@ body {
   cursor: default;
 }
 
+.intro-mobile-head--tap-collapse {
+  cursor: pointer;
+  border-radius: 12px;
+  outline-offset: 4px;
+}
+
+.intro-mobile-head--tap-collapse:focus-visible {
+  outline: 2px solid #2b00ff;
+}
+
 .intro-more-panel {
   overflow: hidden;
   opacity: 0;

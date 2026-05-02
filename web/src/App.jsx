@@ -5426,17 +5426,21 @@ function App() {
             ) : (
               <>
                 <div
-                  className={!isIntroExpanded ? 'intro-expand-hit-zone' : 'intro-mobile-head'}
-                  tabIndex={!isIntroExpanded ? 0 : undefined}
-                  aria-expanded={isIntroExpanded}
-                  aria-label={!isIntroExpanded ? 'Expand intro text' : undefined}
-                  onClick={
-                    !isIntroExpanded ? () => setIsIntroExpanded(true) : undefined
+                  className={
+                    !isIntroExpanded
+                      ? 'intro-expand-hit-zone'
+                      : 'intro-mobile-head intro-mobile-head--tap-collapse'
                   }
+                  tabIndex={0}
+                  aria-expanded={isIntroExpanded}
+                  aria-label={
+                    !isIntroExpanded ? 'Expand intro text' : 'Collapse intro text'
+                  }
+                  onClick={() => setIsIntroExpanded((prev) => !prev)}
                   onKeyDown={(event) => {
-                    if (!isIntroExpanded && (event.key === 'Enter' || event.key === ' ')) {
+                    if (event.key === 'Enter' || event.key === ' ') {
                       event.preventDefault()
-                      setIsIntroExpanded(true)
+                      setIsIntroExpanded((prev) => !prev)
                     }
                   }}
                 >
