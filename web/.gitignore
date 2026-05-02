@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Scratch / exports not imported in src — keeps Git desktop apps showing Push when only commits are pending
+.tmp-*
+src/assets/share-image*.png
+src/assets/bio-avatar.png
+src/assets/DS_outline*.svg
+src/assets/GT-2.png
+src/assets/GT-4.png
+src/assets/start-campaign.png
