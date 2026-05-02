@@ -108,13 +108,11 @@ body {
   background: #ffffff !important;
 }
 
-/* Home index footer email: sharp blue-violet border + soft purplish outer halo */
+/* Home index footer email: violet border + single soft ring (no stacked blur) */
 .home-footer-email-cta:hover,
 .home-footer-email-cta:focus-visible {
   border-color: #5b4dff !important;
-  box-shadow:
-    0 0 0 5px rgb(124 106 232 / 16%),
-    0 0 18px 3px rgb(107 91 214 / 22%) !important;
+  box-shadow: 0 0 0 4px rgb(124 106 232 / 22%) !important;
 }
 
 .bio-home-cta:hover,
