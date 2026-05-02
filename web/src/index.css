@@ -603,6 +603,24 @@ body {
   color: rgb(0 0 0 / 70%);
 }
 
+.intro-expand-hit-zone {
+  cursor: pointer;
+  border-radius: 12px;
+  outline-offset: 4px;
+}
+
+.intro-expand-hit-zone:focus-visible {
+  outline: 2px solid #2b00ff;
+}
+
+.intro-expand-hit-zone__footer {
+  margin-top: 4px;
+}
+
+.intro-mobile-head {
+  cursor: default;
+}
+
 .intro-more-panel {
   overflow: hidden;
   opacity: 0;

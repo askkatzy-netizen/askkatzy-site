@@ -5387,11 +5387,11 @@ function App() {
 
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
-            <p className="case-studies-intro__lead">
-              {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
-            </p>
             {!isIntroTopLayout ? (
               <>
+                <p className="case-studies-intro__lead">
+                  {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
+                </p>
                 <p className="case-studies-intro__body">
                   {
                     'With a background in 3D and animation, I still have a soft spot for elegant motion - and a good feel for how things should look and move.'
@@ -5425,6 +5425,47 @@ function App() {
               </>
             ) : (
               <>
+                <div
+                  className={!isIntroExpanded ? 'intro-expand-hit-zone' : 'intro-mobile-head'}
+                  tabIndex={!isIntroExpanded ? 0 : undefined}
+                  aria-expanded={isIntroExpanded}
+                  aria-label={!isIntroExpanded ? 'Expand intro text' : undefined}
+                  onClick={
+                    !isIntroExpanded ? () => setIsIntroExpanded(true) : undefined
+                  }
+                  onKeyDown={(event) => {
+                    if (!isIntroExpanded && (event.key === 'Enter' || event.key === ' ')) {
+                      event.preventDefault()
+                      setIsIntroExpanded(true)
+                    }
+                  }}
+                >
+                  <p className="case-studies-intro__lead">
+                    {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
+                  </p>
+                  {!isIntroExpanded && (
+                    <div className="intro-expand-hit-zone__footer">
+                      <button
+                        type="button"
+                        className="intro-see-more"
+                        onClick={(event) => {
+                          event.stopPropagation()
+                          setIsIntroExpanded(true)
+                        }}
+                        aria-expanded={false}
+                      >
+                        <span>See more</span>
+                        <img
+                          src={chevronDownIcon}
+                          alt=""
+                          aria-hidden="true"
+                          className="intro-see-more__chevron"
+                        />
+                      </button>
+                    </div>
+                  )}
+                </div>
+
                 <div
                   className={`intro-more-panel ${isIntroExpanded ? 'intro-more-panel--open' : ''}`}
                   style={{
@@ -5464,25 +5505,6 @@ function App() {
                   </div>
                 </div>
 
-                {!isIntroExpanded && (
-                  <div>
-                    <button
-                      type="button"
-                      className="intro-see-more"
-                      onClick={() => setIsIntroExpanded((prev) => !prev)}
-                      aria-expanded={isIntroExpanded}
-                    >
-                      <span>See more</span>
-                      <img
-                        src={chevronDownIcon}
-                        alt=""
-                        aria-hidden="true"
-                        className="intro-see-more__chevron"
-                      />
-                    </button>
-                  </div>
-                )}
-
                 {isIntroExpanded && (
                   <>
                     {renderSeeFullBioCta(`intro-see-full-bio-cta--expanded ${isIntroTopLayout ? 'mt-7' : 'mt-4'}`)}
@@ -5503,7 +5525,6 @@ function App() {
                         />
                       </button>
                     </div>
-
                   </>
                 )}
               </>
