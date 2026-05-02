@@ -681,7 +681,7 @@ function CaseStudyFooter({ variant = 'home' }) {
         className={
           isCaseStudy
             ? 'boss-back-cta header-cta--case-studies'
-            : `header-cta--case-studies header-cta--ghost ${isBio ? 'bio-footer-email-cta' : ''}`
+            : `header-cta--case-studies header-cta--ghost ${isBio ? 'bio-footer-email-cta' : 'home-footer-email-cta'}`
         }
       >
         <img src={mailIcon} alt="" aria-hidden="true" className="header-cta__icon" />
@@ -5390,7 +5390,7 @@ function App() {
             {!isIntroTopLayout ? (
               <>
                 <p className="case-studies-intro__lead">
-                  {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
+                  {'👋 I’m a product design leader focused on thoughtful product experiences.'}
                 </p>
                 <p className="case-studies-intro__body">
                   {
@@ -5445,7 +5445,7 @@ function App() {
                   }}
                 >
                   <p className="case-studies-intro__lead">
-                    {'👋 I’m a product design leader focused on thoughtful product experiences and team success.'}
+                    {'👋 I’m a product design leader focused on thoughtful product experiences.'}
                   </p>
                   {!isIntroExpanded && (
                     <div className="intro-expand-hit-zone__footer">

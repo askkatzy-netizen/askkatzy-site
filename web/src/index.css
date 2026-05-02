@@ -108,6 +108,15 @@ body {
   background: #ffffff !important;
 }
 
+/* Home index footer email: sharp blue-violet border + soft purplish outer halo */
+.home-footer-email-cta:hover,
+.home-footer-email-cta:focus-visible {
+  border-color: #5b4dff !important;
+  box-shadow:
+    0 0 0 5px rgb(124 106 232 / 16%),
+    0 0 18px 3px rgb(107 91 214 / 22%) !important;
+}
+
 .bio-home-cta:hover,
 .bio-home-cta:focus-visible,
 .bio-footer-email-cta:hover,
@@ -2390,7 +2399,9 @@ body {
   .case-study-item .case-thumb__graptap-glyph-idle,
   .case-study-item .case-thumb__graptap-glyph-hover,
   .case-study-item .case-thumb__boss-cog,
+  .case-study-item .case-thumb__boss-cog--secondary,
   .case-study-item .case-thumb__boss-cog-img,
+  .case-study-item .case-thumb__boss-cog-img--secondary,
   .case-study-item .case-thumb__boss-ring,
   .case-study-item .case-thumb__boss-ring-svg,
   .case-study-item .case-thumb__boss-ring-path,
