@@ -5639,7 +5639,9 @@ function App() {
               Even the Academy’s president, Prof. Zuckerman, couldn’t hide his joy.
             </p>
             <p>
-              <TooltipWord imageSrc={tooltipAskkatzy}>‘Askkatzy’</TooltipWord>{' '}
+              <TooltipWord imageSrc={tooltipAskkatzy} imageMaxWidth={436}>
+                ‘Askkatzy’
+              </TooltipWord>{' '}
               was born from hosting
               video sessions to help anyone solve Figma challenges.
             </p>
