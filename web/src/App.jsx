@@ -331,8 +331,26 @@ const normalizePathname = (pathname) => {
   return normalized === '' ? '/' : normalized
 }
 
+const coerceAppPath = (pathValue) => {
+  const rawValue = `${pathValue ?? ''}`.trim()
+  if (!rawValue) return '/'
+
+  if (/^https?:\/\//i.test(rawValue)) {
+    try {
+      return normalizePathname(new URL(rawValue).pathname || '/')
+    } catch {
+      return '/'
+    }
+  }
+
+  const withLeadingSlash = rawValue.startsWith('/') ? rawValue : `/${rawValue}`
+  const collapsedLeading = withLeadingSlash.replace(/^\/+/, '/')
+  const collapsedSlashes = collapsedLeading.replace(/\/{2,}/g, '/')
+  return normalizePathname(collapsedSlashes)
+}
+
 const getRuntimeBasePath = (pathname) => {
-  const normalized = normalizePathname(pathname)
+  const normalized = coerceAppPath(pathname)
   if (normalized === '/') return ''
 
   const matchedCasePath = Object.values(CASE_STUDY_PATHS).find(
@@ -349,8 +367,9 @@ const getRuntimeBasePath = (pathname) => {
 
 const resolveAppPath = (targetPath, currentPathname) => {
   const basePath = getRuntimeBasePath(currentPathname)
-  if (!basePath) return targetPath
-  return normalizePathname(`${basePath}${targetPath}`)
+  const normalizedTarget = coerceAppPath(targetPath)
+  if (!basePath) return normalizedTarget
+  return coerceAppPath(`${basePath}${normalizedTarget}`)
 }
 
 const getCaseStudyFromPathname = (pathname) => {
@@ -554,12 +573,12 @@ function CaseStudyImageCarousel({
     >
       <div
         ref={viewportRef}
-        className="relative overflow-visible rounded-[12px]"
+        className="relative overflow-visible rounded-none"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <div className="overflow-hidden rounded-[12px]">
+        <div className="overflow-x-hidden overflow-y-visible rounded-none">
           <div
             className="flex transition-transform duration-500 ease-out"
             style={{
@@ -2104,6 +2123,18 @@ function SponsorshipsCaseStudyPage({ onBack }) {
   )
   const [showPrototypeCopied, setShowPrototypeCopied] = useState(false)
 
+  const hideFloatingHomeForInteraction = (eventTarget) => {
+    if (!eventTarget) return
+    if (!(eventTarget instanceof Element)) return
+    if (eventTarget.closest('.case-study-floater')) return
+
+    if (idleHideTimerRef.current) {
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+    setShowFloatingHome(false)
+  }
+
   const pricingPrototypeUrl =
     'https://embed.figma.com/proto/sALpRqwxhV0Y4Da15q0DHR/Pricing-Card_prototype?node-id=1-21789&p=f&scaling=scale-down-width&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A21789&embed-host=share&hide-ui=1'
 
@@ -2245,6 +2276,12 @@ function SponsorshipsCaseStudyPage({ onBack }) {
     <main
       className="min-h-screen bg-[#1F00CC] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
       style={{ '--case-cta-hover-border': '#1F00CC' }}
+      onPointerDownCapture={(event) => {
+        hideFloatingHomeForInteraction(event.target)
+      }}
+      onTouchStartCapture={(event) => {
+        hideFloatingHomeForInteraction(event.target)
+      }}
     >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
@@ -3198,6 +3235,18 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
   )
   const bonusBurstResetTimerRefs = useRef(Array.from({ length: totalBonuses }, () => null))
 
+  const hideFloatingHomeForInteraction = (eventTarget) => {
+    if (!eventTarget) return
+    if (!(eventTarget instanceof Element)) return
+    if (eventTarget.closest('.case-study-floater')) return
+
+    if (idleHideTimerRef.current) {
+      window.clearTimeout(idleHideTimerRef.current)
+      idleHideTimerRef.current = null
+    }
+    setShowFloatingHome(false)
+  }
+
   useEffect(() => {
     setBonusBurstStates((previousBursts) => {
       if (previousBursts.length === totalBonuses) return previousBursts
@@ -3517,6 +3566,12 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
     <main
       className="min-h-screen bg-[#0093FF] px-[56px] py-5 text-[#111111] max-[700px]:px-4"
       style={{ '--case-cta-hover-border': '#0093FF' }}
+      onPointerDownCapture={(event) => {
+        hideFloatingHomeForInteraction(event.target)
+      }}
+      onTouchStartCapture={(event) => {
+        hideFloatingHomeForInteraction(event.target)
+      }}
     >
       <div className="mx-auto w-full max-w-[1128px]">
         <header className="mb-8 flex items-center justify-start">
@@ -4135,7 +4190,7 @@ function SponsorshipCampaignCardSection() {
           <div className="flex w-full max-w-[324px] flex-col items-center gap-2">
             <button
               type="button"
-              className="header-cta--case-studies inline-flex touch-manipulation select-none [-webkit-touch-callout:none] !border-[#2b00ff] !bg-white !px-4 !py-3 !text-black shadow-[0_0_0_4px_rgb(43_0_255_/_20%)]"
+              className="spons-hold-cta header-cta--case-studies inline-flex touch-manipulation select-none [-webkit-touch-callout:none] !border-[#2b00ff] !bg-white !px-4 !py-3 !text-black shadow-[0_0_0_4px_rgb(43_0_255_/_20%)]"
               aria-label="Hold to simulate desktop hover"
               onPointerDown={handleHoldPointerDown}
               onPointerUp={handleHoldPointerEnd}
