@@ -4770,7 +4770,7 @@ function IntroLeadTypewriter() {
         if (!applyState(nextContent, nextCursor)) return { content: nextContent, cursorIndex: nextCursor }
         await sleep(delayMs)
         if (nextContent.endsWith('beautiful')) {
-          await sleep(800)
+          await sleep(400)
         }
         if (cancelled) break
       }
