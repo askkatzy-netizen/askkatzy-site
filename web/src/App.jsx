@@ -4735,6 +4735,128 @@ function TooltipWord({ children, imageSrc, label, imageMaxWidth = null }) {
   )
 }
 
+function IntroLeadTypewriter() {
+  const finalIntroLead = '👋 I help teams turn real value into beautiful, lovable products.'
+  const sessionPlayedKey = 'introLeadTypewriterPlayed'
+  const [content, setContent] = useState('')
+  const [cursorIndex, setCursorIndex] = useState(0)
+  const [isCursorVisible, setIsCursorVisible] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+
+    const sleep = (ms) =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, ms)
+      })
+
+    const splitChars = (value) => Array.from(value)
+
+    const applyState = (nextContent, nextCursorIndex) => {
+      if (cancelled) return false
+      setContent(nextContent)
+      setCursorIndex(nextCursorIndex)
+      return true
+    }
+
+    const insertChars = async (startContent, startCursorIndex, chars, delayMs = 48) => {
+      let nextContent = startContent
+      let nextCursor = startCursorIndex
+      for (const char of chars) {
+        const charsBefore = splitChars(nextContent)
+        charsBefore.splice(nextCursor, 0, char)
+        nextContent = charsBefore.join('')
+        nextCursor += 1
+        if (!applyState(nextContent, nextCursor)) return { content: nextContent, cursorIndex: nextCursor }
+        await sleep(delayMs)
+        if (cancelled) break
+      }
+      return { content: nextContent, cursorIndex: nextCursor }
+    }
+
+    const deleteLeftChars = async (startContent, startCursorIndex, count, delayMs = 34) => {
+      let nextContent = startContent
+      let nextCursor = startCursorIndex
+      for (let i = 0; i < count; i += 1) {
+        if (nextCursor <= 0) break
+        const charsBefore = splitChars(nextContent)
+        charsBefore.splice(nextCursor - 1, 1)
+        nextContent = charsBefore.join('')
+        nextCursor -= 1
+        if (!applyState(nextContent, nextCursor)) return { content: nextContent, cursorIndex: nextCursor }
+        await sleep(delayMs)
+        if (cancelled) break
+      }
+      return { content: nextContent, cursorIndex: nextCursor }
+    }
+
+    const runSequence = async () => {
+      if (typeof window !== 'undefined') {
+        try {
+          if (window.sessionStorage.getItem(sessionPlayedKey) === '1') {
+            const finalChars = Array.from(finalIntroLead)
+            applyState(finalIntroLead, finalChars.length)
+            setIsCursorVisible(false)
+            return
+          }
+        } catch {
+          // no-op when sessionStorage is unavailable
+        }
+      }
+
+      let currentContent = ''
+      let currentCursor = 0
+      applyState(currentContent, currentCursor)
+
+      // Blink cursor 3 times before typing.
+      for (let i = 0; i < 3; i += 1) {
+        if (cancelled) return
+        setIsCursorVisible(false)
+        await sleep(220)
+        if (cancelled) return
+        setIsCursorVisible(true)
+        await sleep(220)
+      }
+
+      ;({ content: currentContent, cursorIndex: currentCursor } = await insertChars(
+        currentContent,
+        currentCursor,
+        finalIntroLead,
+      ))
+
+      if (!cancelled) {
+        setIsCursorVisible(false)
+        if (typeof window !== 'undefined') {
+          try {
+            window.sessionStorage.setItem(sessionPlayedKey, '1')
+          } catch {
+            // no-op when sessionStorage is unavailable
+          }
+        }
+      }
+    }
+
+    runSequence()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const renderedChars = Array.from(content)
+
+  return (
+    <span aria-label={content}>
+      {renderedChars.slice(0, cursorIndex).join('')}
+      <span
+        aria-hidden="true"
+        className={`intro-type-cursor ${isCursorVisible ? 'intro-type-cursor--visible' : ''}`}
+      />
+      {renderedChars.slice(cursorIndex).join('')}
+    </span>
+  )
+}
+
 function App() {
   const streamElementsCards = projectCards.filter((project) => project.section === 'stream-elements')
   const redCards = projectCards.filter((project) => project.section === 'red')
@@ -5433,7 +5555,7 @@ function App() {
             {!isIntroTopLayout ? (
               <>
                 <p className="case-studies-intro__lead">
-                  {'👋 I’m a product design leader focused on thoughtful product experiences.'}
+                  <IntroLeadTypewriter />
                 </p>
                 <p className="case-studies-intro__body">
                   {
@@ -5488,7 +5610,7 @@ function App() {
                   }}
                 >
                   <p className="case-studies-intro__lead">
-                    {'👋 I’m a product design leader focused on thoughtful product experiences.'}
+                    <IntroLeadTypewriter />
                   </p>
                   {!isIntroExpanded && (
                     <div className="intro-expand-hit-zone__footer">

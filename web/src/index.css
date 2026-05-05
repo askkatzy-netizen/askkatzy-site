@@ -707,6 +707,21 @@ body {
   flex-shrink: 0;
 }
 
+.intro-type-cursor {
+  display: inline-block;
+  width: 0;
+  height: 0.95em;
+  margin-left: 0;
+  vertical-align: -0.08em;
+  border-left: 2px solid #2b00ff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-type-cursor--visible {
+  opacity: 1;
+}
+
 .case-studies-content {
   width: 100%;
 }
