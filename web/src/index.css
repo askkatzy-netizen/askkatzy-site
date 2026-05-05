@@ -1588,6 +1588,68 @@ body {
   --case-hover-halo: rgb(0 147 255 / 24%);
 }
 
+.case-thumb__squarefish-bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  container-type: size;
+}
+
+.case-thumb__squarefish-bubble {
+  --bubble-rotate-end: 0deg;
+  position: absolute;
+  left: var(--bubble-start-x);
+  bottom: -36px;
+  width: calc(15.4px * var(--bubble-size));
+  height: calc(15.4px * var(--bubble-size));
+  opacity: var(--bubble-opacity);
+  animation: case-thumb-squarefish-bubble-rise var(--bubble-duration) linear var(--bubble-delay) forwards;
+  will-change: transform, opacity;
+}
+
+.case-thumb__squarefish-bubble img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes case-thumb-squarefish-bubble-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: calc(var(--bubble-opacity) * 0.88);
+  }
+
+  40% {
+    transform: translate3d(var(--bubble-drift-x-1), -36cqh, 0) scale(1.03)
+      rotate(calc(0.32 * var(--bubble-rotate-end)));
+    opacity: var(--bubble-opacity);
+  }
+
+  74% {
+    transform: translate3d(var(--bubble-drift-x-2), -76cqh, 0) scale(1.02)
+      rotate(calc(0.66 * var(--bubble-rotate-end)));
+    opacity: var(--bubble-opacity);
+  }
+
+  /* Reach the ceiling while still opaque; fade only after clearing the thumb top */
+  92% {
+    transform: translate3d(var(--bubble-drift-x-3), calc(-100cqh - 40px), 0) scale(0.98)
+      rotate(calc(0.94 * var(--bubble-rotate-end)));
+    opacity: var(--bubble-opacity);
+  }
+
+  100% {
+    transform: translate3d(var(--bubble-drift-x-3), calc(-100cqh - 76px), 0) scale(0.96)
+      rotate(var(--bubble-rotate-end));
+    opacity: 0;
+  }
+}
+
 /* Beyond the Pixels — body copy (not the h2 title); explicit 16px so it isn’t overridden */
 .beyond-the-pixels-copy {
   font-size: 16px;
