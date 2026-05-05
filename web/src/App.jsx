@@ -785,7 +785,7 @@ function BioPage({ onBack }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 || downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
+          downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
           clearIdleHideTimer()
@@ -794,7 +794,7 @@ function BioPage({ onBack }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 || upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
+          upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
           return hasScrolledPastThreshold && !isTopHomeInView && hasEnoughUpScroll
@@ -1170,7 +1170,6 @@ function BossAiCaseStudyPage({ onBack }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -1180,7 +1179,6 @@ function BossAiCaseStudyPage({ onBack }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -1450,7 +1448,6 @@ function BriefsCaseStudyPage({ onBack }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -1460,7 +1457,6 @@ function BriefsCaseStudyPage({ onBack }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -1815,7 +1811,6 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -1825,7 +1820,6 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -2230,7 +2224,6 @@ function SponsorshipsCaseStudyPage({ onBack }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -2240,7 +2233,6 @@ function SponsorshipsCaseStudyPage({ onBack }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -2738,7 +2730,6 @@ function GrabTapCaseStudyPage({ onBack }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -2748,7 +2739,6 @@ function GrabTapCaseStudyPage({ onBack }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -3411,7 +3401,6 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
         upScrollDistanceRef.current = 0
         downScrollDistanceRef.current += downScrollDelta
         const shouldHideFloater =
-          window.innerWidth > 700 ||
           downScrollDistanceRef.current >= MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX
         if (shouldHideFloater && !isFloaterHoveredRef.current) {
           setShowFloatingHome(false)
@@ -3421,7 +3410,6 @@ function SquareFishCaseStudyPage({ onBack, onOpenRed }) {
         downScrollDistanceRef.current = 0
         upScrollDistanceRef.current += upScrollDelta
         const hasEnoughUpScroll =
-          window.innerWidth > 700 ||
           upScrollDistanceRef.current >= MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX
         setShowFloatingHome((prev) => {
           if (prev) return true
@@ -4287,8 +4275,8 @@ function RedStatsRow() {
 const RED_POPUP_TRANSITION_MS = 240
 const RED_POPUP_DESKTOP_CLOSE_TOP = 72
 const RED_POPUP_CLOSE_DELAY_MS = 80
-const MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX = 44
-const MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX = 88
+const MOBILE_FLOATER_ACTIVATION_UP_SCROLL_PX = 80
+const MOBILE_FLOATER_HIDE_DOWN_SCROLL_PX = 20
 
 function RedPopupModal({ open, onClose, onOpenDesignSprints }) {
   const [shapeOffset, setShapeOffset] = useState({ x: 0, y: 0 })
