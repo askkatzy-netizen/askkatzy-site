@@ -914,7 +914,7 @@ function BioPage({ onBack }) {
               together. I bring clarity under pressure, keep things moving, and add just enough humor to keep
               everyone sane.
             </p>
-            <p>I genuinely enjoy what I do.</p>
+            <p>{'I genuinely enjoy what I do.\u00A0'}</p>
           </div>
 
           <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
@@ -5584,7 +5584,7 @@ function App() {
                     'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
                   }
                 </p>
-                <p className="case-studies-intro__closing">I genuinely enjoy what I do.</p>
+                <p className="case-studies-intro__closing">{'I genuinely enjoy what I do.\u00A0'}</p>
 
                 {renderSeeFullBioCta('mt-8')}
               </>
@@ -5670,7 +5670,7 @@ function App() {
                         'My experience helps me when things get stressful; I keep things moving with clarity, focus, and just enough humor to keep everyone sane.'
                       }
                     </p>
-                    <p className="case-studies-intro__closing">I genuinely enjoy what I do.</p>
+                    <p className="case-studies-intro__closing">{'I genuinely enjoy what I do.\u00A0'}</p>
                   </div>
                 </div>
 
