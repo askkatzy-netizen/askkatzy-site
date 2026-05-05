@@ -5389,8 +5389,8 @@ function App() {
               <a
                 key={cta.key}
                 href={cta.href || undefined}
-                target={cta.key === 'linkedin' ? '_blank' : undefined}
-                rel={cta.key === 'linkedin' ? 'noopener noreferrer' : undefined}
+                target={cta.key === 'linkedin' || cta.key === 'lets-chat' ? '_blank' : undefined}
+                rel={cta.key === 'linkedin' || cta.key === 'lets-chat' ? 'noopener noreferrer' : undefined}
                 className={`header-cta--case-studies header-top-cta ${
                   cta.key === 'case-studies' ? 'header-cta-hide-under-880' : ''
                 } ${
