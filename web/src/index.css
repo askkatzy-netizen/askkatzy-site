@@ -163,14 +163,14 @@ body {
   background: transparent;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease-out;
+  transition: opacity 360ms ease-out;
 }
 
 .header-mobile-menu {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  top: 82px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--mobile-menu-top, 96px);
   width: auto;
   border-top: 1px solid #2b00ff;
   border-bottom: 1px solid #2b00ff;
@@ -178,13 +178,13 @@ body {
   box-shadow: none;
   overflow: hidden;
   max-height: 0;
-  transition: max-height 480ms ease-in;
+  transition: max-height 360ms ease-out;
 }
 
 .header-mobile-menu__content {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 480ms ease-in, transform 480ms ease-in;
+  transition: opacity 360ms ease-out, transform 360ms ease-out;
 }
 
 .header-mobile-menu__item {
@@ -194,10 +194,10 @@ body {
   justify-content: space-between;
   gap: 8px;
   border: 0;
-  border-top: 1px solid rgb(0 0 0 / 15%);
+  position: relative;
   background: transparent;
   color: #2b00ff;
-  padding: 24px 16px;
+  padding: 24px 32px;
   font-size: 16px;
   font-weight: 500;
   text-align: left;
@@ -205,8 +205,14 @@ body {
   cursor: pointer;
 }
 
-.header-mobile-menu__item:first-child {
-  border-top: 0;
+.header-mobile-menu__item + .header-mobile-menu__item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: rgb(0 0 0 / 15%);
 }
 
 .header-mobile-menu__item-icon {
@@ -223,19 +229,24 @@ body {
 }
 
 .header-mobile-menu-overlay--open {
+  background: transparent;
   opacity: 1;
   pointer-events: auto;
 }
 
 .header-mobile-menu--open {
   max-height: 360px;
-  transition-timing-function: ease-out;
+  transition-duration: 480ms;
 }
 
 .header-mobile-menu--open .header-mobile-menu__content {
   opacity: 1;
   transform: translateY(0);
-  transition-timing-function: ease-out;
+  transition-duration: 480ms;
+}
+
+.header-mobile-menu-overlay--open {
+  transition-duration: 480ms;
 }
 
 
@@ -2764,9 +2775,7 @@ body {
   }
 
   .header-mobile-menu {
-    left: 0;
-    right: 0;
-    top: 96px;
+    top: var(--mobile-menu-top, 96px);
   }
 }
 

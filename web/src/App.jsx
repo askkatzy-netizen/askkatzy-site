@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import streamElementsLogo from './assets/StreamElementsLogo.svg'
 import graptapLogoDefault from './assets/graptap-logo-default.svg'
 import graptapLogoHover from './assets/graptap-logo-hover.svg'
@@ -5035,6 +5036,9 @@ function App() {
   )
   const [supportsHover, setSupportsHover] = useState(true)
   const [isMobileHeaderMenuOpen, setIsMobileHeaderMenuOpen] = useState(false)
+  const [mobileMenuTop, setMobileMenuTop] = useState(96)
+  const headerRef = useRef(null)
+  const headerCtaRowRef = useRef(null)
   const [isIntroExpanded, setIsIntroExpanded] = useState(false)
   const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
   const [isMobileLayout, setIsMobileLayout] = useState(false)
@@ -5078,6 +5082,7 @@ function App() {
         setIsMobileHeaderMenuOpen(false)
       }
     }
+
     window.addEventListener('resize', closeIfDesktop)
     return () => window.removeEventListener('resize', closeIfDesktop)
   }, [])
@@ -5087,6 +5092,18 @@ function App() {
     const closeOnScroll = () => setIsMobileHeaderMenuOpen(false)
     window.addEventListener('scroll', closeOnScroll, { passive: true })
     return () => window.removeEventListener('scroll', closeOnScroll)
+  }, [isMobileHeaderMenuOpen])
+
+  useEffect(() => {
+    if (!isMobileHeaderMenuOpen || typeof window === 'undefined') return undefined
+    const syncTopFromHeaderEdge = () => {
+      const rect = headerRef.current?.getBoundingClientRect?.()
+      if (!rect) return
+      setMobileMenuTop(Math.round(rect.bottom))
+    }
+    syncTopFromHeaderEdge()
+    window.addEventListener('resize', syncTopFromHeaderEdge)
+    return () => window.removeEventListener('resize', syncTopFromHeaderEdge)
   }, [isMobileHeaderMenuOpen])
 
   useEffect(() => {
@@ -5680,10 +5697,85 @@ function App() {
     return <BioPage onBack={goHome} />
   }
 
+  const mobileHeaderMenuOverlay =
+    typeof document !== 'undefined'
+      ? createPortal(
+          <div
+            className={`header-mobile-menu-overlay ${isMobileHeaderMenuOpen ? 'header-mobile-menu-overlay--open' : ''}`}
+            onClick={() => setIsMobileHeaderMenuOpen(false)}
+            aria-hidden={isMobileHeaderMenuOpen ? 'false' : 'true'}
+          >
+            <div
+              className={`header-mobile-menu ${isMobileHeaderMenuOpen ? 'header-mobile-menu--open' : ''}`}
+              onClick={(event) => event.stopPropagation()}
+              style={{ '--mobile-menu-top': `${mobileMenuTop}px` }}
+            >
+              <div className="header-mobile-menu__content">
+                <button
+                  type="button"
+                  className="header-mobile-menu__item"
+                  onClick={() => {
+                    setIsMobileHeaderMenuOpen(false)
+                    openBioPage()
+                  }}
+                >
+                  <span>Full bio</span>
+                  <svg
+                    className="header-mobile-menu__item-icon header-mobile-menu__item-icon--bio"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <a
+                  href={headerCtas[0].href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="header-mobile-menu__item"
+                  onClick={() => setIsMobileHeaderMenuOpen(false)}
+                >
+                  <span>Linkedin profile</span>
+                  <img src={linkedInMobileIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
+                </a>
+                <a
+                  href={headerCtas[1].href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="header-mobile-menu__item"
+                  onClick={() => setIsMobileHeaderMenuOpen(false)}
+                >
+                  <span>Let’s chat</span>
+                  <img src={mailIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
+                </a>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )
+      : null
+
   return (
     <main className="min-h-screen bg-white px-[56px] py-5 text-[#111111] max-[700px]:px-4">
       <div className="mx-auto w-full max-w-[1128px] fade-up">
-        <header className="header-sticky mb-7 flex items-center justify-between">
+        <header ref={headerRef} className="header-sticky mb-7 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="flex h-[48px] w-[36px] items-center justify-center overflow-hidden">
               <img
@@ -5701,7 +5793,7 @@ function App() {
             </p>
           </div>
 
-          <div className="header-cta-row flex items-center gap-2">
+          <div ref={headerCtaRowRef} className="header-cta-row flex items-center gap-2">
             {renderSeeFullBioCta('header-top-cta header-cta-hide-under-440', 'Full bio', false)}
             <a
               href={headerCtas[0].href}
@@ -5735,7 +5827,13 @@ function App() {
             <button
               type="button"
               className="header-cta--case-studies header-top-cta header-more-cta"
-              onClick={() => setIsMobileHeaderMenuOpen((current) => !current)}
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  const rect = headerRef.current?.getBoundingClientRect?.()
+                  if (rect) setMobileMenuTop(Math.round(rect.bottom))
+                }
+                setIsMobileHeaderMenuOpen((current) => !current)
+              }}
               aria-label="See more"
               aria-expanded={isMobileHeaderMenuOpen}
             >
@@ -5762,73 +5860,7 @@ function App() {
             </button>
           </div>
         </header>
-        <div
-          className={`header-mobile-menu-overlay ${isMobileHeaderMenuOpen ? 'header-mobile-menu-overlay--open' : ''}`}
-          onClick={() => setIsMobileHeaderMenuOpen(false)}
-          aria-hidden={isMobileHeaderMenuOpen ? 'false' : 'true'}
-        >
-          <div
-            className={`header-mobile-menu ${isMobileHeaderMenuOpen ? 'header-mobile-menu--open' : ''}`}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="header-mobile-menu__content">
-              <a
-                href={headerCtas[0].href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="header-mobile-menu__item"
-                onClick={() => setIsMobileHeaderMenuOpen(false)}
-              >
-                <span>Linkedin profile</span>
-                <img src={linkedInMobileIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
-              </a>
-              <button
-                type="button"
-                className="header-mobile-menu__item"
-                onClick={() => {
-                  setIsMobileHeaderMenuOpen(false)
-                  openBioPage()
-                }}
-              >
-                <span>Full bio</span>
-                <svg
-                  className="header-mobile-menu__item-icon header-mobile-menu__item-icon--bio"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-              <a
-                href={headerCtas[1].href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="header-mobile-menu__item"
-                onClick={() => setIsMobileHeaderMenuOpen(false)}
-              >
-                <span>Let’s chat</span>
-                <img src={mailIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
-              </a>
-            </div>
-          </div>
-        </div>
+        {mobileHeaderMenuOverlay}
 
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
