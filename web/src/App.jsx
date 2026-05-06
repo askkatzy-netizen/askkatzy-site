@@ -66,6 +66,7 @@ import linkedInIcon from './assets/arrow-right.svg'
 import arrowRightIcon from './assets/arrow-right.svg'
 import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
+import ellipsisIcon from './assets/ellipsis.svg'
 import downloadIcon from './assets/download.svg'
 import bioPdfFile from './assets/EyalKatz-ProductDesigner.pdf'
 import profileFace from './assets/profile-face.png'
@@ -5033,6 +5034,7 @@ function App() {
     typeof window === 'undefined' ? null : getCaseStudyFromPathname(window.location.pathname),
   )
   const [supportsHover, setSupportsHover] = useState(true)
+  const [isMobileHeaderMenuOpen, setIsMobileHeaderMenuOpen] = useState(false)
   const [isIntroExpanded, setIsIntroExpanded] = useState(false)
   const [isIntroTopLayout, setIsIntroTopLayout] = useState(false)
   const [isMobileLayout, setIsMobileLayout] = useState(false)
@@ -5068,6 +5070,24 @@ function App() {
     mediaQuery.addEventListener('change', updateSupportsHover)
     return () => mediaQuery.removeEventListener('change', updateSupportsHover)
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined
+    const closeIfDesktop = () => {
+      if (window.innerWidth > 439.98) {
+        setIsMobileHeaderMenuOpen(false)
+      }
+    }
+    window.addEventListener('resize', closeIfDesktop)
+    return () => window.removeEventListener('resize', closeIfDesktop)
+  }, [])
+
+  useEffect(() => {
+    if (!isMobileHeaderMenuOpen || typeof window === 'undefined') return undefined
+    const closeOnScroll = () => setIsMobileHeaderMenuOpen(false)
+    window.addEventListener('scroll', closeOnScroll, { passive: true })
+    return () => window.removeEventListener('scroll', closeOnScroll)
+  }, [isMobileHeaderMenuOpen])
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -5248,14 +5268,20 @@ function App() {
     typeof window === 'undefined'
       ? CASE_STUDY_PATHS.bio
       : resolveAppPath(CASE_STUDY_PATHS.bio, window.location.pathname)
-  const renderSeeFullBioCta = (className) => (
+  const renderSeeFullBioCta = (
+    className,
+    label = 'See full bio',
+    useGhost = true,
+    style = undefined,
+  ) => (
     <a
       href={bioCtaHref}
       onClick={(event) => {
         event.preventDefault()
         openBioPage()
       }}
-      className={`intro-see-full-bio-cta header-cta--case-studies header-cta--ghost ${className}`}
+      className={`intro-see-full-bio-cta header-cta--case-studies ${useGhost ? 'header-cta--ghost' : ''} ${className}`}
+      style={style}
     >
       <svg
         className="header-cta__icon"
@@ -5281,7 +5307,7 @@ function App() {
           strokeLinejoin="round"
         />
       </svg>
-      <span>See full Bio</span>
+      <span>{label}</span>
     </a>
   )
   const handleCaseStudyTouchStart = (event) => {
@@ -5676,48 +5702,133 @@ function App() {
           </div>
 
           <div className="header-cta-row flex items-center gap-2">
-            {headerCtas.map((cta) => (
-              <a
-                key={cta.key}
-                href={cta.href || undefined}
-                target={cta.key === 'linkedin' || cta.key === 'lets-chat' ? '_blank' : undefined}
-                rel={cta.key === 'linkedin' || cta.key === 'lets-chat' ? 'noopener noreferrer' : undefined}
-                className={`header-cta--case-studies header-top-cta ${
-                  cta.key === 'case-studies' ? 'header-cta-hide-under-880' : ''
-                } ${
-                  cta.key === 'cv'
-                    ? 'header-cta-hide-under-800'
-                    : ''
-                } ${
-                  cta.key === 'lets-chat' ? 'header-lets-chat-cta' : ''
-                }`}
-                style={{ '--cta-fixed-width': cta.width }}
-              >
-                {cta.key === 'linkedin' ? (
-                  <>
-                    <img
-                      src={linkedInIcon}
-                      alt=""
-                      aria-hidden="true"
-                      className="header-cta__icon header-cta__icon--linkedin-desktop"
-                    />
-                    <img
-                      src={linkedInMobileIcon}
-                      alt=""
-                      aria-hidden="true"
-                      className="header-cta__icon header-cta__icon--linkedin-mobile"
-                    />
-                  </>
-                ) : (
-                  <img src={cta.icon} alt="" aria-hidden="true" className="header-cta__icon" />
-                )}
-                <span className={cta.key === 'lets-chat' ? 'header-lets-chat-label' : ''}>
-                  {cta.label}
-                </span>
-              </a>
-            ))}
+            {renderSeeFullBioCta('header-top-cta header-cta-hide-under-440', 'Full bio', false)}
+            <a
+              href={headerCtas[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header-cta--case-studies header-top-cta header-cta-hide-under-440"
+            >
+              <img
+                src={linkedInIcon}
+                alt=""
+                aria-hidden="true"
+                className="header-cta__icon header-cta__icon--linkedin-desktop"
+              />
+              <img
+                src={linkedInMobileIcon}
+                alt=""
+                aria-hidden="true"
+                className="header-cta__icon header-cta__icon--linkedin-mobile"
+              />
+              <span>{headerCtas[0].label}</span>
+            </a>
+            <a
+              href={headerCtas[1].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="header-cta--case-studies header-top-cta header-lets-chat-cta"
+            >
+              <img src={headerCtas[1].icon} alt="" aria-hidden="true" className="header-cta__icon" />
+              <span className="header-lets-chat-label">{headerCtas[1].label}</span>
+            </a>
+            <button
+              type="button"
+              className="header-cta--case-studies header-top-cta header-more-cta"
+              onClick={() => setIsMobileHeaderMenuOpen((current) => !current)}
+              aria-label="See more"
+              aria-expanded={isMobileHeaderMenuOpen}
+            >
+              {isMobileHeaderMenuOpen ? (
+                <svg
+                  aria-hidden="true"
+                  className="header-more-cta__close"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.33301 3.3335L12.6663 12.6668M12.6663 3.3335L3.33301 12.6668"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              ) : (
+                <img src={ellipsisIcon} alt="" aria-hidden="true" className="header-cta__icon" />
+              )}
+            </button>
           </div>
         </header>
+        <div
+          className={`header-mobile-menu-overlay ${isMobileHeaderMenuOpen ? 'header-mobile-menu-overlay--open' : ''}`}
+          onClick={() => setIsMobileHeaderMenuOpen(false)}
+          aria-hidden={isMobileHeaderMenuOpen ? 'false' : 'true'}
+        >
+          <div
+            className={`header-mobile-menu ${isMobileHeaderMenuOpen ? 'header-mobile-menu--open' : ''}`}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="header-mobile-menu__content">
+              <a
+                href={headerCtas[0].href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="header-mobile-menu__item"
+                onClick={() => setIsMobileHeaderMenuOpen(false)}
+              >
+                <span>Linkedin profile</span>
+                <img src={linkedInMobileIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
+              </a>
+              <button
+                type="button"
+                className="header-mobile-menu__item"
+                onClick={() => {
+                  setIsMobileHeaderMenuOpen(false)
+                  openBioPage()
+                }}
+              >
+                <span>Full bio</span>
+                <svg
+                  className="header-mobile-menu__item-icon header-mobile-menu__item-icon--bio"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 12C14.4853 12 16.5 9.98528 16.5 7.5C16.5 5.01472 14.4853 3 12 3C9.51472 3 7.5 5.01472 7.5 7.5C7.5 9.98528 9.51472 12 12 12Z"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M4.5 20.25C4.5 16.9363 7.18629 14.25 10.5 14.25H13.5C16.8137 14.25 19.5 16.9363 19.5 20.25"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+              <a
+                href={headerCtas[1].href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="header-mobile-menu__item"
+                onClick={() => setIsMobileHeaderMenuOpen(false)}
+              >
+                <span>Let’s chat</span>
+                <img src={mailIcon} alt="" aria-hidden="true" className="header-mobile-menu__item-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
 
         <section className="case-studies-layout mb-10">
           <div className="case-studies-intro">
