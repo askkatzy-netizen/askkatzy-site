@@ -735,7 +735,12 @@ function BioPage({ onBack }) {
     'Animation',
     'Design Systems',
     'Figma',
+    'AI',
     'Cursor',
+    'B2B',
+    'B2B2C',
+    'B2C',
+    'SAAS',
   ]
 
   useEffect(() => {
@@ -910,7 +915,7 @@ function BioPage({ onBack }) {
             </a>
           </div>
 
-          <div className="mb-10 max-w-[920px] text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+          <div className="mb-8 max-w-[920px] text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
             <p className="mb-3">
               I&apos;m a Product Designer focused on making complex products feel simple. With a background as a
               studio founder and animator, I think beyond visuals - shaping how products feel, move, and come
@@ -918,6 +923,48 @@ function BioPage({ onBack }) {
               everyone sane.
             </p>
             <p>{'I genuinely enjoy what I do.\u00A0'}</p>
+          </div>
+
+          <div className="mb-8 flex items-center gap-4">
+            <span className="text-[14px] leading-[1.4] font-normal text-black/70">Let&apos;s chat:</span>
+            <a
+              href={GMAIL_COMPOSE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bio-download-cta bio-intro-chat-cta group inline-flex h-12 w-12 items-center justify-center rounded-full"
+              aria-label="Open email composer"
+            >
+              <span
+                className="bio-download-cta__core flex h-full w-full items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:bg-black group-focus-visible:bg-black"
+                aria-hidden="true"
+              >
+                <img
+                  src={mailIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:scale-[1.4] group-hover:opacity-100 group-hover:invert group-focus-visible:scale-[1.4] group-focus-visible:opacity-100 group-focus-visible:invert"
+                />
+              </span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/eyalk65/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bio-download-cta bio-intro-chat-cta group inline-flex h-12 w-12 items-center justify-center rounded-full"
+              aria-label="Open LinkedIn profile"
+            >
+              <span
+                className="bio-download-cta__core flex h-full w-full items-center justify-center rounded-full border border-black bg-white/50 transition-all duration-200 group-hover:bg-black group-focus-visible:bg-black"
+                aria-hidden="true"
+              >
+                <img
+                  src={linkedInMobileIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="bio-download-cta__icon h-5 w-5 opacity-90 transition-all duration-200 group-hover:scale-[1.4] group-hover:opacity-100 group-hover:invert group-focus-visible:scale-[1.4] group-focus-visible:opacity-100 group-focus-visible:invert"
+                />
+              </span>
+            </a>
           </div>
 
           <div className="mb-8 flex items-center gap-2 py-5 max-[700px]:py-1">
