@@ -172,13 +172,30 @@ body {
   right: 0;
   top: var(--mobile-menu-top, 96px);
   width: auto;
-  border-top: 1px solid #2b00ff;
-  border-bottom: 1px solid #2b00ff;
   background: #ffffff;
   box-shadow: none;
   overflow: hidden;
   max-height: 0;
   transition: max-height 0ms linear;
+}
+
+.header-mobile-menu::before,
+.header-mobile-menu::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background: #2b00ff;
+  pointer-events: none;
+}
+
+.header-mobile-menu::before {
+  top: 0;
+}
+
+.header-mobile-menu::after {
+  bottom: 0;
 }
 
 .header-mobile-menu__content {
