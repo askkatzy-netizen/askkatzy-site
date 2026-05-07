@@ -226,48 +226,8 @@ const projectCards = [
   },
 ]
 
-const CASE_CARD_DRAWER_COPY = {
-  'creators-spons': [
-    { text: 'The ' },
-    { text: 'StreamElements', bold: true },
-    {
-      text: ' Sponsorship program is built on a creators first approach - our tools are free, and we only earn when our creators do. The program bridges the gap between brands and creators looking for a reliable way to earn from their streams.',
-    },
-  ],
-  graptap: [
-    { text: 'GrabTap', bold: true },
-    {
-      text: ' is a Play-to-Earn platform that turns mobile gaming into rewards and directly engages communities by supporting their favorite creators, while giving users a clear and frictionless journey across offers, missions, and rewards.',
-    },
-  ],
-  'boss-ai': [
-    { text: 'BOSS', bold: true },
-    {
-      text: ' is a robust engine that manages creator campaigns at scale and is now evolving into an intuitive self-service AI-powered platform that simplifies configuration, automates outreach, and helps teams act faster with better confidence.',
-    },
-  ],
-  'campaign-brief': [
-    {
-      text: 'We built a dynamic brief system that auto-populates core specs while allowing CMs to add custom content with clarity and speed, while keeping the framework flexible enough to adapt to each campaign’s unique needs.',
-    },
-  ],
-  'design-sprints': [
-    { text: 'In 2018, we shifted ' },
-    { text: 'RED', bold: true },
-    {
-      text: ' toward Design Sprints to test big ideas quickly and create immediate alignment for stakeholders, turning complex business questions into fast high-fidelity prototypes before development begins.',
-    },
-  ],
-  squarefish: [
-    { text: 'SquareFish', bold: true },
-    {
-      text: ' started as an experimental pilot at RED, helping us craft simple engaging game UI and bridge creativity with product outcomes, while sharpening how we design playful experiences that still support measurable product goals.',
-    },
-  ],
-}
-
-/** First hero intro paragraph from each case study page (mobile drawer only). */
-const CASE_CARD_DRAWER_MOBILE_INTRO = {
+/** First hero intro paragraph from each case study page (hover + mobile drawer). */
+const CASE_CARD_DRAWER_INTRO = {
   'creators-spons': [
     { text: 'The ' },
     { text: 'StreamElements', bold: true },
@@ -315,6 +275,8 @@ const CASE_CARD_DRAWER_MOBILE_INTRO = {
 }
 
 const CASE_CARD_DRAWER_DELAY_MS = 1500
+/** Match `transform` duration on `.case-thumb__hover-drawer` (spring close) */
+const CASE_CARD_DRAWER_CLOSE_SETTLE_MS = 640
 const MOBILE_DRAWER_BLACK_ICON_KEYS = new Set(['graptap', 'boss-ai', 'campaign-brief'])
 
 const beyondLines = [
@@ -5178,8 +5140,8 @@ function App() {
   const [mobileDrawerCaseKey, setMobileDrawerCaseKey] = useState(null)
   const [closingDrawerCaseKey, setClosingDrawerCaseKey] = useState(null)
   const caseItemRefs = useRef([])
-  const hoverDrawerTimerRef = useRef(null)
   const closingDrawerTimerRef = useRef(null)
+  const hoverDrawerTimerRef = useRef(null)
   const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
   const suppressCaseClickUntilRef = useRef(0)
   const homeScrollYBeforeCaseRef = useRef(0)
@@ -5561,7 +5523,7 @@ function App() {
       closingDrawerTimerRef.current = window.setTimeout(() => {
         setClosingDrawerCaseKey((closingKey) => (closingKey === projectKey ? null : closingKey))
         closingDrawerTimerRef.current = null
-      }, 280)
+      }, CASE_CARD_DRAWER_CLOSE_SETTLE_MS)
       return null
     })
   }
@@ -5593,7 +5555,7 @@ function App() {
     const isDrawerTriggerVisible = !supportsHover && isTouchActiveCard
     const isDrawerClosing = supportsHover && closingDrawerCaseKey === project.key
     const isDrawerVisible = isDrawerOpen || isDrawerClosing
-    const drawerCopy = supportsHover ? CASE_CARD_DRAWER_COPY[project.key] : CASE_CARD_DRAWER_MOBILE_INTRO[project.key]
+    const drawerCopy = CASE_CARD_DRAWER_INTRO[project.key]
     const isMobileDrawerBlackIcon = MOBILE_DRAWER_BLACK_ICON_KEYS.has(project.key)
     return (
     <article
@@ -5876,19 +5838,10 @@ function App() {
           <div className="case-thumb__hover-drawer-clip">
             <div className={`case-thumb__hover-drawer ${isDrawerOpen ? 'case-thumb__hover-drawer--open' : ''}`}>
               <div className={`case-thumb__hover-drawer-row ${supportsHover ? '' : 'case-thumb__hover-drawer-row--mobile'}`}>
-                <p
-                  className={`case-thumb__hover-drawer-text${
-                    supportsHover ? '' : ' case-thumb__hover-drawer-text--mobile'
-                  }`}
-                >
+                <p className="case-thumb__hover-drawer-text">
                   {drawerCopy.map((segment, segmentIndex) =>
                     segment.bold ? (
-                      <strong
-                        key={segmentIndex}
-                        className={
-                          supportsHover ? 'font-semibold text-black/70' : 'font-bold text-black/70'
-                        }
-                      >
+                      <strong key={segmentIndex} className="font-bold text-black/70">
                         {segment.text}
                       </strong>
                     ) : (
@@ -5896,9 +5849,6 @@ function App() {
                     ),
                   )}
                 </p>
-                {supportsHover ? (
-                  <img src={linkedInIcon} alt="" aria-hidden="true" className="case-thumb__hover-drawer-arrow" />
-                ) : null}
               </div>
             </div>
           </div>

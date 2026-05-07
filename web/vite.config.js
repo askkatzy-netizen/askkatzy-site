@@ -12,4 +12,8 @@ export default defineConfig({
   preview: {
     port: 5191,
   },
+  test: {
+    environment: 'node',
+    include: ['src/__experimental__/**/*.test.{js,jsx}'],
+  },
 })
