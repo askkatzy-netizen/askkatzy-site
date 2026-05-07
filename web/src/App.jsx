@@ -266,6 +266,54 @@ const CASE_CARD_DRAWER_COPY = {
   ],
 }
 
+/** First hero intro paragraph from each case study page (mobile drawer only). */
+const CASE_CARD_DRAWER_MOBILE_INTRO = {
+  'creators-spons': [
+    { text: 'The ' },
+    { text: 'StreamElements', bold: true },
+    {
+      text: " Sponsorship program is built on a 'creators first' approach - our tools are free, and we only earn when our creators do. The program bridges the gap between brands and creators looking for a reliable way to earn from their streams.",
+    },
+  ],
+  graptap: [
+    { text: 'GrabTap', bold: true },
+    {
+      text: ' is a "Play-to-Earn" platform that turns mobile gaming into rewards. It marked a strategic shift for ',
+    },
+    { text: 'StreamElements', bold: true },
+    {
+      text: ', directly engaging communities by offering gift cards in exchange for supporting their favorite creators.',
+    },
+  ],
+  'boss-ai': [
+    { text: 'BOSS', bold: true },
+    {
+      text: ' is a robust engine that manages creator campaigns at scale. Originally built for internal personnel, it required specialized training to navigate. ',
+    },
+  ],
+  'campaign-brief': [
+    { text: 'The Problem', bold: true },
+    {
+      text: ' - Previously, campaign briefs were "locked" until a creator committed. This forced them to start campaigns just to see details, creating friction and skewing our metrics.',
+    },
+  ],
+  'design-sprints': [
+    { text: 'In 2018, we shifted ' },
+    { text: 'RED', bold: true },
+    {
+      text: ' towards Design Sprints - a methodology designed to test big ideas while creating immediate clarity and alignment for stakeholders.',
+    },
+  ],
+  squarefish: [
+    { text: 'SquareFish', bold: true },
+    { text: ' started as an experimental pilot at ' },
+    { text: 'RED', bold: true },
+    {
+      text: ", aimed at a younger audience and built on an ad-based revenue model. While it didn't reach its commercial goals, it became a valuable learning ground.",
+    },
+  ],
+}
+
 const CASE_CARD_DRAWER_DELAY_MS = 1500
 const MOBILE_DRAWER_BLACK_ICON_KEYS = new Set(['graptap', 'boss-ai', 'campaign-brief'])
 
@@ -2055,16 +2103,6 @@ function DesignSprintsCaseStudyPage({ onBack, onOpenRed }) {
                 This allowed our clients to validate market fit and solve user pain points before writing a
                 single line of code.
               </p>
-
-              <a
-                href="https://www.red-id.com"
-                target="_blank"
-                rel="noreferrer"
-                className="header-cta--case-studies header-cta--ghost mt-3 inline-flex h-12 w-fit !bg-black/5 !px-[22px] !py-[14px] !text-[14px] !text-black/70 hover:!bg-white"
-              >
-                <img src={rocketSvg} alt="" aria-hidden="true" className="header-cta__icon" />
-                www.red-id.com
-              </a>
             </div>
           </div>
         </section>
@@ -5555,7 +5593,7 @@ function App() {
     const isDrawerTriggerVisible = !supportsHover && isTouchActiveCard
     const isDrawerClosing = supportsHover && closingDrawerCaseKey === project.key
     const isDrawerVisible = isDrawerOpen || isDrawerClosing
-    const drawerCopy = CASE_CARD_DRAWER_COPY[project.key]
+    const drawerCopy = supportsHover ? CASE_CARD_DRAWER_COPY[project.key] : CASE_CARD_DRAWER_MOBILE_INTRO[project.key]
     const isMobileDrawerBlackIcon = MOBILE_DRAWER_BLACK_ICON_KEYS.has(project.key)
     return (
     <article
@@ -5838,10 +5876,19 @@ function App() {
           <div className="case-thumb__hover-drawer-clip">
             <div className={`case-thumb__hover-drawer ${isDrawerOpen ? 'case-thumb__hover-drawer--open' : ''}`}>
               <div className={`case-thumb__hover-drawer-row ${supportsHover ? '' : 'case-thumb__hover-drawer-row--mobile'}`}>
-                <p className="case-thumb__hover-drawer-text">
+                <p
+                  className={`case-thumb__hover-drawer-text${
+                    supportsHover ? '' : ' case-thumb__hover-drawer-text--mobile'
+                  }`}
+                >
                   {drawerCopy.map((segment, segmentIndex) =>
                     segment.bold ? (
-                      <strong key={segmentIndex} className="font-semibold text-black/70">
+                      <strong
+                        key={segmentIndex}
+                        className={
+                          supportsHover ? 'font-semibold text-black/70' : 'font-bold text-black/70'
+                        }
+                      >
                         {segment.text}
                       </strong>
                     ) : (
