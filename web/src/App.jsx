@@ -77,6 +77,7 @@ import rocketSvg from './assets/rocket.svg'
 import pointerSvg from './assets/pointer.svg'
 import wowShapeSvg from './assets/wow-shape.svg'
 import bubbleSvg from './assets/_bubble.svg'
+import textDrawerIcon from './assets/text-drawer-2.svg'
 import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
 import chevronDownIcon from './assets/chevron-down.svg'
@@ -224,6 +225,49 @@ const projectCards = [
     section: 'red',
   },
 ]
+
+const CASE_CARD_DRAWER_COPY = {
+  'creators-spons': [
+    { text: 'The ' },
+    { text: 'StreamElements', bold: true },
+    {
+      text: ' Sponsorship program is built on a creators first approach - our tools are free, and we only earn when our creators do. The program bridges the gap between brands and creators looking for a reliable way to earn from their streams.',
+    },
+  ],
+  graptap: [
+    { text: 'GrabTap', bold: true },
+    {
+      text: ' is a Play-to-Earn platform that turns mobile gaming into rewards and directly engages communities by supporting their favorite creators, while giving users a clear and frictionless journey across offers, missions, and rewards.',
+    },
+  ],
+  'boss-ai': [
+    { text: 'BOSS', bold: true },
+    {
+      text: ' is a robust engine that manages creator campaigns at scale and is now evolving into an intuitive self-service AI-powered platform that simplifies configuration, automates outreach, and helps teams act faster with better confidence.',
+    },
+  ],
+  'campaign-brief': [
+    {
+      text: 'We built a dynamic brief system that auto-populates core specs while allowing CMs to add custom content with clarity and speed, while keeping the framework flexible enough to adapt to each campaign’s unique needs.',
+    },
+  ],
+  'design-sprints': [
+    { text: 'In 2018, we shifted ' },
+    { text: 'RED', bold: true },
+    {
+      text: ' toward Design Sprints to test big ideas quickly and create immediate alignment for stakeholders, turning complex business questions into fast high-fidelity prototypes before development begins.',
+    },
+  ],
+  squarefish: [
+    { text: 'SquareFish', bold: true },
+    {
+      text: ' started as an experimental pilot at RED, helping us craft simple engaging game UI and bridge creativity with product outcomes, while sharpening how we design playful experiences that still support measurable product goals.',
+    },
+  ],
+}
+
+const CASE_CARD_DRAWER_DELAY_MS = 1500
+const MOBILE_DRAWER_BLACK_ICON_KEYS = new Set(['graptap', 'boss-ai', 'campaign-brief'])
 
 const beyondLines = [
   'I have an identical twin brother.',
@@ -5092,7 +5136,12 @@ function App() {
   const [introMoreContentHeight, setIntroMoreContentHeight] = useState(0)
   const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
+  const [hoverDrawerCaseKey, setHoverDrawerCaseKey] = useState(null)
+  const [mobileDrawerCaseKey, setMobileDrawerCaseKey] = useState(null)
+  const [closingDrawerCaseKey, setClosingDrawerCaseKey] = useState(null)
   const caseItemRefs = useRef([])
+  const hoverDrawerTimerRef = useRef(null)
+  const closingDrawerTimerRef = useRef(null)
   const caseTouchRef = useRef({ x: 0, y: 0, moved: false })
   const suppressCaseClickUntilRef = useRef(0)
   const homeScrollYBeforeCaseRef = useRef(0)
@@ -5272,6 +5321,30 @@ function App() {
   }, [isIntroTopLayout, isIntroExpanded])
 
   useEffect(() => {
+    return () => {
+      if (hoverDrawerTimerRef.current) {
+        window.clearTimeout(hoverDrawerTimerRef.current)
+      }
+      if (closingDrawerTimerRef.current) {
+        window.clearTimeout(closingDrawerTimerRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (supportsHover) {
+      setMobileDrawerCaseKey(null)
+      return
+    }
+    setMobileDrawerCaseKey((currentKey) => {
+      if (!currentKey) return currentKey
+      const currentIndex = projectCards.findIndex((project) => project.key === currentKey)
+      if (currentIndex < 0) return null
+      return activeCaseIndexes.includes(currentIndex) ? currentKey : null
+    })
+  }, [supportsHover, activeCaseIndexes])
+
+  useEffect(() => {
     if (typeof window === 'undefined') return undefined
 
     const syncFromLocation = () => {
@@ -5282,6 +5355,22 @@ function App() {
     window.addEventListener('popstate', syncFromLocation)
     return () => window.removeEventListener('popstate', syncFromLocation)
   }, [])
+
+  useEffect(() => {
+    if (activeCaseStudy !== null) {
+      if (hoverDrawerTimerRef.current) {
+        window.clearTimeout(hoverDrawerTimerRef.current)
+        hoverDrawerTimerRef.current = null
+      }
+      if (closingDrawerTimerRef.current) {
+        window.clearTimeout(closingDrawerTimerRef.current)
+        closingDrawerTimerRef.current = null
+      }
+      setHoverDrawerCaseKey(null)
+      setClosingDrawerCaseKey(null)
+      setMobileDrawerCaseKey(null)
+    }
+  }, [activeCaseStudy])
 
   const goHome = () => {
     const shouldRestoreMobileScroll =
@@ -5403,6 +5492,47 @@ function App() {
     }
     openCaseStudy(projectKey)
   }
+  const handleCaseCardMouseEnter = (projectKey) => {
+    if (!supportsHover || !interactiveCaseStudyKeys.has(projectKey)) return
+    if (closingDrawerTimerRef.current) {
+      window.clearTimeout(closingDrawerTimerRef.current)
+      closingDrawerTimerRef.current = null
+    }
+    setClosingDrawerCaseKey((current) => (current === projectKey ? null : current))
+    if (hoverDrawerTimerRef.current) {
+      window.clearTimeout(hoverDrawerTimerRef.current)
+      hoverDrawerTimerRef.current = null
+    }
+    hoverDrawerTimerRef.current = window.setTimeout(() => {
+      setHoverDrawerCaseKey(projectKey)
+      hoverDrawerTimerRef.current = null
+    }, CASE_CARD_DRAWER_DELAY_MS)
+  }
+  const handleCaseCardMouseLeave = (projectKey) => {
+    if (!interactiveCaseStudyKeys.has(projectKey)) return
+    if (hoverDrawerTimerRef.current) {
+      window.clearTimeout(hoverDrawerTimerRef.current)
+      hoverDrawerTimerRef.current = null
+    }
+    setHoverDrawerCaseKey((current) => {
+      if (current !== projectKey) return current
+      if (closingDrawerTimerRef.current) {
+        window.clearTimeout(closingDrawerTimerRef.current)
+      }
+      setClosingDrawerCaseKey(projectKey)
+      closingDrawerTimerRef.current = window.setTimeout(() => {
+        setClosingDrawerCaseKey((closingKey) => (closingKey === projectKey ? null : closingKey))
+        closingDrawerTimerRef.current = null
+      }, 280)
+      return null
+    })
+  }
+  const handleMobileDrawerTriggerClick = (event, projectKey, isTouchActiveCard) => {
+    event.preventDefault()
+    event.stopPropagation()
+    if (supportsHover || !isTouchActiveCard) return
+    setMobileDrawerCaseKey((current) => (current === projectKey ? null : projectKey))
+  }
   const openDesignSprintsFromRed = () => {
     setIsRedModalOpen(false)
     openCaseStudy('design-sprints')
@@ -5419,6 +5549,14 @@ function App() {
 
   const renderCaseStudyCard = (project, index) => {
     const isTouchActiveCard = !supportsHover && activeCaseIndexes.includes(index)
+    const isDesktopDrawerOpen = supportsHover && hoverDrawerCaseKey === project.key
+    const isMobileDrawerOpen = !supportsHover && mobileDrawerCaseKey === project.key && isTouchActiveCard
+    const isDrawerOpen = isDesktopDrawerOpen || isMobileDrawerOpen
+    const isDrawerTriggerVisible = !supportsHover && isTouchActiveCard
+    const isDrawerClosing = supportsHover && closingDrawerCaseKey === project.key
+    const isDrawerVisible = isDrawerOpen || isDrawerClosing
+    const drawerCopy = CASE_CARD_DRAWER_COPY[project.key]
+    const isMobileDrawerBlackIcon = MOBILE_DRAWER_BLACK_ICON_KEYS.has(project.key)
     return (
     <article
       key={project.key}
@@ -5441,6 +5579,8 @@ function App() {
           ? (event) => handleCaseStudyTouchEnd(event, project.key)
           : undefined
       }
+      onMouseEnter={() => handleCaseCardMouseEnter(project.key)}
+      onMouseLeave={() => handleCaseCardMouseLeave(project.key)}
       onKeyDown={
         interactiveCaseStudyKeys.has(project.key)
           ? (event) => {
@@ -5484,7 +5624,7 @@ function App() {
                   : project.brand === 'squarefish'
                     ? 'case-thumb--squarefish'
                     : 'case-thumb--stream'
-        }`}
+        } ${isDrawerVisible ? 'case-thumb--drawer-open' : ''}`}
       >
         <div className="case-thumb__surface">
           {project.key === 'creators-spons' ? (
@@ -5664,6 +5804,58 @@ function App() {
           )}
         </div>
         <span className="case-thumb__tag">{project.tag}</span>
+        {isDrawerTriggerVisible ? (
+          <button
+            type="button"
+            className={`case-thumb__mobile-drawer-trigger ${
+              isMobileDrawerBlackIcon ? 'case-thumb__mobile-drawer-trigger--black' : ''
+            }`}
+            onTouchStart={(event) => {
+              event.stopPropagation()
+            }}
+            onTouchEnd={(event) => {
+              event.preventDefault()
+              event.stopPropagation()
+              handleMobileDrawerTriggerClick(event, project.key, isTouchActiveCard)
+            }}
+            onClick={(event) => handleMobileDrawerTriggerClick(event, project.key, isTouchActiveCard)}
+            aria-label="Show case preview text"
+            aria-pressed={isMobileDrawerOpen ? 'true' : 'false'}
+          >
+            <img
+              src={textDrawerIcon}
+              alt=""
+              aria-hidden="true"
+              className={`case-thumb__mobile-drawer-trigger-icon ${
+                isMobileDrawerBlackIcon
+                  ? 'case-thumb__mobile-drawer-trigger-icon--black'
+                  : 'case-thumb__mobile-drawer-trigger-icon--white'
+              }`}
+            />
+          </button>
+        ) : null}
+        {drawerCopy ? (
+          <div className="case-thumb__hover-drawer-clip">
+            <div className={`case-thumb__hover-drawer ${isDrawerOpen ? 'case-thumb__hover-drawer--open' : ''}`}>
+              <div className={`case-thumb__hover-drawer-row ${supportsHover ? '' : 'case-thumb__hover-drawer-row--mobile'}`}>
+                <p className="case-thumb__hover-drawer-text">
+                  {drawerCopy.map((segment, segmentIndex) =>
+                    segment.bold ? (
+                      <strong key={segmentIndex} className="font-semibold text-black/70">
+                        {segment.text}
+                      </strong>
+                    ) : (
+                      <span key={segmentIndex}>{segment.text}</span>
+                    ),
+                  )}
+                </p>
+                {supportsHover ? (
+                  <img src={linkedInIcon} alt="" aria-hidden="true" className="case-thumb__hover-drawer-arrow" />
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
       <p
         className={`mt-2 ml-[40px] text-black/40 transition-colors duration-[160ms] ease-out group-hover:text-black/90 ${
