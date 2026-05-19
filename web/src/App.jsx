@@ -295,13 +295,15 @@ const campaignBriefHoverIcons = [
 const GMAIL_COMPOSE_URL =
   'https://mail.google.com/mail/?view=cm&fs=1&to=askkatzy@gmail.com&su=Let%27s%20chat'
 
+const PERSONAL_LINKEDIN_URL = 'https://www.linkedin.com/in/askkatzy/'
+
 const headerCtas = [
   {
     key: 'linkedin',
     label: 'LinkedIn',
     icon: linkedInIcon,
     width: '142px',
-    href: 'https://www.linkedin.com/in/eyalk65/',
+    href: PERSONAL_LINKEDIN_URL,
   },
   {
     key: 'lets-chat',
@@ -1001,7 +1003,7 @@ function BioPage({ onBack }) {
               </span>
             </a>
             <a
-              href="https://www.linkedin.com/in/eyalk65/"
+              href={PERSONAL_LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="bio-download-cta bio-intro-chat-cta group inline-flex h-12 w-12 items-center justify-center rounded-full"
