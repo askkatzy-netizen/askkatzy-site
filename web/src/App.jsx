@@ -1468,7 +1468,7 @@ function BossAiCaseStudyPage({ onBack }) {
               <div className="mb-4 flex flex-col gap-2">
                 <p className="text-[16px] leading-[1.4] font-medium text-black/90">Figma prototype</p>
               </div>
-              <div className="boss-case-image-shell boss-case-image-shell--no-shadow">
+              <div className="boss-case-image-shell boss-case-image-shell--no-shadow border border-black/30">
                 <video
                   src={bossAiScreenRecording}
                   className="boss-case-image block h-auto w-full"
