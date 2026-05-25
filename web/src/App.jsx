@@ -97,6 +97,7 @@ import boss02MobileImage from './assets/boss-02-mobile.png'
 import boss03MobileImage from './assets/boss-03-mobile.png'
 import boss04MobileImage from './assets/boss-04-mobile.png'
 import boss05MobileImage from './assets/boss-05-mobile.png'
+import bossAiScreenRecording from './assets/BOSS AI Screen Recording.mov'
 import sponsListCard1Image from './assets/spons-list-card-1.png'
 import sponsListCard2Image from './assets/spons-list-card-2.png'
 import sponsListCard3Image from './assets/spons-list-card-3.png'
@@ -1391,10 +1392,6 @@ function BossAiCaseStudyPage({ onBack }) {
                 now leverages AI to identify target audiences, automate creator outreach, streamline
                 content approvals, and provide data-backed performance predictions.
               </p>
-              <p>
-                As this project is in active development, details are limited - stay tuned for the full
-                release.
-              </p>
 
               <div className="mt-1 flex w-full flex-col gap-3">
                 <p className="text-[12px] leading-[1.4] text-black/70">Design guidelines</p>
@@ -1436,7 +1433,7 @@ function BossAiCaseStudyPage({ onBack }) {
           </div>
 
           <div className="flex flex-col gap-10 max-[700px]:gap-6">
-            {bossCaseSections.map((section, index) => (
+            {bossCaseSections.map((section, sectionIndex) => (
               <section key={section.key} className="boss-case-content-section">
                 <div className="mb-4 flex flex-col gap-2">
                   <p className="text-[16px] leading-[1.4] font-medium text-black/90">
@@ -1447,11 +1444,7 @@ function BossAiCaseStudyPage({ onBack }) {
                   {section.images.map((src, imageIndex) => (
                     <div
                       key={`${section.key}-${imageIndex}`}
-                      className={`boss-case-image-shell ${
-                        index === bossCaseSections.length - 1 && imageIndex === section.images.length - 1
-                          ? 'boss-case-image-shell--no-shadow'
-                          : ''
-                      }`}
+                      className="boss-case-image-shell"
                     >
                       <picture>
                         <source
@@ -1460,7 +1453,7 @@ function BossAiCaseStudyPage({ onBack }) {
                         />
                         <img
                           src={src}
-                          alt={`BOSS.AI product flow section ${index + 1}, image ${imageIndex + 1}`}
+                          alt={`BOSS.AI product flow section ${sectionIndex + 1}, image ${imageIndex + 1}`}
                           className="boss-case-image block h-auto w-full"
                           loading="lazy"
                         />
@@ -1470,11 +1463,23 @@ function BossAiCaseStudyPage({ onBack }) {
                 </div>
               </section>
             ))}
-          </div>
 
-          <p className="mt-10 text-center text-[16px] leading-[1.4] text-black/70 max-[700px]:mt-6">
-            Details limited - work in progress.
-          </p>
+            <section className="boss-case-content-section">
+              <div className="mb-4 flex flex-col gap-2">
+                <p className="text-[16px] leading-[1.4] font-medium text-black/90">Figma prototype</p>
+              </div>
+              <div className="boss-case-image-shell boss-case-image-shell--no-shadow">
+                <video
+                  src={bossAiScreenRecording}
+                  className="boss-case-image block h-auto w-full"
+                  controls
+                  playsInline
+                  preload="metadata"
+                  aria-label="BOSS.AI Figma prototype screen recording"
+                />
+              </div>
+            </section>
+          </div>
         </section>
 
         <div className="mt-8 mb-4">
