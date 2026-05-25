@@ -1209,6 +1209,7 @@ function BioPage({ onBack }) {
 
 function BossAiCaseStudyPage({ onBack }) {
   const topHomeButtonRef = useRef(null)
+  const bossPrototypeVideoRef = useRef(null)
   const lastScrollYRef = useRef(0)
   const upScrollDistanceRef = useRef(0)
   const downScrollDistanceRef = useRef(0)
@@ -1316,6 +1317,29 @@ function BossAiCaseStudyPage({ onBack }) {
       clearIdleHideTimer()
     }
   }, [isTopHomeInView])
+
+  useEffect(() => {
+    const video = bossPrototypeVideoRef.current
+    if (!video) return undefined
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const playPromise = video.play()
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(() => {})
+          }
+        } else {
+          video.pause()
+        }
+      },
+      { root: null, threshold: 0.35 },
+    )
+
+    observer.observe(video)
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <main
@@ -1470,9 +1494,12 @@ function BossAiCaseStudyPage({ onBack }) {
               </div>
               <div className="boss-case-image-shell boss-case-image-shell--no-shadow border border-black/30">
                 <video
+                  ref={bossPrototypeVideoRef}
                   src={bossAiScreenRecording}
                   className="boss-case-image block h-auto w-full"
                   controls
+                  muted
+                  loop
                   playsInline
                   preload="metadata"
                   aria-label="BOSS.AI Figma prototype screen recording"
