@@ -1,21 +1,8 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import streamElementsLogo from './assets/StreamElementsLogo.svg'
-import graptapLogoDefault from './assets/graptap-logo-default.svg'
-import graptapLogoHover from './assets/graptap-logo-hover.svg'
-import graptapBg from './assets/graptap-bg.svg'
-import bossAiCog from './assets/CaseStudy-Boss-cog-1.svg'
-import bossAiCog2 from './assets/CaseStudy-Boss-cog-2.svg'
-import brief1StarIcon from './assets/brief1-star.svg'
-import brief4JoinInnerIcon from './assets/brief4-join_inner.svg'
-import brief5PreviewIcon from './assets/brief5-preview.svg'
-import brief6TimerIcon from './assets/brief6-timer.svg'
-import brief12VideoLibraryIcon from './assets/brief12video_library.svg'
-import brief13BoltIcon from './assets/brief13-bolt.svg'
-import { DesignSprintsWordmark } from './DesignSprintsWordmark.jsx'
+import { AnimatedStatValue } from './AnimatedStatValue.jsx'
 import { HumanDesignBanner } from './HumanDesignBanner.jsx'
-import squareFishDefault from './assets/Piranha_default.png'
-import squareFishHover from './assets/Piranha_hover.png'
+import { PickMeCaseStudyPage } from './PickMeCaseStudyPage.jsx'
 import squareFishLogo from './assets/SF_Logo.png'
 import sfRocksImage from './assets/SF-rocks.png'
 import sfPiranhaDefault from './assets/_SF-Piranha_default.png'
@@ -76,7 +63,17 @@ import tripletsSvg from './assets/triplets.svg'
 import rocketSvg from './assets/rocket.svg'
 import pointerSvg from './assets/pointer.svg'
 import wowShapeSvg from './assets/wow-shape.svg'
-import bubbleSvg from './assets/_bubble.svg'
+import {
+  MANAGED_CASE_STUDIES,
+  hydrateCatalogFromPersistedOverrides,
+  isCaseStudyVisibleOnHomepage,
+  getManagedCaseStudyAssets,
+  getManagedCaseStudyTheme,
+  getPickMeDisplayTitle,
+} from './thumbDesigner/caseStudiesCatalog.js'
+import { CaseThumbVisual } from './thumbDesigner/ThumbDesignerPreview.jsx'
+import { BRAND_OPTIONS, buildColorCss, getTemplateById } from './thumbDesigner/thumbDesignerSchema.js'
+import { useCaseStudyCatalogRevision } from './thumbDesigner/useCaseStudyCatalogRevision.js'
 import textDrawerIcon from './assets/text-drawer-2.svg'
 import ramsterAvatar from './assets/ramster-avatar.png'
 import luluAvatar from './assets/lulu-avatar.png'
@@ -182,51 +179,6 @@ const bossCaseSections = [
   },
 ]
 
-const projectCards = [
-  {
-    key: 'creators-spons',
-    title: 'Sponsorships',
-    tag: 'Helping 1M+ creators win',
-    brand: 'stream',
-    section: 'stream-elements',
-  },
-  {
-    key: 'graptap',
-    title: 'GrabTap',
-    tag: 'Play-to-earn app',
-    brand: 'graptap',
-    section: 'stream-elements',
-  },
-  {
-    key: 'boss-ai',
-    title: 'BOSS.AI',
-    tag: 'AI Campaign Engine',
-    brand: 'boss',
-    section: 'stream-elements',
-  },
-  {
-    key: 'campaign-brief',
-    title: 'Campaign brief',
-    tag: 'Brief automation',
-    brand: 'stream',
-    section: 'stream-elements',
-  },
-  {
-    key: 'design-sprints',
-    title: 'Design Sprints prototyping',
-    tag: 'Rapid prototyping',
-    brand: 'red',
-    section: 'red',
-  },
-  {
-    key: 'squarefish',
-    title: 'SquareFish',
-    tag: 'Mobile game',
-    brand: 'squarefish',
-    section: 'red',
-  },
-]
-
 /** First hero intro paragraph from each case study page (hover + mobile drawer). */
 const CASE_CARD_DRAWER_INTRO = {
   'creators-spons': [
@@ -273,6 +225,11 @@ const CASE_CARD_DRAWER_INTRO = {
       text: ", aimed at a younger audience and built on an ad-based revenue model. While it didn't reach its commercial goals, it became a valuable learning ground.",
     },
   ],
+  'pickme-eyal': [
+    {
+      text: 'When I suddenly found myself job hunting, I discovered that ranking companies is way more fun than applying to them.',
+    },
+  ],
 }
 
 const CASE_CARD_DRAWER_DELAY_MS = 1500
@@ -282,15 +239,6 @@ const MOBILE_DRAWER_BLACK_ICON_KEYS = new Set(['graptap', 'boss-ai', 'campaign-b
 
 const beyondLines = [
   'I have an identical twin brother.',
-]
-
-const campaignBriefHoverIcons = [
-  brief1StarIcon,
-  brief4JoinInnerIcon,
-  brief5PreviewIcon,
-  brief6TimerIcon,
-  brief12VideoLibraryIcon,
-  brief13BoltIcon,
 ]
 
 const GMAIL_COMPOSE_URL =
@@ -379,6 +327,7 @@ const CASE_STUDY_PATHS = {
   'campaign-brief': '/case-studies/briefs',
   'design-sprints': '/case-studies/design-sprints',
   squarefish: '/case-studies/squarefish',
+  'pickme-eyal': '/case-studies/pickme',
   bio: '/bio',
 }
 
@@ -439,51 +388,6 @@ const getCaseStudyFromPathname = (pathname) => {
 
   const suffixMatch = Object.entries(CASE_STUDY_BY_PATH).find(([path]) => normalized.endsWith(path))
   return suffixMatch?.[1] ?? null
-}
-
-function AnimatedStatValue({ value, duration = 560, delay = 0 }) {
-  const firstDigitIndex = value.search(/\d/)
-  const lastDigitIndex = value.search(/\d(?!.*\d)/)
-  const hasNumber = firstDigitIndex !== -1 && lastDigitIndex !== -1
-  const prefix = hasNumber ? value.slice(0, firstDigitIndex) : ''
-  const numericPart = hasNumber ? value.slice(firstDigitIndex, lastDigitIndex + 1) : ''
-  const suffix = hasNumber ? value.slice(lastDigitIndex + 1) : ''
-  const targetValue = hasNumber ? Number(numericPart.replace(/[^\d.]/g, '')) : 0
-  const [currentValue, setCurrentValue] = useState(hasNumber ? 0 : value)
-
-  useEffect(() => {
-    if (!hasNumber || Number.isNaN(targetValue)) {
-      setCurrentValue(value)
-      return undefined
-    }
-
-    let animationFrameId = null
-    let startTimestamp = null
-    const timeoutId = window.setTimeout(() => {
-      const animate = (timestamp) => {
-        if (startTimestamp == null) startTimestamp = timestamp
-        const elapsed = timestamp - startTimestamp
-        const progress = Math.min(elapsed / duration, 1)
-        setCurrentValue(Math.round(targetValue * progress))
-
-        if (progress < 1) {
-          animationFrameId = window.requestAnimationFrame(animate)
-        }
-      }
-
-      animationFrameId = window.requestAnimationFrame(animate)
-    }, delay)
-
-    return () => {
-      window.clearTimeout(timeoutId)
-      if (animationFrameId != null) {
-        window.cancelAnimationFrame(animationFrameId)
-      }
-    }
-  }, [delay, duration, hasNumber, targetValue, value])
-
-  if (!hasNumber || Number.isNaN(targetValue)) return value
-  return `${prefix}${currentValue}${suffix}`
 }
 
 const sponsorshipOfferCards = [
@@ -751,7 +655,7 @@ function CaseStudyFooter({ variant = 'home' }) {
       }`}
     >
       <p className={`text-[14px] font-semibold italic ${isCaseStudy ? 'text-white/90' : 'text-black/70'}`}>
-        🌻 Let’s do nice things together...
+        🌻 Let’s build nice things together...
       </p>
       <a
         href={GMAIL_COMPOSE_URL}
@@ -2798,7 +2702,6 @@ function GrabTapCaseStudyPage({ onBack }) {
   const kpiItemRefs = useRef([])
   const [showFloatingHome, setShowFloatingHome] = useState(false)
   const [isTopHomeInView, setIsTopHomeInView] = useState(true)
-  const [isRedeemOnNewLine, setIsRedeemOnNewLine] = useState(false)
 
   useEffect(() => {
     const topButton = topHomeButtonRef.current
@@ -2898,26 +2801,42 @@ function GrabTapCaseStudyPage({ onBack }) {
     }
   }, [isTopHomeInView])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const rowEl = kpiRowRef.current
     if (!rowEl) return undefined
 
-    const updateRedeemLineState = () => {
-      const firstEl = kpiItemRefs.current[0]
-      const redeemEl = kpiItemRefs.current[2]
-      if (!firstEl || !redeemEl) return
-      setIsRedeemOnNewLine(redeemEl.offsetTop > firstEl.offsetTop)
+    let rafId = 0
+
+    const updateKpiDividers = () => {
+      const items = kpiItemRefs.current.filter(Boolean)
+      items.forEach((el, index) => {
+        if (index === 0) return
+        const divider = el.querySelector('[data-kpi-divider]')
+        if (!divider) return
+        const prevEl = items[index - 1]
+        const onNewRow =
+          el.getBoundingClientRect().top - prevEl.getBoundingClientRect().top > 2
+        divider.classList.toggle('hidden', onNewRow)
+      })
     }
 
-    updateRedeemLineState()
+    const scheduleUpdate = () => {
+      if (rafId) window.cancelAnimationFrame(rafId)
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0
+        updateKpiDividers()
+      })
+    }
 
-    const observer = new ResizeObserver(updateRedeemLineState)
+    updateKpiDividers()
+
+    const observer = new ResizeObserver(scheduleUpdate)
     observer.observe(rowEl)
-    window.addEventListener('resize', updateRedeemLineState)
+    kpiItemRefs.current.filter(Boolean).forEach((el) => observer.observe(el))
 
     return () => {
+      if (rafId) window.cancelAnimationFrame(rafId)
       observer.disconnect()
-      window.removeEventListener('resize', updateRedeemLineState)
     }
   }, [])
 
@@ -2999,20 +2918,19 @@ function GrabTapCaseStudyPage({ onBack }) {
                     ref={(el) => {
                       kpiItemRefs.current[index] = el
                     }}
-                    className="flex items-center"
+                    className="graptap-kpi-stat relative flex w-[120px] flex-col items-center text-center leading-[1.4] text-black"
                   >
                     {index > 0 ? (
                       <span
+                        data-kpi-divider
                         aria-hidden="true"
-                        className={`mr-3 h-[66px] w-px bg-black/70 ${index === 2 && isRedeemOnNewLine ? 'invisible' : ''}`}
+                        className="absolute top-1/2 -left-[13px] h-[66px] w-px -translate-y-1/2 bg-black/70"
                       />
                     ) : null}
-                    <div className="flex w-[120px] flex-col items-center text-center leading-[1.4] text-black">
-                      <p className="font-roboto-slab text-[32px] font-semibold leading-[1.4]">
-                        <AnimatedStatValue value={stat.value} delay={index * 120} />
-                      </p>
-                      <p className="text-[12px] leading-[1.4]">{stat.label}</p>
-                    </div>
+                    <p className="font-roboto-slab text-[32px] font-semibold leading-[1.4]">
+                      <AnimatedStatValue value={stat.value} delay={index * 120} />
+                    </p>
+                    <p className="text-[12px] leading-[1.4]">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -4988,173 +4906,23 @@ function IntroLeadTypewriter() {
   )
 }
 
-function SquareFishThumbBubbles() {
-  const maxActiveBubbles = 5
-  const [bubbles, setBubbles] = useState([])
-  const nextBubbleIdRef = useRef(0)
-  const visibilityRootRef = useRef(null)
+function App() {
+  const catalogRevision = useCaseStudyCatalogRevision()
 
   useEffect(() => {
-    const rootEl = visibilityRootRef.current
-    if (!rootEl) return undefined
-
-    const spawnTimeouts = new Set()
-    const removeTimeouts = new Set()
-    let isUnmounted = false
-    let isLoopRunning = false
-    let loopGeneration = 0
-    let inView = false
-    let tabVisible = typeof document === 'undefined' ? true : document.visibilityState === 'visible'
-
-    const clearSpawnTimers = () => {
-      spawnTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId))
-      spawnTimeouts.clear()
-    }
-
-    const clearRemoveTimers = () => {
-      removeTimeouts.forEach((timeoutId) => window.clearTimeout(timeoutId))
-      removeTimeouts.clear()
-    }
-
-    const stopBubbleLoop = (clearDom) => {
-      loopGeneration += 1
-      clearSpawnTimers()
-      clearRemoveTimers()
-      isLoopRunning = false
-      if (clearDom) {
-        setBubbles([])
-      }
-    }
-
-    const scheduleNextSpawn = () => {
-      if (isUnmounted || !isLoopRunning) return
-      const nextDelayMs = 760 + Math.random() * 1040
-      const timeoutId = window.setTimeout(() => {
-        spawnTimeouts.delete(timeoutId)
-        if (isUnmounted || !isLoopRunning) return
-        spawnBubble()
-        scheduleNextSpawn()
-      }, nextDelayMs)
-      spawnTimeouts.add(timeoutId)
-    }
-
-    const buildBubble = () => {
-      const sizeScale = 0.48 + Math.random() * 0.72
-      const t = (sizeScale - 0.48) / 0.72
-      const opacity = 0.22 + t * 0.48
-      const durationMs = Math.round(13800 - t * 8800)
-      const delayMs = Math.round(Math.random() * 420)
-      const rotateTo = `${(Math.random() * 40 - 20).toFixed(2)}deg`
-      const id = nextBubbleIdRef.current
-      nextBubbleIdRef.current += 1
-      return {
-        id,
-        size: sizeScale,
-        opacity,
-        durationMs,
-        delayMs,
-        rotateTo,
-        startX: `${10 + Math.random() * 80}%`,
-        driftX1: `${(Math.random() * 64 - 32).toFixed(1)}px`,
-        driftX2: `${(Math.random() * 80 - 40).toFixed(1)}px`,
-        driftX3: `${(Math.random() * 96 - 48).toFixed(1)}px`,
-      }
-    }
-
-    const spawnBubble = () => {
-      if (isUnmounted || !isLoopRunning) return
-
-      setBubbles((current) => {
-        if (current.length >= maxActiveBubbles) return current
-        const bubble = buildBubble()
-        const spawnGen = loopGeneration
-        queueMicrotask(() => {
-          if (isUnmounted || spawnGen !== loopGeneration) return
-          const removeTimeoutId = window.setTimeout(() => {
-            removeTimeouts.delete(removeTimeoutId)
-            if (isUnmounted || spawnGen !== loopGeneration) return
-            setBubbles((next) => next.filter((item) => item.id !== bubble.id))
-          }, bubble.durationMs + bubble.delayMs + 400)
-          removeTimeouts.add(removeTimeoutId)
-        })
-        return [...current, bubble]
-      })
-    }
-
-    const startBubbleLoop = () => {
-      if (isUnmounted || isLoopRunning) return
-      isLoopRunning = true
-      const startGen = loopGeneration
-      scheduleNextSpawn()
-      queueMicrotask(() => {
-        if (isUnmounted || !isLoopRunning || startGen !== loopGeneration) return
-        spawnBubble()
-      })
-    }
-
-    const refreshVisibilityGate = () => {
-      const shouldRun = inView && tabVisible && !isUnmounted
-      if (shouldRun) {
-        startBubbleLoop()
-      } else if (isLoopRunning) {
-        stopBubbleLoop(true)
-      }
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        inView = Boolean(entry?.isIntersecting)
-        refreshVisibilityGate()
-      },
-      { root: null, threshold: 0.08, rootMargin: '72px 0px 72px 0px' },
-    )
-
-    const onVisibilityChange = () => {
-      tabVisible = document.visibilityState === 'visible'
-      refreshVisibilityGate()
-    }
-
-    observer.observe(rootEl)
-    document.addEventListener('visibilitychange', onVisibilityChange)
-    refreshVisibilityGate()
-
-    return () => {
-      isUnmounted = true
-      observer.disconnect()
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-      clearSpawnTimers()
-      clearRemoveTimers()
-    }
-  }, [])
-
-  return (
-    <span ref={visibilityRootRef} className="case-thumb__squarefish-bubbles" aria-hidden="true">
-      {bubbles.map((bubble) => (
-        <span
-          key={bubble.id}
-          className="case-thumb__squarefish-bubble"
-          style={{
-            '--bubble-start-x': bubble.startX,
-            '--bubble-drift-x-1': bubble.driftX1,
-            '--bubble-drift-x-2': bubble.driftX2,
-            '--bubble-drift-x-3': bubble.driftX3,
-            '--bubble-rotate-end': bubble.rotateTo,
-            '--bubble-size': bubble.size,
-            '--bubble-opacity': bubble.opacity,
-            '--bubble-duration': `${bubble.durationMs}ms`,
-            '--bubble-delay': `${bubble.delayMs}ms`,
-          }}
-        >
-          <img src={bubbleSvg} alt="" />
-        </span>
-      ))}
-    </span>
+    hydrateCatalogFromPersistedOverrides()
+  }, [catalogRevision])
+  const streamElementsCards = MANAGED_CASE_STUDIES.filter(
+    (project) =>
+      project.section === 'stream-elements' && isCaseStudyVisibleOnHomepage(project),
   )
-}
-
-function App() {
-  const streamElementsCards = projectCards.filter((project) => project.section === 'stream-elements')
-  const redCards = projectCards.filter((project) => project.section === 'red')
+  const redCards = MANAGED_CASE_STUDIES.filter(
+    (project) => project.section === 'red' && isCaseStudyVisibleOnHomepage(project),
+  )
+  const selfInitiatedCards = MANAGED_CASE_STUDIES.filter(
+    (project) => project.section === 'self-initiated' && isCaseStudyVisibleOnHomepage(project),
+  )
+  const caseStudyHomeCards = [...streamElementsCards, ...redCards, ...selfInitiatedCards]
   const [isRedModalOpen, setIsRedModalOpen] = useState(false)
   const [activeCaseStudy, setActiveCaseStudy] = useState(() =>
     typeof window === 'undefined' ? null : getCaseStudyFromPathname(window.location.pathname),
@@ -5171,6 +4939,7 @@ function App() {
   const introMoreContentRef = useRef(null)
   const [activeCaseIndexes, setActiveCaseIndexes] = useState([0])
   const [hoverDrawerCaseKey, setHoverDrawerCaseKey] = useState(null)
+  const [hoveredCaseCardKey, setHoveredCaseCardKey] = useState(null)
   const [mobileDrawerCaseKey, setMobileDrawerCaseKey] = useState(null)
   const [closingDrawerCaseKey, setClosingDrawerCaseKey] = useState(null)
   const caseItemRefs = useRef([])
@@ -5191,6 +4960,8 @@ function App() {
             ? '#000000'
             : activeCaseStudy === 'squarefish'
               ? '#0093FF'
+              : activeCaseStudy === 'pickme-eyal'
+                ? '#B6448A'
             : '#ffffff'
   const effectiveThemeColor = isRedModalOpen ? '#A84CF6' : pageThemeColor
 
@@ -5372,11 +5143,11 @@ function App() {
     }
     setMobileDrawerCaseKey((currentKey) => {
       if (!currentKey) return currentKey
-      const currentIndex = projectCards.findIndex((project) => project.key === currentKey)
+      const currentIndex = caseStudyHomeCards.findIndex((project) => project.key === currentKey)
       if (currentIndex < 0) return null
       return activeCaseIndexes.includes(currentIndex) ? currentKey : null
     })
-  }, [supportsHover, activeCaseIndexes])
+  }, [supportsHover, activeCaseIndexes, caseStudyHomeCards])
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined
@@ -5416,6 +5187,7 @@ function App() {
       }
     }
     setActiveCaseStudy(null)
+    setHoveredCaseCardKey(null)
     if (shouldRestoreMobileScroll) {
       window.scrollTo({ top: homeScrollYBeforeCaseRef.current, behavior: 'auto' })
       return
@@ -5434,6 +5206,8 @@ function App() {
         window.history.pushState({}, '', targetPath)
       }
     }
+    setHoveredCaseCardKey(null)
+    setHoverDrawerCaseKey(null)
     setActiveCaseStudy(projectKey)
     window.scrollTo({ top: 0, behavior: 'auto' })
   }
@@ -5527,7 +5301,11 @@ function App() {
     openCaseStudy(projectKey)
   }
   const handleCaseCardMouseEnter = (projectKey) => {
-    if (!supportsHover || !interactiveCaseStudyKeys.has(projectKey)) return
+    if (supportsHover) {
+      setHoveredCaseCardKey(projectKey)
+    }
+    if (!interactiveCaseStudyKeys.has(projectKey)) return
+    if (!supportsHover) return
     if (closingDrawerTimerRef.current) {
       window.clearTimeout(closingDrawerTimerRef.current)
       closingDrawerTimerRef.current = null
@@ -5543,6 +5321,9 @@ function App() {
     }, CASE_CARD_DRAWER_DELAY_MS)
   }
   const handleCaseCardMouseLeave = (projectKey) => {
+    if (supportsHover) {
+      setHoveredCaseCardKey((current) => (current === projectKey ? null : current))
+    }
     if (!interactiveCaseStudyKeys.has(projectKey)) return
     if (hoverDrawerTimerRef.current) {
       window.clearTimeout(hoverDrawerTimerRef.current)
@@ -5579,6 +5360,7 @@ function App() {
     'campaign-brief',
     'design-sprints',
     'squarefish',
+    'pickme-eyal',
   ])
 
   const renderCaseStudyCard = (project, index) => {
@@ -5591,6 +5373,28 @@ function App() {
     const isDrawerVisible = isDrawerOpen || isDrawerClosing
     const drawerCopy = CASE_CARD_DRAWER_INTRO[project.key]
     const isMobileDrawerBlackIcon = MOBILE_DRAWER_BLACK_ICON_KEYS.has(project.key)
+    const template = getTemplateById(project.templateId)
+    const brandThumbClass =
+      BRAND_OPTIONS.find((brand) => brand.value === project.brand)?.thumbClass ??
+      'case-thumb--stream'
+    const assets = getManagedCaseStudyAssets(project)
+    const theme = getManagedCaseStudyTheme(project)
+    const haloFallback = template.defaultHoverHaloOpacity ?? 20
+    const themeStyle = {
+      '--case-hover-border': buildColorCss(
+        theme.hoverBorderColor,
+        theme.hoverBorderOpacity,
+        100,
+      ),
+      '--case-hover-halo': buildColorCss(
+        theme.hoverHaloColor,
+        theme.hoverHaloOpacity,
+        haloFallback,
+      ),
+      '--case-hover-surface': buildColorCss(theme.hoverTheme, theme.hoverThemeOpacity, 100),
+    }
+    const isCardHovered = supportsHover && hoveredCaseCardKey === project.key
+    const isThumbPreviewActive = isCardHovered || isTouchActiveCard
     return (
     <article
       key={project.key}
@@ -5640,204 +5444,23 @@ function App() {
                   ? 'Open Design Sprints case study page'
                   : project.key === 'squarefish'
                     ? 'Open SquareFish case study page'
+                    : project.key === 'pickme-eyal'
+                      ? 'Open PickMe case study page'
             : undefined
       }
     >
-      <div
-        className={`case-thumb ${
-          project.key === 'creators-spons'
-            ? 'case-thumb--sponsorships'
-            : project.key === 'campaign-brief'
-              ? 'case-thumb--campaign-brief'
-              : project.brand === 'graptap'
-              ? 'case-thumb--graptap'
-              : project.brand === 'boss'
-                ? 'case-thumb--boss'
-                : project.brand === 'red'
-                  ? 'case-thumb--red'
-                  : project.brand === 'squarefish'
-                    ? 'case-thumb--squarefish'
-                    : 'case-thumb--stream'
-        } ${isDrawerVisible ? 'case-thumb--drawer-open' : ''}`}
+      <CaseThumbVisual
+        template={template}
+        tag={project.tag}
+        assets={assets}
+        previewHover={isThumbPreviewActive}
+        drawerOpen={isDrawerOpen}
+        drawerVisible={isDrawerVisible}
+        brandThumbClass={brandThumbClass}
+        themeStyle={themeStyle}
+        showDrawer={false}
+        thumbClassName={isDrawerVisible ? 'case-thumb--drawer-open' : ''}
       >
-        <div className="case-thumb__surface">
-          {project.key === 'creators-spons' ? (
-            <>
-              <img
-                src={streamElementsLogo}
-                alt="StreamElements logo"
-                className="case-thumb__logo case-thumb__logo--spons-idle"
-              />
-              <div className="case-thumb__spons-hover" aria-hidden="true">
-                <img
-                  src={streamElementsLogo}
-                  alt=""
-                  className="case-thumb__logo case-thumb__logo--spons-hover-logo"
-                />
-              </div>
-            </>
-          ) : project.key === 'boss-ai' ? (
-            <>
-              <div className="case-thumb__boss-mark">
-                <div className="case-thumb__boss-cog" aria-hidden="true">
-                  <img src={bossAiCog} alt="" className="case-thumb__boss-cog-img" />
-                </div>
-                <div className="case-thumb__boss-cog case-thumb__boss-cog--secondary" aria-hidden="true">
-                  <img src={bossAiCog2} alt="" className="case-thumb__boss-cog-img case-thumb__boss-cog-img--secondary" />
-                </div>
-                <div className="case-thumb__boss-ring">
-                  <svg
-                    className="case-thumb__boss-ring-svg"
-                    viewBox="0 0 102 102"
-                    overflow="visible"
-                    shapeRendering="geometricPrecision"
-                    aria-hidden="true"
-                  >
-                    <path
-                      className="case-thumb__boss-ring-path"
-                      vectorEffect="nonScalingStroke"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M51 0C79.1665 0 102 22.8335 102 51C102 79.1665 79.1665 102 51 102C22.8335 102 0 79.1665 0 51C0 22.8335 22.8335 0 51 0Z"
-                    />
-                  </svg>
-                </div>
-                <div className="case-thumb__boss-sparkle" aria-hidden="true">
-                  <svg
-                    className="case-thumb__boss-sparkle-svg"
-                    width="42"
-                    height="42"
-                    viewBox="0 0 42 42"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      className="case-thumb__boss-sparkle-path"
-                      d="M19.28 4.92478C19.355 4.52334 19.568 4.16076 19.8822 3.89984C20.1964 3.63892 20.5919 3.49609 21.0003 3.49609C21.4087 3.49609 21.8042 3.63892 22.1184 3.89984C22.4325 4.16076 22.6456 4.52334 22.7205 4.92478L24.5598 14.6513C24.6904 15.3428 25.0265 15.9789 25.5241 16.4765C26.0217 16.9741 26.6578 17.3102 27.3493 17.4408L37.0758 19.28C37.4772 19.355 37.8398 19.568 38.1007 19.8822C38.3616 20.1964 38.5045 20.5919 38.5045 21.0003C38.5045 21.4087 38.3616 21.8042 38.1007 22.1184C37.8398 22.4325 37.4772 22.6456 37.0758 22.7205L27.3493 24.5598C26.6578 24.6904 26.0217 25.0265 25.5241 25.5241C25.0265 26.0217 24.6904 26.6578 24.5598 27.3493L22.7205 37.0758C22.6456 37.4772 22.4325 37.8398 22.1184 38.1007C21.8042 38.3616 21.4087 38.5045 21.0003 38.5045C20.5919 38.5045 20.1964 38.3616 19.8822 38.1007C19.568 37.8398 19.355 37.4772 19.28 37.0758L17.4408 27.3493C17.3102 26.6578 16.9741 26.0217 16.4765 25.5241C15.9789 25.0265 15.3428 24.6904 14.6513 24.5598L4.92478 22.7205C4.52334 22.6456 4.16076 22.4325 3.89984 22.1184C3.63892 21.8042 3.49609 21.4087 3.49609 21.0003C3.49609 20.5919 3.63892 20.1964 3.89984 19.8822C4.16076 19.568 4.52334 19.355 4.92478 19.28L14.6513 17.4408C15.3428 17.3102 15.9789 16.9741 16.4765 16.4765C16.9741 15.9789 17.3102 15.3428 17.4408 14.6513L19.28 4.92478Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </>
-          ) : project.key === 'campaign-brief' ? (
-            <>
-              <div className="case-thumb__campaign-brief-vector" aria-hidden="true">
-                {campaignBriefHoverIcons.map((iconSrc, index) => (
-                  <span key={iconSrc} className="case-thumb__campaign-brief-vector-item">
-                    <img
-                      src={iconSrc}
-                      alt=""
-                      className="case-thumb__campaign-brief-vector-img"
-                      style={{ transitionDelay: `${index * 55}ms` }}
-                    />
-                  </span>
-                ))}
-              </div>
-              <div className="case-thumb__campaign-brief-mark">
-                <div className="case-thumb__campaign-brief-ring">
-                  <svg
-                    className="case-thumb__campaign-brief-ring-svg"
-                    viewBox="0 0 102 102"
-                    overflow="visible"
-                    shapeRendering="geometricPrecision"
-                    aria-hidden="true"
-                  >
-                    <path
-                      className="case-thumb__campaign-brief-ring-path"
-                      vectorEffect="nonScalingStroke"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M51 0C79.1665 0 102 22.8335 102 51C102 79.1665 79.1665 102 51 102C22.8335 102 0 79.1665 0 51C0 22.8335 22.8335 0 51 0Z"
-                    />
-                  </svg>
-                </div>
-                <div className="case-thumb__campaign-brief-icon" aria-hidden="true">
-                  <span className="case-thumb__campaign-brief-icon-viewport">
-                    <svg
-                      className="case-thumb__campaign-brief-icon-svg case-thumb__campaign-brief-icon-svg--outgoing"
-                      viewBox="0 0 54 54"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M47.25 11.25H6.75M33.75 27H6.75M38.25 42.75H6.75"
-                      />
-                    </svg>
-                    <svg
-                      className="case-thumb__campaign-brief-icon-svg case-thumb__campaign-brief-icon-svg--incoming"
-                      viewBox="0 0 54 54"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M47.25 11.25H6.75M33.75 27H6.75M38.25 42.75H6.75"
-                      />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-            </>
-          ) : project.key === 'graptap' ? (
-            <>
-              <div className="case-thumb__graptap-deco" aria-hidden="true">
-                <img src={graptapBg} alt="" className="case-thumb__graptap-pattern-bg" />
-              </div>
-              <div className="case-thumb__graptap-mark">
-                <div className="case-thumb__graptap-ring">
-                  <svg
-                    className="case-thumb__graptap-ring-svg"
-                    viewBox="0 0 102 102"
-                    overflow="visible"
-                    shapeRendering="geometricPrecision"
-                    aria-hidden="true"
-                  >
-                    <path
-                      className="case-thumb__graptap-ring-path"
-                      vectorEffect="nonScalingStroke"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M51 0C79.1665 0 102 22.8335 102 51C102 79.1665 79.1665 102 51 102C22.8335 102 0 79.1665 0 51C0 22.8335 22.8335 0 51 0Z"
-                    />
-                  </svg>
-                </div>
-                <div className="case-thumb__graptap-glyph-idle">
-                  <img src={graptapLogoDefault} alt="" />
-                </div>
-                <div className="case-thumb__graptap-glyph-hover">
-                  <img src={graptapLogoHover} alt="" />
-                </div>
-              </div>
-            </>
-          ) : project.brand === 'squarefish' ? (
-            <>
-              <SquareFishThumbBubbles />
-              <img
-                src={squareFishDefault}
-                alt="SquareFish default art"
-                className="case-thumb__squarefish case-thumb__squarefish--default"
-              />
-              <img
-                src={squareFishHover}
-                alt=""
-                aria-hidden="true"
-                className="case-thumb__squarefish case-thumb__squarefish--hover"
-              />
-            </>
-          ) : project.key === 'design-sprints' ? (
-            <DesignSprintsWordmark isActive={isTouchActiveCard} />
-          ) : (
-            <img src={streamElementsLogo} alt="StreamElements logo" className="case-thumb__logo" />
-          )}
-        </div>
-        <span className="case-thumb__tag">{project.tag}</span>
         {isDrawerTriggerVisible ? (
           <button
             type="button"
@@ -5887,13 +5510,15 @@ function App() {
             </div>
           </div>
         ) : null}
-      </div>
+      </CaseThumbVisual>
       <p
         className={`mt-2 ml-[40px] text-black/40 transition-colors duration-[160ms] ease-out group-hover:text-black/90 ${
           isTouchActiveCard ? 'text-black/90' : ''
         }`}
       >
-        <span className="font-roboto-slab text-[16px] font-semibold leading-none">{project.title}</span>
+        <span className="font-roboto-slab text-[16px] font-semibold leading-none">
+          {project.templateId === 'pickme' ? getPickMeDisplayTitle(project) : project.title}
+        </span>
       </p>
     </article>
     )
@@ -5961,6 +5586,10 @@ function App() {
         />
       </>
     )
+  }
+
+  if (activeCaseStudy === 'pickme-eyal') {
+    return <PickMeCaseStudyPage onBack={goHome} catalogKey="pickme-eyal" />
   }
 
   if (activeCaseStudy === 'bio') {
@@ -6047,23 +5676,23 @@ function App() {
       <div className="mx-auto w-full max-w-[1128px] fade-up">
         <header ref={headerRef} className="header-sticky mb-7 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-[48px] w-[36px] items-center justify-center overflow-hidden">
-              <img
-                src={profileFace}
-                alt="Eyal Katz"
-                className="h-full w-full object-contain"
-              />
+              <div className="flex h-[48px] w-[36px] items-center justify-center overflow-hidden">
+                <img
+                  src={profileFace}
+                  alt="Eyal Katz"
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <p className="header-name-role leading-none tracking-[0.01em]">
+                <span className="text-[18px] font-semibold text-black/90">Eyal Katz</span>
+                <span className="header-role-separator text-[16px] font-normal text-black/70"> / </span>
+                <span className="header-role-label text-[16px] font-normal text-black/70">
+                  Product Designer
+                </span>
+              </p>
             </div>
-            <p className="header-name-role leading-none tracking-[0.01em]">
-              <span className="text-[18px] font-semibold text-black/90">Eyal Katz</span>
-              <span className="header-role-separator text-[16px] font-normal text-black/70"> / </span>
-              <span className="header-role-label text-[16px] font-normal text-black/70">
-                Product Designer
-              </span>
-            </p>
-          </div>
 
-          <div ref={headerCtaRowRef} className="header-cta-row flex items-center gap-2">
+            <div ref={headerCtaRowRef} className="header-cta-row flex items-center gap-2">
             {renderSeeFullBioCta('header-top-cta header-cta-hide-under-440', 'Full bio', false)}
             <a
               href={headerCtas[0].href}
@@ -6300,6 +5929,20 @@ function App() {
             <div className="case-studies-grid mt-8">
               {redCards.map((project, index) =>
                 renderCaseStudyCard(project, streamElementsCards.length + index),
+              )}
+            </div>
+
+            <div className="case-studies-divider mt-8" aria-hidden="true">
+              <div className="case-studies-divider__line" />
+              <p className="case-studies-divider__label">@ Self initiated</p>
+              <div className="case-studies-divider__line" />
+            </div>
+            <div className="case-studies-grid mt-8">
+              {selfInitiatedCards.map((project, index) =>
+                renderCaseStudyCard(
+                  project,
+                  streamElementsCards.length + redCards.length + index,
+                ),
               )}
             </div>
           </div>
