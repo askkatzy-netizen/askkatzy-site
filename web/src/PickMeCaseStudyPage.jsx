@@ -144,7 +144,7 @@ export function PickMeCaseStudyPage({ onBack, catalogKey = 'pickme-eyal' }) {
   const pickMeEntry = getManagedCaseStudyByKey(catalogKey)
   const pickMeName = getPickMeName(pickMeEntry)
   const pickMeTagline = pickMeEntry?.tag?.trim() || 'Jobs compete for you!'
-  const nameToken = `{${pickMeName}}`
+  const nameToken = pickMeName
   const pageTitle = formatPickMeTitle(pickMeName)
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
@@ -394,7 +394,7 @@ export function PickMeCaseStudyPage({ onBack, catalogKey = 'pickme-eyal' }) {
                 <div className="flex flex-col items-center gap-0.5 text-center leading-[1.4] text-black/90">
                   <div className="flex items-start justify-center gap-1 text-[20px] font-bold text-black/90">
                     <span>PickMe</span>
-                    <span>{nameToken}</span>
+                    <span>{'{name}'}</span>
                   </div>
                   <p className="text-[14px] italic text-black/90">{pickMeTagline}</p>
                 </div>

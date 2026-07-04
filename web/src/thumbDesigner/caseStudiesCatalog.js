@@ -16,17 +16,20 @@ function haloOpacityFallback(templateId) {
   return getTemplateById(templateId).defaultHoverHaloOpacity ?? 20
 }
 
-export const DEFAULT_PICKME_NAME = 'name'
+export const DEFAULT_PICKME_NAME = 'Eyal'
 
 export function formatPickMeTitle(name) {
   const trimmed = `${name ?? ''}`.trim()
   if (!trimmed) return 'PickMe'
-  return `PickMe {${trimmed}}`
+  return `PickMe ${trimmed}`
 }
 
 export function parsePickMeName(title) {
-  const match = /^PickMe\s*\{([^}]+)\}\s*$/i.exec(`${title ?? ''}`.trim())
-  return match ? match[1].trim() : null
+  const trimmed = `${title ?? ''}`.trim()
+  const braceMatch = /^PickMe\s*\{([^}]+)\}\s*$/i.exec(trimmed)
+  if (braceMatch) return braceMatch[1].trim()
+  const plainMatch = /^PickMe\s+(.+)$/i.exec(trimmed)
+  return plainMatch ? plainMatch[1].trim() : null
 }
 
 export function getPickMeName(entry) {
@@ -50,14 +53,15 @@ export function normalizePickMeFormFields(form) {
   }
 }
 
-function migrateLegacyPickMeEyal(entry) {
+function migrateLegacyPickMePlaceholder(entry) {
   if (entry?.templateId !== 'pickme') return false
-  if (entry.pickMeName === 'Eyal' || entry.title === 'PickMe {Eyal}') {
-    entry.pickMeName = 'name'
-    entry.title = 'PickMe {name}'
-    return true
-  }
-  return false
+  const name = getPickMeName(entry)
+  const needsEyal = name === 'name'
+  const needsPlainTitle = /\{[^}]+\}/.test(`${entry.title ?? ''}`)
+  if (!needsEyal && !needsPlainTitle) return false
+  entry.pickMeName = needsEyal ? DEFAULT_PICKME_NAME : name
+  entry.title = formatPickMeTitle(entry.pickMeName)
+  return true
 }
 
 function syncPickMeCatalogEntry(entry) {
@@ -289,8 +293,8 @@ export const MANAGED_CASE_STUDIES = [
   },
   {
     key: 'pickme-eyal',
-    title: 'PickMe {name}',
-    pickMeName: 'name',
+    title: 'PickMe Eyal',
+    pickMeName: 'Eyal',
     tag: 'Jobs compete for you!',
     brand: 'pickme',
     section: 'self-initiated',
@@ -527,8 +531,12 @@ export function hydrateCatalogFromPersistedOverrides() {
     const entry = getManagedCaseStudyByKey(key)
     if (!entry) {
       const created = { key, ...patch }
-      if (migrateLegacyPickMeEyal(created)) {
-        overrides[key] = { ...patch, pickMeName: 'name', title: 'PickMe {name}' }
+      if (migrateLegacyPickMePlaceholder(created)) {
+        overrides[key] = {
+          ...patch,
+          pickMeName: created.pickMeName,
+          title: created.title,
+        }
         overridesChanged = true
       } else {
         syncPickMeCatalogEntry(created)
@@ -538,8 +546,12 @@ export function hydrateCatalogFromPersistedOverrides() {
     }
 
     Object.assign(entry, patch)
-    if (migrateLegacyPickMeEyal(entry)) {
-      overrides[key] = { ...patch, pickMeName: 'name', title: 'PickMe {name}' }
+    if (migrateLegacyPickMePlaceholder(entry)) {
+      overrides[key] = {
+        ...patch,
+        pickMeName: entry.pickMeName,
+        title: entry.title,
+      }
       overridesChanged = true
     } else {
       syncPickMeCatalogEntry(entry)
@@ -554,7 +566,7 @@ export function hydrateCatalogFromPersistedOverrides() {
   if (purgeDiscardedCaseStudies()) catalogChanged = true
 
   MANAGED_CASE_STUDIES.forEach((entry) => {
-    if (!overrides[entry.key] && migrateLegacyPickMeEyal(entry)) {
+    if (!overrides[entry.key] && migrateLegacyPickMePlaceholder(entry)) {
       overridesChanged = true
       return
     }
