@@ -30,15 +30,14 @@ export function computeSpinWheelLogoFrame(input) {
     reduceEffects,
   } = input;
 
-  const isIdle = status === 'idle';
   const depth = computeSpinWheelDepth(index, count, offset);
   const angle = (2 * Math.PI * (index - offset)) / Math.max(1, count);
   const carouselX = Math.sin(angle) * wheelRadius;
   const linearX = (index - (count - 1) / 2) * logoStep;
-  const idleWiggle = isIdle
-    ? Math.sin(offset * 2.4 + index * 0.55) * SPIN_WHEEL_IDLE_WIGGLE_PX
-    : 0;
-  const baseX = isIdle ? linearX + idleWiggle : linearX * (1 - intensity) + carouselX * intensity;
+  const wiggleFade = Math.max(0, 1 - intensity / 0.14);
+  const idleWiggle =
+    Math.sin(offset * 2.4 + index * 0.55) * SPIN_WHEEL_IDLE_WIGGLE_PX * wiggleFade;
+  const baseX = linearX * (1 - intensity) + carouselX * intensity + idleWiggle;
 
   const spinSize = SPIN_WHEEL_LOGO_FAR + (SPIN_WHEEL_LOGO_MAX - SPIN_WHEEL_LOGO_FAR) * depth;
   const baseSize = SPIN_WHEEL_LOGO_BASE + (spinSize - SPIN_WHEEL_LOGO_BASE) * intensity;
@@ -47,48 +46,41 @@ export function computeSpinWheelLogoFrame(input) {
   const hideForWinnerReveal = status === 'stopped' && !isWinner;
 
   const x = hideForWinnerReveal ? baseX * 0.2 : baseX;
-  const size = isIdle
-    ? SPIN_WHEEL_LOGO_BASE
-    : isWinner
-      ? SPIN_WHEEL_LOGO_MAX
-      : hideForWinnerReveal
-        ? SPIN_WHEEL_LOGO_FAR
-        : baseSize;
+  const size = isWinner
+    ? SPIN_WHEEL_LOGO_MAX
+    : hideForWinnerReveal
+      ? SPIN_WHEEL_LOGO_FAR
+      : baseSize;
 
   let blur = 0;
 
   const opacityScale = depthToOpacityScale(depth);
-  const opacity = isIdle
-    ? 1
-    : hideForWinnerReveal
-      ? 0
-      : 0.6 + opacityScale * 0.4 * intensity + (1 - intensity) * 0.4;
+  const opacity = hideForWinnerReveal
+    ? 0
+    : 0.6 + opacityScale * 0.4 * intensity + (1 - intensity) * 0.4;
 
-  const depthLayer = Math.round(depth * 900);
-  const zIndex = isIdle
-    ? 100 + index
-    : hideForWinnerReveal
-      ? 2
-      : isWinner
-        ? 5000 + depthLayer
-        : 100 + depthLayer + index;
+  const z = (depth - 0.5) * 120;
+  const zIndex = hideForWinnerReveal
+    ? 2
+    : isWinner
+      ? 5000 + Math.floor(depth * 9990)
+      : 100 + Math.floor(depth * 9990) + index;
 
   return {
     x,
+    z,
     scale: size / SPIN_WHEEL_LOGO_BASE,
     opacity,
     blur,
     zIndex,
     isWinner,
     hideForWinnerReveal,
-    isIdle,
+    isIdle: intensity < 0.02,
   };
 }
 
 export function applySpinWheelLogoFrame(el, frame) {
-  el.style.width = `${SPIN_WHEEL_LOGO_BASE}px`;
-  el.style.height = `${SPIN_WHEEL_LOGO_BASE}px`;
-  el.style.transform = `translate(-50%, -50%) translateX(${frame.x}px) scale(${frame.scale})`;
+  el.style.transform = `translate(-50%, -50%) translate3d(${frame.x}px, 0, ${frame.z}px) scale(${frame.scale})`;
   el.style.opacity = String(frame.opacity);
   el.style.filter = frame.blur > 0.05 ? `blur(${frame.blur.toFixed(2)}px)` : 'none';
   el.style.zIndex = String(frame.zIndex);

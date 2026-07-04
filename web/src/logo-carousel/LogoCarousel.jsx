@@ -1,8 +1,7 @@
-import { Children, isValidElement, useCallback, useEffect, useRef } from 'react';
+import { Children, isValidElement, useEffect, useRef } from 'react';
 import {
   applySpinWheelLogoFrame,
   computeSpinWheelLogoFrame,
-  SPIN_WHEEL_LOGO_BASE,
 } from './spinWheelLogoFrame.js';
 import './logoCarousel.css';
 
@@ -21,39 +20,25 @@ export function LogoCarousel({
   const intensityRef = useRef(0);
   const rafRef = useRef(null);
   const lastTsRef = useRef(null);
+  const activeRef = useRef(active);
+  const wasActiveRef = useRef(false);
+  const wheelRadiusRef = useRef(wheelRadius);
+  const logoStepRef = useRef(logoStep);
 
   const items = Children.toArray(children).filter(isValidElement);
   const count = items.length;
 
-  const applyFrames = useCallback(() => {
-    if (count === 0) return;
+  useEffect(() => {
+    activeRef.current = active;
+    wheelRadiusRef.current = wheelRadius;
+    logoStepRef.current = logoStep;
 
-    const speed = active ? 1 : 0;
-    const intensity = intensityRef.current;
-    const status = intensity < 0.02 ? 'idle' : 'holding';
-    const reduceEffects =
-      typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
-
-    for (let index = 0; index < count; index++) {
-      const el = logoRefs.current.get(index);
-      if (!el) continue;
-      applySpinWheelLogoFrame(
-        el,
-        computeSpinWheelLogoFrame({
-          index,
-          count,
-          offset: offsetRef.current,
-          speed,
-          intensity,
-          status,
-          winnerIndex: null,
-          logoStep,
-          wheelRadius,
-          reduceEffects,
-        }),
-      );
+    if (active && !wasActiveRef.current) {
+      offsetRef.current = 0;
+      intensityRef.current = 0;
     }
-  }, [active, count, logoStep, wheelRadius]);
+    wasActiveRef.current = active;
+  }, [active, wheelRadius, logoStep]);
 
   useEffect(() => {
     if (count === 0) return;
@@ -62,19 +47,46 @@ export function LogoCarousel({
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    function applyFrames() {
+      const intensity = intensityRef.current;
+      const reduceEffects =
+        typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
+      for (let index = 0; index < count; index++) {
+        const el = logoRefs.current.get(index);
+        if (!el) continue;
+        applySpinWheelLogoFrame(
+          el,
+          computeSpinWheelLogoFrame({
+            index,
+            count,
+            offset: offsetRef.current,
+            speed: activeRef.current ? 1 : 0,
+            intensity,
+            status: 'holding',
+            winnerIndex: null,
+            logoStep: logoStepRef.current,
+            wheelRadius: wheelRadiusRef.current,
+            reduceEffects,
+          }),
+        );
+      }
+    }
+
     function frame(ts) {
       if (lastTsRef.current == null) lastTsRef.current = ts;
       const dt = Math.min(0.05, (ts - lastTsRef.current) / 1000);
       lastTsRef.current = ts;
 
-      const target = active ? 1 : 0;
+      const isActive = activeRef.current;
+      const target = isActive ? 1 : 0;
       const step = INTENSITY_RAMP * dt;
       intensityRef.current =
         intensityRef.current < target
           ? Math.min(target, intensityRef.current + step)
           : Math.max(target, intensityRef.current - step);
 
-      if (!reduced && (active || intensityRef.current > 0.02)) {
+      if (!reduced && (isActive || intensityRef.current > 0.001)) {
         offsetRef.current += IDLE_SPEED * dt;
       }
 
@@ -88,7 +100,7 @@ export function LogoCarousel({
       rafRef.current = null;
       lastTsRef.current = null;
     };
-  }, [active, applyFrames, count]);
+  }, [count]);
 
   if (count === 0) return null;
 
@@ -102,10 +114,6 @@ export function LogoCarousel({
             else logoRefs.current.delete(index);
           }}
           className="logo-carousel__item"
-          style={{
-            width: SPIN_WHEEL_LOGO_BASE,
-            height: SPIN_WHEEL_LOGO_BASE,
-          }}
         >
           {child}
         </div>

@@ -185,6 +185,14 @@ function GraptapThumbPreview({ bgSrc, logoSrc, dismissed }) {
   )
 }
 
+function preloadPickMeLogos(participants) {
+  for (const participant of participants) {
+    if (!participant?.logo) continue
+    const img = new Image()
+    img.src = participant.logo
+  }
+}
+
 function PickMeThumbPreview({ handSrc, carouselAssets, active, dismissed }) {
   const [randomParticipants, setRandomParticipants] = useState(() =>
     pickRandomPickMeParticipants(PICKME_CAROUSEL_COUNT),
@@ -195,13 +203,15 @@ function PickMeThumbPreview({ handSrc, carouselAssets, active, dismissed }) {
 
   useEffect(() => {
     if (active && !wasActiveRef.current) {
-      setRandomParticipants(pickRandomPickMeParticipants(PICKME_CAROUSEL_COUNT))
       setIsHandSurfacing(false)
       if (surfaceTimerRef.current) {
         window.clearTimeout(surfaceTimerRef.current)
         surfaceTimerRef.current = null
       }
     } else if (!active && wasActiveRef.current) {
+      const nextParticipants = pickRandomPickMeParticipants(PICKME_CAROUSEL_COUNT)
+      preloadPickMeLogos(nextParticipants)
+      setRandomParticipants(nextParticipants)
       setIsHandSurfacing(true)
       if (surfaceTimerRef.current) window.clearTimeout(surfaceTimerRef.current)
       surfaceTimerRef.current = window.setTimeout(() => {
@@ -244,7 +254,7 @@ function PickMeThumbPreview({ handSrc, carouselAssets, active, dismissed }) {
         >
           <LogoCarousel active={active} wheelRadius={78} logoStep={78}>
             {participants.map((participant, index) => (
-              <div key={participant.id ?? index} className="case-thumb__pickme-logo-badge">
+              <div key={`pickme-slot-${index}`} className="case-thumb__pickme-logo-badge">
                 <img
                   src={participant.logo}
                   alt=""
