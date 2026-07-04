@@ -144,7 +144,6 @@ export function PickMeCaseStudyPage({ onBack, catalogKey = 'pickme-eyal' }) {
   const pickMeEntry = getManagedCaseStudyByKey(catalogKey)
   const pickMeName = getPickMeName(pickMeEntry)
   const pickMeTagline = pickMeEntry?.tag?.trim() || 'Jobs compete for you!'
-  const nameToken = pickMeName
   const pageTitle = formatPickMeTitle(pickMeName)
   const topHomeButtonRef = useRef(null)
   const lastScrollYRef = useRef(0)
@@ -323,7 +322,7 @@ export function PickMeCaseStudyPage({ onBack, catalogKey = 'pickme-eyal' }) {
                 </p>
                 <p>
                   So I built <PickMeBrandText>PickMe</PickMeBrandText>
-                  {` ${nameToken} - an app where jobs ask me to pick them instead. At least in my browser.`}
+                  {' - an app where jobs ask me to pick them instead. At least in my browser.'}
                 </p>
                 <p>
                   I define what matters most to me, and <PickMeBrandText>PickMe</PickMeBrandText> ranks companies
