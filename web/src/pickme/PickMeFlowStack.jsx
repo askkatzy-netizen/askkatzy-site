@@ -26,10 +26,11 @@ export function PickMeFlowStack({ images, title }) {
       raf = 0
       const rect = shell.getBoundingClientRect()
       const vh = window.innerHeight
-      const start = vh * 0.88
-      const end = vh * 0.48
+      // Long range: starts before the stack enters view, finishes well after
+      const start = vh * 1.25
+      const end = vh * 0.12
       const linear = Math.min(1, Math.max(0, (start - rect.top) / (start - end)))
-      const progress = 1 - (1 - linear) ** 2.4
+      const progress = 1 - (1 - linear) ** 1.6
       stack.style.setProperty('--pm-scroll-progress', String(progress))
     }
 
