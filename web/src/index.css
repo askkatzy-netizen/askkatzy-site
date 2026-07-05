@@ -381,6 +381,72 @@ body {
   margin-inline: auto;
 }
 
+/* PickMe case study — fluid 3-screen row; tight by default, spreads on scroll */
+.pickme-flow-stack-shell {
+  container-type: inline-size;
+  width: min(100%, 724px);
+  margin-inline: auto;
+}
+
+.pickme-flow-stack {
+  --pm-progress: calc((100cqw - 343px) / 381px);
+  --pm-screen-w: calc(200px + 98px * var(--pm-progress));
+  --pm-screen-h: calc(434px + 212px * var(--pm-progress));
+  --pm-stack-h: calc(486.647px + 233.353px * var(--pm-progress));
+  --pm-overlap: calc(128.5px - 43.5px * var(--pm-progress));
+  --pm-radius: calc(16.222px + 7.778px * var(--pm-progress));
+  --pm-border: calc(0.936px + 0.064px * var(--pm-progress));
+  --pm-stagger-y: calc((var(--pm-stack-h) - var(--pm-screen-h)) / 2);
+  /* 0 = tight cluster, 1 = full spread (JS on scroll) */
+  --pm-scroll-progress: 0;
+  --pm-step-spread: calc(var(--pm-screen-w) - var(--pm-overlap));
+  --pm-step-tight: calc(var(--pm-step-spread) * 0.72);
+  --pm-step: calc(
+    var(--pm-step-tight) + (var(--pm-step-spread) - var(--pm-step-tight)) * var(--pm-scroll-progress)
+  );
+  --pm-spread-w: calc(var(--pm-screen-w) + 2 * var(--pm-step));
+  --pm-group-left: calc((100% - var(--pm-spread-w)) / 2);
+
+  position: relative;
+  width: 100%;
+  height: var(--pm-stack-h);
+}
+
+.pickme-flow-stack__frame {
+  position: absolute;
+  overflow: hidden;
+  width: var(--pm-screen-w);
+  height: var(--pm-screen-h);
+  border: var(--pm-border) solid #000;
+  border-radius: var(--pm-radius);
+}
+
+.pickme-flow-stack__frame--back {
+  left: var(--pm-group-left);
+  top: calc(var(--pm-stagger-y) * (1 - var(--pm-scroll-progress)));
+  z-index: 1;
+}
+
+.pickme-flow-stack__frame--middle {
+  left: calc(var(--pm-group-left) + var(--pm-step));
+  top: var(--pm-stagger-y);
+  z-index: 2;
+}
+
+.pickme-flow-stack__frame--front {
+  left: calc(var(--pm-group-left) + 2 * var(--pm-step));
+  top: calc(var(--pm-stagger-y) * (1 + var(--pm-scroll-progress)));
+  z-index: 3;
+}
+
+.pickme-flow-stack__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
 @media (max-width: 700px) {
   .pickme-hand-blob-visual--xl {
     width: 180px;

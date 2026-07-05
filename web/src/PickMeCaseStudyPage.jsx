@@ -1,11 +1,21 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { AnimatedStatValue } from './AnimatedStatValue.jsx'
 import arrowLeftIcon from './assets/arrow-left.svg'
-import pickMeFlowImage1 from './assets/image-1.png'
-import pickMeFlowImage2 from './assets/image-2.png'
-import pickMeFlowImage3 from './assets/image-3b.png'
-import pickMeFlowImage4 from './assets/image-4.png'
-import pickMeFlowImage5 from './assets/image-5.png'
+import pm0101 from './assets/PM-01-01.png'
+import pm0102 from './assets/PM-01-02.png'
+import pm0103 from './assets/PM-01-03.png'
+import pm0201 from './assets/PM-02-01.png'
+import pm0202 from './assets/PM-02-02.png'
+import pm0203 from './assets/PM-02-03.png'
+import pm0301 from './assets/PM-03-01.png'
+import pm0302 from './assets/PM-03-02.png'
+import pm0303 from './assets/PM-03-03.png'
+import pm0401 from './assets/PM-04-01.png'
+import pm0402 from './assets/PM-04-02.png'
+import pm0403 from './assets/PM-04-03.png'
+import pm0501 from './assets/PM-05-01.png'
+import pm0502 from './assets/PM-05-02.png'
+import pm0503 from './assets/PM-05-03.png'
 import mailIcon from './assets/mail.svg'
 import rocketSvg from './assets/rocket.svg'
 import {
@@ -14,6 +24,7 @@ import {
   getPickMeName,
 } from './thumbDesigner/caseStudiesCatalog.js'
 import { useCaseStudyCatalogRevision } from './thumbDesigner/useCaseStudyCatalogRevision.js'
+import { PickMeFlowStack } from './pickme/PickMeFlowStack.jsx'
 import { PickMeHandBlobVisual } from './pickme/PickMeHandBlobVisual.jsx'
 
 const GMAIL_COMPOSE_URL =
@@ -40,31 +51,31 @@ const PICKME_FLOW_SECTIONS = [
     key: 'onboarding',
     title: 'Quick onboarding',
     subtitle: 'Set your preferences',
-    image: pickMeFlowImage1,
+    images: [pm0101, pm0102, pm0103],
   },
   {
     key: 'ranking',
     title: 'Rank as you go',
     subtitle: 'With AI suggestions',
-    image: pickMeFlowImage2,
+    images: [pm0201, pm0202, pm0203],
   },
   {
     key: 'matches',
     title: 'Review your matches',
     subtitle: 'Ranked jobs, FAQs, and profile',
-    image: pickMeFlowImage3,
+    images: [pm0301, pm0302, pm0303],
   },
   {
     key: 'insights',
     title: 'Get job insights',
     subtitle: 'About, challenges, fit, and cover letter',
-    image: pickMeFlowImage4,
+    images: [pm0401, pm0402, pm0403],
   },
   {
     key: 'spin',
     title: 'Can\u2019t decide? Spin.',
     subtitle: 'For when choosing gets hard',
-    image: pickMeFlowImage5,
+    images: [pm0501, pm0502, pm0503],
   },
 ]
 
@@ -412,13 +423,8 @@ export function PickMeCaseStudyPage({ onBack, catalogKey = 'pickme-eyal' }) {
                         <p className="text-[16px] leading-[1.4] text-black/70">{section.subtitle}</p>
                       </div>
 
-                      <div className="mx-auto w-full max-w-[640px]">
-                        <img
-                          src={section.image}
-                          alt={`PickMe product flow — ${section.title}`}
-                          className="block h-auto w-full"
-                          loading="lazy"
-                        />
+                      <div className="flex w-full justify-center">
+                        <PickMeFlowStack images={section.images} title={section.title} />
                       </div>
                     </div>
                   </Fragment>
