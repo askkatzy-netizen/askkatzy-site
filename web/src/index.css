@@ -395,7 +395,6 @@ body {
   --pm-stack-h: calc(486.647px + 233.353px * var(--pm-progress));
   --pm-overlap: calc(128.5px - 43.5px * var(--pm-progress));
   --pm-radius: calc(16.222px + 7.778px * var(--pm-progress));
-  --pm-border: calc(0.936px + 0.064px * var(--pm-progress));
   --pm-stagger-y: calc((var(--pm-stack-h) - var(--pm-screen-h)) / 2);
   /* 0 = tight cluster, 1 = full spread (JS on scroll) */
   --pm-scroll-progress: 0;
@@ -417,7 +416,6 @@ body {
   overflow: hidden;
   width: var(--pm-screen-w);
   height: var(--pm-screen-h);
-  border: var(--pm-border) solid #000;
   border-radius: var(--pm-radius);
 }
 
