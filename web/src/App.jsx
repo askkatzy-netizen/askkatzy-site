@@ -56,7 +56,7 @@ import linkedInMobileIcon from './assets/linkedin.svg'
 import mailIcon from './assets/mail.svg'
 import ellipsisIcon from './assets/ellipsis.svg'
 import downloadIcon from './assets/download.svg'
-import bioPdfFile from './assets/EyalKatz-ProductDesigner.pdf'
+import bioPdfFile from './assets/EyalKatz-ProductDesigner_1126.pdf'
 import profileFace from './assets/profile-face.png'
 import redPopupTile from './assets/red-popup-tile.png'
 import tripletsSvg from './assets/triplets.svg'
@@ -858,7 +858,7 @@ function BioPage({ onBack }) {
             </h1>
             <a
               href={bioPdfFile}
-              download="EyalKatz-ProductDesigner.pdf"
+              download="EyalKatz-ProductDesigner_1126.pdf"
               className="bio-download-cta group inline-flex h-16 w-16 items-center justify-center rounded-full max-[480px]:absolute max-[480px]:top-2 max-[480px]:right-2"
               aria-label="Download bio PDF"
             >
@@ -937,10 +937,24 @@ function BioPage({ onBack }) {
           <div className="mb-11">
             <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
               <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
+                <span>Staff Product Designer, </span>
+                <span className="text-[24px]">HoneyBook</span>
+              </h2>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | Jul-Nov 2026 ◦ Contract</p>
+            </div>
+            <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
+              <li>Contributed to the development of HoneyBook&apos;s core product.</li>
+              <li>Supported the team&apos;s transition to AI-driven workflows and methodologies.</li>
+            </ul>
+          </div>
+
+          <div className="mb-11">
+            <div className="mb-4 flex items-baseline gap-6 max-[700px]:flex-col max-[700px]:gap-2">
+              <h2 className="flex-1 font-roboto-slab text-[32px] leading-[1.3] font-semibold text-black/90 max-[700px]:text-[28px]">
                 <span>Product Design Lead, </span>
                 <span className="text-[24px]">StreamElements</span>
               </h2>
-              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2022 - now</p>
+              <p className="text-[18px] leading-[1.4] text-black/70">Tel Aviv | 2022 - 2026</p>
             </div>
             <ul className="list-disc space-y-2 pl-6 text-[18px] leading-[1.4] text-black/70 max-[700px]:text-[16px]">
               <li>
